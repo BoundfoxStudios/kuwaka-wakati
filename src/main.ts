@@ -1,7 +1,4 @@
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { bootstrapApplication } from '@angular/platform-browser';
+import { KuwakaWakatiComponent } from './app/components/kuwaka-wakati/kuwaka-wakati.component';
 
-import { AppModule } from './app/app.module';
-
-platformBrowserDynamic()
-    .bootstrapModule(AppModule)
-    .catch(err => console.error(err));
+bootstrapApplication(KuwakaWakatiComponent).catch(console.log);

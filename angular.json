@@ -10,6 +10,27 @@
   },
   "projects": {
     "kuwaka-wakati": {
+      "schematics": {
+        "@schematics/angular:component": {
+          "skipTests": true,
+          "prefix": "kw",
+          "standalone": true,
+          "changeDetection": "OnPush",
+          "viewEncapsulation": "ShadowDom"
+        },
+        "@schematics/angular:directive": {
+          "skipTests": true,
+          "prefix": "kw",
+          "standalone": true
+        },
+        "@schematics/angular:pipe": {
+          "standalone": true,
+          "skipTests": true
+        },
+        "@schematics/angular:service": {
+          "skipTests": true
+        }
+      },
       "root": "",
       "projectType": "application",
       "sourceRoot": "src",
