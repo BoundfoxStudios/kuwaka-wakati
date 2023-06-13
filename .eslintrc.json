@@ -1,0 +1,102 @@
+{
+  "root": true,
+  "ignorePatterns": ["projects/**/*", "gulpfile.js", "tasks/**/*.js"],
+  "overrides": [
+    {
+      "files": ["*.ts"],
+      "parserOptions": {
+        "project": ["tsconfig.json"],
+        "createDefaultProgram": true
+      },
+      "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:@typescript-eslint/recommended-requiring-type-checking",
+        "plugin:@angular-eslint/recommended",
+        "plugin:@angular-eslint/template/process-inline-templates",
+        "prettier"
+      ],
+      "plugins": ["deprecation", "prefer-arrow"],
+      "rules": {
+        "@angular-eslint/component-class-suffix": [
+          "error",
+          {
+            "suffixes": ["Component"]
+          }
+        ],
+        "@angular-eslint/component-max-inline-declarations": "error",
+        "@angular-eslint/component-selector": [
+          "error",
+          {
+            "type": "element",
+            "prefix": "kw",
+            "style": "kebab-case"
+          }
+        ],
+        "@angular-eslint/directive-selector": [
+          "error",
+          {
+            "type": "attribute",
+            "prefix": "kw",
+            "style": "camelCase"
+          }
+        ],
+        "@angular-eslint/no-host-metadata-property": [
+          "error",
+          {
+            "allowStatic": true
+          }
+        ],
+        "@typescript-eslint/member-ordering": "off",
+        "@typescript-eslint/prefer-readonly": "error",
+        "@typescript-eslint/naming-convention": [
+          "error",
+          {
+            "selector": "enumMember",
+            "format": ["PascalCase", "UPPER_CASE"]
+          }
+        ],
+        "@typescript-eslint/ban-types": [
+          "error",
+          {
+            "extendDefaults": true,
+            "types": {
+              "{}": false,
+              "Function": false
+            }
+          }
+        ],
+        "@typescript-eslint/unbound-method": [
+          "error",
+          {
+            "ignoreStatic": true
+          }
+        ],
+        "@typescript-eslint/explicit-function-return-type": "error",
+        "prefer-arrow/prefer-arrow-functions": [
+          "error",
+          {
+            "allowStandaloneDeclarations": true
+          }
+        ],
+        "brace-style": ["error", "1tbs"],
+        "id-blacklist": "off",
+        "max-len": [
+          "error",
+          {
+            "code": 150
+          }
+        ],
+        "no-redeclare": "error",
+        "no-underscore-dangle": "off",
+        "space-before-function-paren": 0,
+        "deprecation/deprecation": "warn"
+      }
+    },
+    {
+      "files": ["*.html"],
+      "extends": ["plugin:@angular-eslint/template/recommended"],
+      "rules": {}
+    }
+  ]
+}
