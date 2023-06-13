@@ -1,11 +1,26 @@
 {
-  "trailingComma": "all",
-  "tabWidth": 2,
-  "semi": true,
-  "useTabs": false,
+  "tabWidth": 4,
   "singleQuote": true,
-  "printWidth": 140,
+  "trailingComma": "all",
+  "useTabs": false,
   "bracketSpacing": true,
-  "quoteProps": "as-needed",
-  "arrowParens": "avoid"
+  "printWidth": 150,
+  "bracketSameLine": true,
+  "arrowParens": "avoid",
+  "overrides": [
+    {
+      "files": ["**/*.html"],
+      "options": {
+        "singleQuote": false,
+        "embeddedLanguageFormatting": "off"
+      }
+    },
+    {
+      "files": ["**/*.json", "**/*.yml", "**/*.md"],
+      "options": {
+        "tabWidth": 2
+      }
+    }
+  ],
+  "plugins": ["prettier-plugin-css-order"]
 }
