@@ -1,4 +1,13 @@
-<kw-sidebar></kw-sidebar>
+<kw-sidebar>
+    <kw-sidebar-item [link]="['/dashboard']">
+        <kw-sidebar-icon [icon]="faDashboard"></kw-sidebar-icon>
+        Dashboard
+    </kw-sidebar-item>
+    <kw-sidebar-item [link]="['/data']">
+        <kw-sidebar-icon [icon]="faDatabase"></kw-sidebar-icon>
+        Data
+    </kw-sidebar-item>
+</kw-sidebar>
 <main>
     <router-outlet></router-outlet>
 </main>

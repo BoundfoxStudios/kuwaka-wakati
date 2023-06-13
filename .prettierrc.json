@@ -22,5 +22,6 @@
       }
     }
   ],
-  "plugins": ["prettier-plugin-css-order"]
+  "plugins": ["prettier-plugin-tailwindcss"],
+  "pluginSearchDirs": []
 }

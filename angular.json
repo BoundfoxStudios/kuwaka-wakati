@@ -15,8 +15,7 @@
           "skipTests": true,
           "prefix": "kw",
           "standalone": true,
-          "changeDetection": "OnPush",
-          "viewEncapsulation": "ShadowDom"
+          "changeDetection": "OnPush"
         },
         "@schematics/angular:directive": {
           "skipTests": true,
