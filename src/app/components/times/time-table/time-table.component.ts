@@ -17,6 +17,6 @@ import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
 })
 export class TimeTableComponent {
     @Input({ required: true }) times: TimeEntryWithDuration[] = [];
-    @Output() trash = new EventEmitter<TimeEntryWithDuration>();
+    @Output() delete = new EventEmitter<TimeEntryWithDuration>();
     protected readonly faTrashAlt = faTrashAlt;
 }

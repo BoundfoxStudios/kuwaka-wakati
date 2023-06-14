@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TimeEntryComponent } from './time-entry/time-entry.component';
 import { TimeTable } from '../../services/time-tracking/time.table';
-import { TimeEntry } from '../../services/time-tracking/time.entry';
+import { TimeEntry, TimeEntryCreate } from '../../services/time-tracking/time.entry';
 import { TimeTableComponent } from './time-table/time-table.component';
 import { CardComponent } from '../presentation/card/card.component';
 
@@ -18,7 +18,11 @@ export default class TimesComponent {
     private readonly timeTable = inject(TimeTable);
     times$ = this.timeTable.items$;
 
-    add(timeEntry: TimeEntry): void {
+    add(timeEntry: TimeEntryCreate): void {
         void this.timeTable.add(timeEntry);
+    }
+
+    delete(timeEntry: TimeEntry): void {
+        void this.timeTable.delete(timeEntry.id);
     }
 }

@@ -2,11 +2,11 @@ import { ChangeDetectionStrategy, Component, EventEmitter, inject, Output } from
 import { CommonModule } from '@angular/common';
 import { AbstractControl, FormBuilder, FormControl, FormsModule, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
 import { FormModel, InferModeFromModel, Replace } from 'ngx-mf';
-import { TimeEntry } from '../../../services/time-tracking/time.entry';
+import { TimeEntry, TimeEntryCreate } from '../../../services/time-tracking/time.entry';
 import { formatISO, getUnixTime, parseISO } from 'date-fns';
 
 type EntryModel = FormModel<
-    TimeEntry,
+    TimeEntryCreate,
     {
         utcDate: Replace<FormControl<string>>;
         start: Replace<FormControl<string>>;
@@ -46,7 +46,7 @@ const validateTime: ValidatorFn = (control: AbstractControl<string>) => (isNaN(p
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TimeEntryComponent {
-    @Output() timeEntry = new EventEmitter<TimeEntry>();
+    @Output() timeEntry = new EventEmitter<TimeEntryCreate>();
 
     protected readonly maximumDate = formatISO(new Date(), { representation: 'date' });
     private readonly formBuilder = inject(FormBuilder);

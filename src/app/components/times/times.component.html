@@ -4,5 +4,5 @@
     <div header>
         History <span class="ml-1 text-sm font-normal text-slate-400">{{ times.length }}</span>
     </div>
-    <kw-time-table [times]="times" body />
+    <kw-time-table [times]="times" (delete)="delete($event)" body />
 </kw-card>

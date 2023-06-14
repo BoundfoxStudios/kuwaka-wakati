@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { DatabaseTable } from '../database/database.service';
-import { TimeEntry, TimeEntryWithDuration } from './time.entry';
+import { TimeEntry, TimeEntryCreate, TimeEntryWithDuration } from './time.entry';
 import { liveQuery, Table } from 'dexie';
 import { Observable } from 'rxjs';
 import { dexieToRxObservable } from '../dexie-to-rxjs';
@@ -29,7 +29,11 @@ export class TimeTable implements DatabaseTable<TimeEntry> {
         this.times = table;
     }
 
-    async add(entry: TimeEntry): Promise<void> {
-        await this.times.add({ ...entry });
+    async add(entry: TimeEntryCreate): Promise<void> {
+        await this.times.add({ ...entry } as TimeEntry);
+    }
+
+    delete(id: number): Promise<void> {
+        return this.times.delete(id);
     }
 }

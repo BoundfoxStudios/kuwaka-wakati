@@ -1,7 +1,7 @@
 import { Duration } from 'date-fns';
 
 export interface TimeEntry {
-    id?: number;
+    id: number;
 
     /**
      * Seconds
@@ -18,6 +18,8 @@ export interface TimeEntry {
      */
     end: number;
 }
+
+export type TimeEntryCreate = Omit<TimeEntry, 'id'>;
 
 export interface TimeEntryWithDuration extends TimeEntry {
     duration: Duration;

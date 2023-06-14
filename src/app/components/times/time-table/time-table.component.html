@@ -17,7 +17,7 @@
             <td class="border-t border-slate-100 px-2 py-2">{{ time.end | millisecondsToTime }}</td>
             <td class="border-t border-slate-100 px-2 py-2">{{ time.duration | duration }}</td>
             <td class="border-t border-slate-100 px-2 py-2">
-                <fa-icon (click)="trash.next(time)" [icon]="faTrashAlt" class="cursor-pointer"></fa-icon>
+                <fa-icon (click)="delete.next(time)" [icon]="faTrashAlt" class="cursor-pointer"></fa-icon>
             </td>
         </tr>
     </tbody>
