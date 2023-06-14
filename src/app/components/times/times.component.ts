@@ -16,7 +16,7 @@ import { CardComponent } from '../presentation/card/card.component';
 })
 export default class TimesComponent {
     private readonly timeTable = inject(TimeTable);
-    times = this.timeTable.items;
+    times = this.timeTable.items();
 
     add(timeEntry: TimeEntryCreate): void {
         void this.timeTable.add(timeEntry);
