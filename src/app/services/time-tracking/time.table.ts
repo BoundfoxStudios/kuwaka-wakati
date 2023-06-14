@@ -1,10 +1,9 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Signal } from '@angular/core';
 import { DatabaseTable } from '../database/database.service';
 import { TimeEntry, TimeEntryCreate, TimeEntryWithDuration } from './time.entry';
 import { liveQuery, Table } from 'dexie';
-import { Observable } from 'rxjs';
-import { dexieToRxObservable } from '../dexie-to-rxjs';
 import { Duration, intervalToDuration, secondsToMilliseconds } from 'date-fns';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 export const calculateDuration = ({ start, end }: TimeEntry): Duration =>
     intervalToDuration({ start: secondsToMilliseconds(start), end: secondsToMilliseconds(end) });
@@ -16,12 +15,13 @@ export class TimeTable implements DatabaseTable<TimeEntry> {
     readonly version = 2;
     private times!: Table<TimeEntry, number>;
 
-    get items$(): Observable<TimeEntryWithDuration[]> {
-        return dexieToRxObservable(
+    get items(): Signal<TimeEntryWithDuration[]> {
+        return toSignal(
             liveQuery(async () => {
                 const items = await this.times.orderBy('utcDate').reverse().toArray();
                 return items.map(item => ({ ...item, duration: calculateDuration(item) }));
             }),
+            { initialValue: [] },
         );
     }
 
