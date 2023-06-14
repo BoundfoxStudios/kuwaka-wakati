@@ -15,7 +15,7 @@ type EntryModel = FormModel<
     InferModeFromModel
 >;
 
-const parseTime = (time: string): number => DateTime.fromFormat(time, 'hh:mm').toMillis();
+const parseTime = (time: string): number => DateTime.fromFormat(time, 'HH:mm').toMillis();
 
 const validateStartEnd: ValidatorFn = (control: AbstractControl) => {
     const startControl = control.get('start') as AbstractControl<string>;

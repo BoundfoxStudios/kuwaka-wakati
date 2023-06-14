@@ -5,11 +5,12 @@ import { TimeTable } from '../../services/time-tracking/time.table';
 import { TimeEntry, TimeEntryCreate } from '../../services/time-tracking/time.entry';
 import { TimeTableComponent } from './time-table/time-table.component';
 import { CardComponent } from '../presentation/card/card.component';
+import { ImporterComponent } from './importer/importer.component';
 
 @Component({
     selector: 'kw-times',
     standalone: true,
-    imports: [CommonModule, TimeEntryComponent, TimeTableComponent, CardComponent],
+    imports: [CommonModule, TimeEntryComponent, TimeTableComponent, CardComponent, ImporterComponent],
     templateUrl: './times.component.html',
     styleUrls: ['./times.component.css'],
     changeDetection: ChangeDetectionStrategy.OnPush,

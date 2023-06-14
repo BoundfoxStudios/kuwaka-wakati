@@ -1,5 +1,7 @@
 <kw-time-entry class="mb-4 block" (timeEntry)="add($event)" />
 
+<kw-importer></kw-importer>
+
 <kw-card *ngIf="times().length">
     <div header>
         History <span class="ml-1 text-sm font-normal text-slate-400">{{ times().length }}</span>

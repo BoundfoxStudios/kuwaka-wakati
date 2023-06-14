@@ -7,6 +7,6 @@ import { DateTime } from 'luxon';
 })
 export class MillisecondsToTimePipe implements PipeTransform {
     transform(value: number): string {
-        return DateTime.fromMillis(value).toFormat('hh:mm');
+        return DateTime.fromMillis(value).toFormat('HH:mm');
     }
 }
