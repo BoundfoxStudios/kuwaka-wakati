@@ -1,10 +1,10 @@
-import { Duration } from 'date-fns';
+import { Duration } from 'luxon';
 
 export interface TimeEntry {
     id: number;
 
     /**
-     * Seconds
+     * Milliseconds
      */
     utcDate: number;
 
@@ -22,5 +22,13 @@ export interface TimeEntry {
 export type TimeEntryCreate = Omit<TimeEntry, 'id'>;
 
 export interface TimeEntryWithDuration extends TimeEntry {
+    duration: Duration;
+}
+
+export interface TimeEntryGroup {
+    ids: number[];
+    starts: number[];
+    ends: number[];
+    utcDate: number;
     duration: Duration;
 }

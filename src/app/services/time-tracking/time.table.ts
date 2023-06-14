@@ -2,11 +2,10 @@ import { Injectable, Signal } from '@angular/core';
 import { DatabaseTable } from '../database/database.service';
 import { TimeEntry, TimeEntryCreate, TimeEntryWithDuration } from './time.entry';
 import { liveQuery, Table } from 'dexie';
-import { Duration, intervalToDuration, secondsToMilliseconds } from 'date-fns';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { Duration } from 'luxon';
 
-export const calculateDuration = ({ start, end }: TimeEntry): Duration =>
-    intervalToDuration({ start: secondsToMilliseconds(start), end: secondsToMilliseconds(end) });
+export const calculateDuration = ({ start, end }: TimeEntry): Duration => Duration.fromMillis(end - start);
 
 @Injectable()
 export class TimeTable implements DatabaseTable<TimeEntry> {

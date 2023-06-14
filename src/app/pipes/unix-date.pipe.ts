@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { format, fromUnixTime } from 'date-fns';
+import { DateTime } from 'luxon';
 
 @Pipe({
     name: 'unixDate',
@@ -7,6 +7,6 @@ import { format, fromUnixTime } from 'date-fns';
 })
 export class UnixDatePipe implements PipeTransform {
     transform(value: number): string {
-        return format(fromUnixTime(value), 'P');
+        return DateTime.fromMillis(value).toLocaleString({ dateStyle: 'medium' });
     }
 }

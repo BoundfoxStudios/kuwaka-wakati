@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { format, fromUnixTime } from 'date-fns';
+import { DateTime } from 'luxon';
 
 @Pipe({
     name: 'millisecondsToTime',
@@ -7,7 +7,6 @@ import { format, fromUnixTime } from 'date-fns';
 })
 export class MillisecondsToTimePipe implements PipeTransform {
     transform(value: number): string {
-        const date = fromUnixTime(value);
-        return format(date, 'HH:mm');
+        return DateTime.fromMillis(value).toFormat('hh:mm');
     }
 }

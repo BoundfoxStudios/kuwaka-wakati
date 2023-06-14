@@ -2,8 +2,8 @@ import { ChangeDetectionStrategy, Component, EventEmitter, inject, Output } from
 import { CommonModule } from '@angular/common';
 import { AbstractControl, FormBuilder, FormControl, FormsModule, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
 import { FormModel, InferModeFromModel, Replace } from 'ngx-mf';
-import { TimeEntry, TimeEntryCreate } from '../../../services/time-tracking/time.entry';
-import { formatISO, getUnixTime, parseISO } from 'date-fns';
+import { TimeEntryCreate } from '../../../services/time-tracking/time.entry';
+import { DateTime } from 'luxon';
 
 type EntryModel = FormModel<
     TimeEntryCreate,
@@ -15,11 +15,7 @@ type EntryModel = FormModel<
     InferModeFromModel
 >;
 
-const parseTime = (time: string): number => {
-    const [hours, minutes] = time.split(':');
-
-    return getUnixTime(new Date(0, 0, 0, +hours, +minutes));
-};
+const parseTime = (time: string): number => DateTime.fromFormat(time, 'hh:mm').toMillis();
 
 const validateStartEnd: ValidatorFn = (control: AbstractControl) => {
     const startControl = control.get('start') as AbstractControl<string>;
@@ -48,11 +44,12 @@ const validateTime: ValidatorFn = (control: AbstractControl<string>) => (isNaN(p
 export class TimeEntryComponent {
     @Output() timeEntry = new EventEmitter<TimeEntryCreate>();
 
-    protected readonly maximumDate = formatISO(new Date(), { representation: 'date' });
+    protected readonly maximumDate = DateTime.now().toISODate();
     private readonly formBuilder = inject(FormBuilder);
     protected formGroup = this.formBuilder.group<EntryModel['controls']>(
         {
-            utcDate: new FormControl<string>(formatISO(new Date(), { representation: 'date' }), {
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            utcDate: new FormControl<string>(DateTime.now().toISODate()!, {
                 nonNullable: true,
                 validators: [Validators.required],
             }),
@@ -70,7 +67,7 @@ export class TimeEntryComponent {
         const formValue = { ...(this.formGroup.value as Required<EntryModel['value']>) };
 
         this.timeEntry.emit({
-            utcDate: getUnixTime(parseISO(formValue.utcDate)),
+            utcDate: DateTime.fromISO(formValue.utcDate).toMillis(),
             start: parseTime(formValue.start),
             end: parseTime(formValue.end),
         });

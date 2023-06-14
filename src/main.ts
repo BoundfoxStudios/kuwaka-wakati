@@ -5,13 +5,12 @@ import { routes } from './app/components/kuwaka-wakati/routes';
 import { DATABASE_TABLE, databaseInitializerFactory, databaseInitializerFactoryDeps } from './app/services/database/database.service';
 import { TimeTable } from './app/services/time-tracking/time.table';
 import { APP_INITIALIZER } from '@angular/core';
-import { setDefaultOptions } from 'date-fns';
-import { de } from 'date-fns/locale';
 import localeDe from '@angular/common/locales/de';
 import { registerLocaleData } from '@angular/common';
+import { Settings } from 'luxon';
 
+Settings.defaultLocale = 'de-DE';
 registerLocaleData(localeDe);
-setDefaultOptions({ locale: de });
 
 bootstrapApplication(KuwakaWakatiComponent, {
     providers: [
