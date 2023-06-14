@@ -1,4 +1,5 @@
 {
+  "$schema": "https://raw.githubusercontent.com/tauri-apps/tauri/dev/tooling/cli/schema.json",
   "build": {
     "beforeDevCommand": "npm run start -- --port 1420",
     "beforeBuildCommand": "npm run build",
@@ -7,8 +8,8 @@
     "withGlobalTauri": false
   },
   "package": {
-    "productName": "kuwaka-wakati",
-    "version": "0.0.0"
+    "productName": "Kuwaka Wakati",
+    "version": "../package.json"
   },
   "tauri": {
     "allowlist": {
@@ -20,7 +21,11 @@
     },
     "bundle": {
       "active": true,
-      "targets": "all",
+      "targets": [
+        "dmg",
+        "msi",
+        "deb"
+      ],
       "identifier": "com.boundfoxstudios.kuwakawakati",
       "icon": [
         "icons/32x32.png",
@@ -28,7 +33,10 @@
         "icons/128x128@2x.png",
         "icons/icon.icns",
         "icons/icon.ico"
-      ]
+      ],
+      "publisher": "Boundfox Studios",
+      "copyright": "Copyright Boundfox Studios",
+      "category": "Business"
     },
     "security": {
       "csp": null
@@ -38,8 +46,12 @@
         "fullscreen": false,
         "resizable": true,
         "title": "Kuwaka Wakati",
+        "minWidth": 800,
+        "minHeight": 600,
         "width": 800,
-        "height": 600
+        "height": 600,
+        "fileDropEnabled": false,
+        "acceptFirstMouse": true
       }
     ]
   }

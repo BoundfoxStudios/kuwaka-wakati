@@ -41,5 +41,9 @@ jobs:
           APPLE_PASSWORD: ${{ secrets.APPLE_NOTARIZATION_PASSWORD }}
       - uses: actions/upload-artifact@v3
         with:
-          name: apps-${{ matrix.platform }}
-          path: src-tauri/target/release/bundle/
+          name: apps
+          path: |
+            src-tauri/target/release/bundle/dmg/*.dmg
+            src-tauri/target/release/bundle/deb/*.deb
+            src-tauri/target/release/bundle/msi/*.msi
+
