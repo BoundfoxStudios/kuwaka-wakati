@@ -1,0 +1,8 @@
+<kw-time-entry (timeEntry)="add($event)" />
+
+<kw-card *ngIf="times$ | async as times">
+    <div header>
+        History <span class="ml-1 text-sm font-normal text-slate-400">{{ times.length }}</span>
+    </div>
+    <kw-time-table [times]="times" body />
+</kw-card>

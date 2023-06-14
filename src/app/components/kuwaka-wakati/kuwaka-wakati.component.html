@@ -3,11 +3,12 @@
         <kw-sidebar-icon [icon]="faDashboard"></kw-sidebar-icon>
         Dashboard
     </kw-sidebar-item>
-    <kw-sidebar-item [link]="['/data']">
+    <kw-sidebar-item [link]="['/times']">
         <kw-sidebar-icon [icon]="faDatabase"></kw-sidebar-icon>
         Data
     </kw-sidebar-item>
 </kw-sidebar>
-<main>
+
+<main class="m-4 flex-1">
     <router-outlet></router-outlet>
 </main>

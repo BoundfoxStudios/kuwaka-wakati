@@ -1,0 +1,15 @@
+<form (ngSubmit)="submit()" [formGroup]="formGroup">
+    <label>
+        Date:
+        <input type="date" [formControl]="formGroup.controls.utcDate" [max]="maximumDate" />
+    </label>
+    <label>
+        Start
+        <input type="time" [formControl]="formGroup.controls.start" />
+    </label>
+    <label>
+        End
+        <input type="time" [formControl]="formGroup.controls.end" />
+    </label>
+    <button type="submit" [disabled]="formGroup.invalid">Submit the shit</button>
+</form>

@@ -2,11 +2,11 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
-    selector: 'kw-data',
+    selector: 'kw-card',
     standalone: true,
     imports: [CommonModule],
-    templateUrl: './data.component.html',
-    styleUrls: ['./data.component.css'],
+    templateUrl: './card.component.html',
+    styleUrls: ['./card.component.css'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export default class DataComponent {}
+export class CardComponent {}
