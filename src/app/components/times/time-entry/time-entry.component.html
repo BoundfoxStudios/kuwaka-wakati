@@ -1,15 +1,27 @@
-<form (ngSubmit)="submit()" [formGroup]="formGroup">
-    <label>
-        Date:
-        <input type="date" [formControl]="formGroup.controls.utcDate" [max]="maximumDate" />
-    </label>
-    <label>
-        Start
-        <input type="time" [formControl]="formGroup.controls.start" />
-    </label>
-    <label>
-        End
-        <input type="time" [formControl]="formGroup.controls.end" />
-    </label>
-    <button type="submit" [disabled]="formGroup.invalid">Submit the shit</button>
+<form class="flex items-end space-x-3" (ngSubmit)="submit()" [formGroup]="formGroup">
+    <div>
+        <label class="mb-1 block text-sm font-semibold" for="utcDate">Date:</label>
+        <input
+            class="rounded border border-slate-200 px-3.5 py-1.5 drop-shadow"
+            id="utcDate"
+            type="date"
+            [formControl]="formGroup.controls.utcDate"
+            [max]="maximumDate" />
+    </div>
+    <div>
+        <label class="mb-1 block text-sm font-semibold" for="start">Start:</label>
+        <input class="rounded border border-slate-200 px-3.5 py-1.5 drop-shadow" id="start" type="time" [formControl]="formGroup.controls.start" />
+    </div>
+    <div>
+        <label class="mb-1 block text-sm font-semibold" for="end">End:</label>
+        <input class="rounded border border-slate-200 px-3.5 py-1.5 drop-shadow" id="end" type="time" [formControl]="formGroup.controls.end" />
+    </div>
+    <div>
+        <button
+            class="rounded bg-blue-800 px-4 py-2 text-white disabled:cursor-not-allowed disabled:bg-blue-300"
+            type="submit"
+            [disabled]="formGroup.invalid">
+            Ok
+        </button>
+    </div>
 </form>

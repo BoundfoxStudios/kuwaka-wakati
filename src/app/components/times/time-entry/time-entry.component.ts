@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, inject, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormsModule, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
 import { FormModel, InferModeFromModel, Replace } from 'ngx-mf';
 import { TimeEntry } from '../../../services/time-tracking/time.entry';
 import { formatISO, getUnixTime, parseISO } from 'date-fns';
@@ -15,6 +15,28 @@ type EntryModel = FormModel<
     InferModeFromModel
 >;
 
+const parseTime = (time: string): number => {
+    const [hours, minutes] = time.split(':');
+
+    return getUnixTime(new Date(0, 0, 0, +hours, +minutes));
+};
+
+const validateStartEnd: ValidatorFn = (control: AbstractControl) => {
+    const startControl = control.get('start') as AbstractControl<string>;
+    const endControl = control.get('end') as AbstractControl<string>;
+
+    if (!startControl || !endControl) {
+        return null;
+    }
+
+    const start = parseTime(startControl.value);
+    const end = parseTime(endControl.value);
+
+    return start > end ? { startGreaterThanEnd: true } : null;
+};
+
+const validateTime: ValidatorFn = (control: AbstractControl<string>) => (isNaN(parseTime(control.value)) ? { invalidTime: true } : null);
+
 @Component({
     selector: 'kw-time-entry',
     standalone: true,
@@ -28,11 +50,17 @@ export class TimeEntryComponent {
 
     protected readonly maximumDate = formatISO(new Date(), { representation: 'date' });
     private readonly formBuilder = inject(FormBuilder);
-    protected formGroup = this.formBuilder.group<EntryModel['controls']>({
-        start: new FormControl<string>('', { nonNullable: true }),
-        utcDate: new FormControl<string>(formatISO(new Date(), { representation: 'date' }), { nonNullable: true }),
-        end: new FormControl<string>('', { nonNullable: true }),
-    });
+    protected formGroup = this.formBuilder.group<EntryModel['controls']>(
+        {
+            utcDate: new FormControl<string>(formatISO(new Date(), { representation: 'date' }), {
+                nonNullable: true,
+                validators: [Validators.required],
+            }),
+            start: new FormControl<string>('', { nonNullable: true, validators: [validateTime] }),
+            end: new FormControl<string>('', { nonNullable: true, validators: [validateTime] }),
+        },
+        { validators: [validateStartEnd] },
+    );
 
     submit(): void {
         if (!this.formGroup.valid) {
@@ -43,14 +71,8 @@ export class TimeEntryComponent {
 
         this.timeEntry.emit({
             utcDate: getUnixTime(parseISO(formValue.utcDate)),
-            start: this.parseTime(formValue.start),
-            end: this.parseTime(formValue.end),
+            start: parseTime(formValue.start),
+            end: parseTime(formValue.end),
         });
-    }
-
-    private parseTime(time: string): number {
-        const [hours, minutes] = time.split(':');
-
-        return getUnixTime(new Date(0, 0, 0, +hours, +minutes));
     }
 }
