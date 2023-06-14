@@ -11,7 +11,7 @@ export const routes: Routes = [
         loadComponent: () => import('../dashboard/dashboard.component'),
     },
     {
-        path: 'data',
+        path: 'times',
         loadComponent: () => import('../times/times.component'),
     },
 ];
