@@ -14,4 +14,8 @@ export const routes: Routes = [
         path: 'times',
         loadComponent: () => import('../times/times.component'),
     },
+    {
+        path: 'settings',
+        loadComponent: () => import('../settings/settings.component'),
+    },
 ];

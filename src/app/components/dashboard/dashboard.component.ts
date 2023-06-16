@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CardComponent } from '../presentation/card/card.component';
+import { CardComponent } from '../card/card.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { TimeTable } from '../../services/time-tracking/time.table';
 import { DateTime } from 'luxon';

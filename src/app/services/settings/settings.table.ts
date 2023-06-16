@@ -9,7 +9,7 @@ interface SettingsEntity extends Settings {
 }
 
 const defaultSettings: Settings = {
-    minutesToWorkPerWeek: 2250, // 37.5 hours
+    workPerDay: 27_000_000, // 7.5 hours
 };
 
 @Injectable()
