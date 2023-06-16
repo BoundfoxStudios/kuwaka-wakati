@@ -12,6 +12,7 @@ jobs:
     runs-on: ubuntu-20.04
     outputs:
       release_id: ${{ steps.create-release.outputs.result }}
+      version: ${{ steps.get-next-version.outputs.new-release-version }}
 
     steps:
       - uses: actions/checkout@v3
@@ -19,8 +20,12 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16
+      - run: npx semantic-release --dry-run
+        id: get-next-version
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: get version
-        run: echo "PACKAGE_VERSION=$(node -p "require('./package.json').version")" >> $GITHUB_ENV
+        run: echo "PACKAGE_VERSION=${{ steps.get-next-version.outputs.new-release-version }}" >> $GITHUB_ENV
       - name: create release
         id: create-release
         uses: actions/github-script@v6
@@ -49,6 +54,10 @@ jobs:
     runs-on: ${{ matrix.platform }}
     steps:
       - uses: actions/checkout@v3
+      - name: update package.json with current version
+        uses: jaywcjlove/github-action-package@main
+        with:
+          version: ${{ needs.create-release.outputs.version }}
       - name: setup node
         uses: actions/setup-node@v3
         with:
