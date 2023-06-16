@@ -10,6 +10,7 @@ import { registerLocaleData } from '@angular/common';
 import { Settings } from 'luxon';
 import { SettingsTable } from './app/services/settings/settings.table';
 import { provideAnimations } from '@angular/platform-browser/animations';
+import { TauriService, tauriServiceFactory } from './app/services/tauri.service';
 
 Settings.defaultLocale = 'de-DE';
 registerLocaleData(localeDe);
@@ -20,6 +21,7 @@ bootstrapApplication(KuwakaWakatiComponent, {
         provideRouter(routes, withInMemoryScrolling({ scrollPositionRestoration: 'top' })),
         TimeTable,
         SettingsTable,
+        { provide: TauriService, useFactory: tauriServiceFactory },
         { provide: DATABASE_TABLE, useExisting: TimeTable, multi: true },
         { provide: DATABASE_TABLE, useExisting: SettingsTable, multi: true },
         { provide: APP_INITIALIZER, useFactory: databaseInitializerFactory, deps: databaseInitializerFactoryDeps, multi: true },

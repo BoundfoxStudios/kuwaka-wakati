@@ -1,3 +1,3 @@
 :host {
-    @apply block bg-blue-950 p-2;
+    @apply flex flex-col bg-blue-950 p-2;
 }

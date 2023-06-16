@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
@@ -6,6 +6,8 @@ import { SidebarItemComponent } from '../sidebar/sidebar-item/sidebar-item.compo
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faCogs, faDashboard, faDatabase } from '@fortawesome/free-solid-svg-icons';
 import { SidebarIconComponent } from '../sidebar/sidebar-icon/sidebar-icon.component';
+import { TauriService } from '../../services/tauri.service';
+import { SidebarFooterComponent } from '../sidebar/sidebar-footer/sidebar-footer.component';
 
 @Component({
     selector: 'kw-kuwaka-wakati',
@@ -15,6 +17,7 @@ import { SidebarIconComponent } from '../sidebar/sidebar-icon/sidebar-icon.compo
         RouterOutlet,
         SidebarComponent,
         SidebarItemComponent,
+        SidebarFooterComponent,
         FontAwesomeModule,
         SidebarIconComponent,
         RouterLink,
@@ -25,6 +28,9 @@ import { SidebarIconComponent } from '../sidebar/sidebar-icon/sidebar-icon.compo
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class KuwakaWakatiComponent {
+    private readonly tauriService = inject(TauriService);
+    protected readonly version$ = this.tauriService.getVersion();
+
     protected readonly faDashboard = faDashboard;
     protected readonly faDatabase = faDatabase;
     protected readonly faCogs = faCogs;
