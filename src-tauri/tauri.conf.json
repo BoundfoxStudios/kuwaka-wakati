@@ -12,6 +12,14 @@
     "version": "../package.json"
   },
   "tauri": {
+    "updater": {
+      "active": true,
+      "dialog": true,
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDg5QzNEQ0YzNTg4NjdFQjMKUldTemZvWlk4OXpEaVR5SDdBWkpGQVlOc3g0V0hBZTY2dXZibTYrLzZwQVVwT1RvcmtNTmY1ZEkK",
+      "endpoints": [
+        "https://gist.githubusercontent.com/ManuelRauber/c65aab8be88bbbb49f82b1d060e26e52/raw/390232374425f8503838a41916f2a72371690c55/update.json"
+      ]
+    },
     "allowlist": {
       "all": false,
       "shell": {
@@ -24,7 +32,8 @@
       "targets": [
         "dmg",
         "msi",
-        "deb"
+        "deb",
+        "updater"
       ],
       "identifier": "com.boundfoxstudios.kuwakawakati",
       "icon": [
