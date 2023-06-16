@@ -4,7 +4,7 @@ import { TimeEntryComponent } from './time-entry/time-entry.component';
 import { TimeTable } from '../../services/time-tracking/time.table';
 import { TimeEntry, TimeEntryCreate } from '../../services/time-tracking/time.entry';
 import { TimeTableComponent } from './time-table/time-table.component';
-import { CardComponent } from '../presentation/card/card.component';
+import { CardComponent } from '../card/card.component';
 import { ImporterComponent } from './importer/importer.component';
 
 @Component({

@@ -2,6 +2,33 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+    .kw-label {
+        @apply block text-sm font-semibold;
+    }
+
+    .kw-input {
+        @apply rounded border border-slate-200 px-3.5 py-1.5 drop-shadow;
+    }
+
+    .kw-submit-button {
+        @apply rounded bg-blue-800 px-4 py-2 text-white disabled:cursor-not-allowed disabled:bg-blue-300;
+    }
+
+    .kw-hint {
+        @apply text-sm text-slate-400;
+    }
+
+    .kw-label + .kw-input,
+    .kw-input + .kw-hint {
+        @apply mt-1;
+    }
+
+    .kw-label + .kw-hint {
+        @apply mb-1;
+    }
+}
+
 body {
     @apply h-screen w-screen text-base;
 }

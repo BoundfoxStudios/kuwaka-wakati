@@ -1,22 +1,11 @@
 import { Duration } from 'luxon';
+import { Milliseconds } from '../time.utils';
 
 export interface TimeEntry {
     id: number;
-
-    /**
-     * Milliseconds
-     */
-    utcDate: number;
-
-    /**
-     * Milliseconds start time
-     */
-    start: number;
-
-    /**
-     * Milliseconds end time
-     */
-    end: number;
+    utcDate: Milliseconds;
+    start: Milliseconds;
+    end: Milliseconds;
 }
 
 export type TimeEntryCreate = Omit<TimeEntry, 'id'>;
@@ -27,8 +16,8 @@ export interface TimeEntryWithDuration extends TimeEntry {
 
 export interface TimeEntryGroup {
     ids: number[];
-    starts: number[];
-    ends: number[];
-    utcDate: number;
+    starts: Milliseconds[];
+    ends: Milliseconds[];
+    utcDate: Milliseconds;
     duration: Duration;
 }
