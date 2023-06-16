@@ -5,8 +5,8 @@ import { TimeTable } from '../../services/time-tracking/time.table';
 import { TimeEntry, TimeEntryCreate } from '../../services/time-tracking/time.models';
 import { TimeTableComponent } from './time-table/time-table.component';
 import { CardComponent } from '../card/card.component';
-import { ImporterComponent } from './importer/importer.component';
 import { toSignal } from '@angular/core/rxjs-interop';
+import ImporterComponent from '../importer/importer.component';
 
 @Component({
     selector: 'kw-times',
