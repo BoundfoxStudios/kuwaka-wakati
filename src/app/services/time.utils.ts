@@ -1,4 +1,4 @@
-import { Duration } from 'luxon';
+import { DateTime, Duration } from 'luxon';
 
 export type Milliseconds = number;
 
@@ -27,3 +27,6 @@ export const dailyWorkAsWeek = (duration: Duration, days = 5): Duration => {
 
     return finalDuration;
 };
+
+export const unixTimeToLocaleDate = (milliseconds: Milliseconds): string => DateTime.fromMillis(milliseconds).toLocaleString({ dateStyle: 'medium' });
+export const unixTimeToDate = (milliseconds: Milliseconds): string => DateTime.fromMillis(milliseconds).toFormat('dd.MM');
