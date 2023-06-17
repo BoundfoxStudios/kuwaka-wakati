@@ -11,8 +11,9 @@ jobs:
       contents: write
     runs-on: ubuntu-20.04
     outputs:
-      release_id: ${{ steps.create-release.outputs.result }}
-      version: ${{ steps.get-next-version.outputs.new-release-version }}
+      release-id: ${{ steps.create-release.outputs.result }}
+      version-with-prefix: ${{ steps.get-next-version.outputs.new-release-version }}
+      version: ${{ steps.version-without-prefix.outputs.version }}
 
     steps:
       - uses: actions/checkout@v3
@@ -24,8 +25,15 @@ jobs:
         id: get-next-version
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Remove "v" from version
+        id: version-without-prefix
+        if: matrix.platform == 'windows-latest'
+        run: |
+          VERSION=${{ needs.create-release.outputs.version }}
+          VERSION=${VERSION//v} # replace all dots
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
       - name: get version
-        run: echo "PACKAGE_VERSION=${{ steps.get-next-version.outputs.new-release-version }}" >> $GITHUB_ENV
+        run: echo "PACKAGE_VERSION=${{ steps.version-without-prefix.outputs.version }}" >> $GITHUB_ENV
       - name: create release
         id: create-release
         uses: actions/github-script@v6
@@ -57,7 +65,7 @@ jobs:
       - name: update package.json with current version
         uses: jaywcjlove/github-action-package@main
         with:
-          version: ${{ needs.create-release.outputs.version }}
+          version: ${{ steps.create-release.outputs.version }}
       - name: setup node
         uses: actions/setup-node@v3
         with:
@@ -83,7 +91,13 @@ jobs:
           TAURI_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
           TAURI_KEY_PASSWORD: ${{ secrets.TAURI_KEY_PASSWORD }}
         with:
-          releaseId: ${{ needs.create-release.outputs.release_id }}
+          releaseId: ${{ needs.create-release.outputs.release-id }}
+          tagName: ${{ needs.create-release.outputs.version-with-prefix }}
+      - uses: actions/upload-artifact@v3
+        with:
+          name: apps
+          path: |
+            src-tauri/target/release/
 
   publish-release:
     permissions:
@@ -92,6 +106,44 @@ jobs:
     needs: [ create-release, build-tauri ]
 
     steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: apps
+      - name: read signatures
+        id: signatures
+        run: |
+          LINUX=$(cat appimage/kuwaka-wakati_${{ needs.create-release.outputs.version }}_amd64.AppImage.tar.gz.sig)
+          DARWIN=$(cat "macos/Kuwaka Wakati.app.tar.gz.sig")
+          WINDOWS=$(cat "Kuwaka Wakati_${{ needs.create-release.outputs.version }}_x64_en-US.msi.zip.sig")
+          echo "linux=$LINUX" >> "$GITHUB_OUTPUT"
+          echo "darwin=$DARWIN" >> "$GITHUB_OUTPUT"
+          echo "windows=$WINDOWS" >> "$GITHUB_OUTPUT"
+      - run: npx semantic-release
+        id: get-next-version
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - run: |
+          cat <<EOT>> update.json
+          {
+            "version": "${{ needs.create-release.outputs.version }}",
+            "notes": "For changelog, please visit the GitHub page",
+            "pub_date": "",
+            "platforms": {
+              "darwin-aarch64": {
+                "signature": "${{ steps.signatures.outputs.darwin }}"
+                "url": "https://github.com/boundfoxstudios/kuwaka-wakati/releases/download/${{ needs.create-release.outputs.version }}/Kuwaka%20Wakati.app.tar.gz"
+              },
+              "linux-x86_64": {
+                "signature": "${{ steps.signatures.outputs.linux }}"
+                "url": "https://github.com/boundfoxstudios/kuwaka-wakati/releases/download/${{ needs.create-release.outputs.version }}/kuwaka-wakati_${{ needs.create-release.outputs.version }}_amd64.AppImage.tar.gz"
+              },
+              "windows-x86_64": {
+                "signature": "${{ steps.signatures.outputs.windows }}"
+                "url": "https://github.com/boundfoxstudios/kuwaka-wakati/releases/download/${{ needs.create-release.outputs.version }}/Kuwaka%20Wakati_${{ needs.create-release.outputs.version }}_x64_en-US.msi.zip"
+              }
+            }
+          }
+          EOT
       - name: publish release
         id: publish-release
         uses: actions/github-script@v6
@@ -106,3 +158,9 @@ jobs:
               draft: false,
               prerelease: false
             })
+      - name: Deploy update.json to Gist
+        uses: exuanbo/actions-deploy-gist@v1
+        with:
+          token: ${{ secrets.TOKEN }}
+          gist_id: c65aab8be88bbbb49f82b1d060e26e52
+          file_path: update.json
