@@ -1,4 +1,4 @@
 <kw-card>
     <div header>Chart</div>
-    <ngx-charts-line-chart body [results]="chartData | async"></ngx-charts-line-chart>
+    <kw-history-chart body [data]="chartData()" [dailyWork]="settings().workPerDay"></kw-history-chart>
 </kw-card>

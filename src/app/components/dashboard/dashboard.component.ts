@@ -6,28 +6,22 @@ import { TimeTable } from '../../services/time-tracking/time.table';
 import { DateTime } from 'luxon';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs';
+import { HistoryChartComponent } from '../history-chart/history-chart.component';
+import { unixTimeToLocaleDate } from '../../services/time.utils';
+import { SettingsTable } from '../../services/settings/settings.table';
 
 @Component({
     selector: 'kw-dashboard',
     standalone: true,
-    imports: [CommonModule, CardComponent, NgxChartsModule],
+    imports: [CommonModule, CardComponent, NgxChartsModule, HistoryChartComponent],
     templateUrl: './dashboard.component.html',
     styleUrls: ['./dashboard.component.css'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class DashboardComponent {
     private readonly timeTable = inject(TimeTable);
-    protected chartData = toObservable(this.timeTable.groupByDay(0, DateTime.now().toMillis())).pipe(
-        map(data => {
-            return [
-                {
-                    name: 'Time',
-                    series: data.map(d => ({
-                        name: `${d.utcDate}`,
-                        value: d.duration.toMillis(),
-                    })),
-                },
-            ];
-        }),
-    );
+    private readonly settingsTable = inject(SettingsTable);
+
+    protected readonly chartData = this.timeTable.groupByDay(0, DateTime.now().toMillis());
+    protected readonly settings = this.settingsTable.current();
 }

@@ -6,7 +6,11 @@ import { Duration } from 'luxon';
     standalone: true,
 })
 export class DurationPipe implements PipeTransform {
-    transform(duration: Duration): string {
+    transform(duration: Duration | number): string {
+        if (typeof duration === 'number') {
+            duration = Duration.fromMillis(duration);
+        }
+
         return duration.toFormat('hh:mm');
     }
 }

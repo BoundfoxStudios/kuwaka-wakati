@@ -1,12 +1,12 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { DateTime } from 'luxon';
+import { unixTimeToLocaleDate } from '../services/time.utils';
 
 @Pipe({
     name: 'unixDate',
     standalone: true,
 })
 export class UnixDatePipe implements PipeTransform {
-    transform(value: number): string {
-        return DateTime.fromMillis(value).toLocaleString({ dateStyle: 'medium' });
+    transform(value: number | string): string {
+        return unixTimeToLocaleDate(+value);
     }
 }
