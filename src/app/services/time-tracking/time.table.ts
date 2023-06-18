@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { DatabaseTable } from '../database/database.service';
 import { TimeEntry, TimeEntryCreate, TimeEntryGroup, TimeEntryWithDuration } from './time.models';
 import { liveQuery, Table } from 'dexie';
-import { DateTime, Duration } from 'luxon';
+import { Duration } from 'luxon';
 import { Milliseconds, todayDateMilliseconds } from '../time.utils';
 import { map, Observable } from 'rxjs';
 import { dexieToRxObservable } from '../dexie-to-rxjs';
@@ -16,10 +16,11 @@ export class TimeTable implements DatabaseTable<TimeEntry> {
     readonly version = 2;
     private times!: Table<TimeEntry, number>;
 
-    items$(): Observable<TimeEntryWithDuration[]> {
+    items$(fromTimestamp: Milliseconds = 0, toTimestamp: Milliseconds = Number.MAX_SAFE_INTEGER): Observable<TimeEntryWithDuration[]> {
         return dexieToRxObservable(
             liveQuery(async () => {
-                const items = await this.times.orderBy('utcDate').reverse().toArray();
+                const items = await this.times.where('utcDate').between(fromTimestamp, toTimestamp, true).toArray();
+                items.sort((a, b) => (a.utcDate < b.utcDate ? 1 : 0));
                 return items.map(item => ({ ...item, duration: calculateDuration(item) }));
             }),
         );
@@ -60,7 +61,7 @@ export class TimeTable implements DatabaseTable<TimeEntry> {
         );
     }
 
-    today$(): Observable<TimeEntryGroup> {
+    todayGroup$(): Observable<TimeEntryGroup> {
         const todayDate = todayDateMilliseconds;
         return this.groupByDay$(todayDate, todayDate + 1).pipe(
             map(([today]) => {
@@ -77,5 +78,10 @@ export class TimeTable implements DatabaseTable<TimeEntry> {
                 return today;
             }),
         );
+    }
+
+    todayItems$(): Observable<TimeEntryWithDuration[]> {
+        const todayDate = todayDateMilliseconds;
+        return this.items$(todayDate, todayDate + 1);
     }
 }
