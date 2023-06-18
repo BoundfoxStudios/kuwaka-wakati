@@ -15,11 +15,22 @@ import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
 import { faClose, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { TimeEntryComponent } from '../times/time-entry/time-entry.component';
 import { TimeEntry, TimeEntryCreate } from '../../services/time-tracking/time.models';
+import { TimeTableComponent } from '../times/time-table/time-table.component';
 
 @Component({
     selector: 'kw-dashboard',
     standalone: true,
-    imports: [CommonModule, CardComponent, NgxChartsModule, HistoryChartComponent, TodayComponent, RouterLink, FontAwesomeModule, TimeEntryComponent],
+    imports: [
+        CommonModule,
+        CardComponent,
+        NgxChartsModule,
+        HistoryChartComponent,
+        TodayComponent,
+        RouterLink,
+        FontAwesomeModule,
+        TimeEntryComponent,
+        TimeTableComponent,
+    ],
     templateUrl: './dashboard.component.html',
     styleUrls: ['./dashboard.component.css'],
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -28,6 +39,7 @@ export default class DashboardComponent {
     protected isTimeEntryVisible = false;
     protected readonly faCheckCircle = faCheckCircle;
     protected readonly faPlus = faPlus;
+    protected readonly faClose = faClose;
     private readonly timeTable = inject(TimeTable);
     protected readonly chartData = toSignal(this.timeTable.groupByDay$(0, DateTime.now().toMillis()), { initialValue: [] });
     private readonly settingsTable = inject(SettingsTable);
@@ -43,10 +55,14 @@ export default class DashboardComponent {
 
         return !today.remainingTime;
     });
-    protected readonly faClose = faClose;
+    protected readonly todayItems = toSignal(this.timeTable.todayItems$(), { initialValue: [] });
 
     protected async addTimeEntry(timeEntry: TimeEntryCreate): Promise<void> {
         await this.timeTable.add(timeEntry);
         this.isTimeEntryVisible = false;
+    }
+
+    protected async deleteTimeEntry(timeEntry: TimeEntry): Promise<void> {
+        return this.timeTable.delete(timeEntry.id);
     }
 }

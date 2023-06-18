@@ -12,7 +12,7 @@ export class TimeService {
     private readonly settingsTable = inject(SettingsTable);
 
     today$(): Observable<Today> {
-        return combineLatest([this.timeTable.today$(), this.settingsTable.current$()]).pipe(
+        return combineLatest([this.timeTable.todayGroup$(), this.settingsTable.current$()]).pipe(
             map(([today, settings]) => {
                 const workPerDay = Duration.fromMillis(settings.workPerDay);
 

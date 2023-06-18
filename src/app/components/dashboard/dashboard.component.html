@@ -14,5 +14,6 @@
     <ng-container body>
         <kw-time-entry *ngIf="isTimeEntryVisible" [isTodayMode]="true" (timeEntry)="addTimeEntry($event)" class="mb-2 self-end" />
         <kw-today *ngIf="today() as today" [today]="today" />
+        <kw-time-table *ngIf="todayItems().length" [times]="todayItems()" (delete)="deleteTimeEntry($event)"></kw-time-table>
     </ng-container>
 </kw-card>
