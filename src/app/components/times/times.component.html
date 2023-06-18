@@ -1,10 +1,13 @@
-<kw-time-entry class="mb-4 block" (timeEntry)="add($event)" />
+<kw-card>
+    <h2 header>Create Time Entry</h2>
+    <kw-time-entry class="mb-4 block" (timeEntry)="add($event)" body />
+</kw-card>
 
 <kw-importer></kw-importer>
 
 <kw-card *ngIf="times().length">
-    <div header>
+    <h2 header>
         History <span class="ml-1 text-sm font-normal text-slate-400">{{ times().length }}</span>
-    </div>
+    </h2>
     <kw-time-table [times]="times()" (delete)="delete($event)" body />
 </kw-card>

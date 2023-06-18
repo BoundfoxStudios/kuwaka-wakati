@@ -1,8 +1,9 @@
 import { DatabaseCleanup, DatabaseTable } from '../database/database.service';
 import { Settings } from './settings';
 import { liveQuery, Table } from 'dexie';
-import { Injectable, Signal } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { Injectable } from '@angular/core';
+import { Observable, startWith } from 'rxjs';
+import { dexieToRxObservable } from '../dexie-to-rxjs';
 
 interface SettingsEntity extends Settings {
     id?: number;
@@ -19,8 +20,8 @@ export class SettingsTable implements DatabaseTable<SettingsEntity>, DatabaseCle
     readonly version = 1;
     private settings!: Table<SettingsEntity, number>;
 
-    current(): Signal<Settings> {
-        return toSignal(
+    current$(): Observable<Settings> {
+        return dexieToRxObservable(
             liveQuery(async (): Promise<SettingsEntity> => {
                 const entity = await this.settings.orderBy('id').last();
 
@@ -30,8 +31,7 @@ export class SettingsTable implements DatabaseTable<SettingsEntity>, DatabaseCle
 
                 return { ...entity, id: undefined };
             }),
-            { initialValue: defaultSettings },
-        );
+        ).pipe(startWith(defaultSettings));
     }
 
     initialize(table: Table<SettingsEntity, number>): void {

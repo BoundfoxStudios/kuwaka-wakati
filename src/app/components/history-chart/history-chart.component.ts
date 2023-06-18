@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, HostBinding, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LineChartModule } from '@swimlane/ngx-charts';
-import { TimeEntryGroup } from '../../services/time-tracking/time.entry';
+import { TimeEntryGroup } from '../../services/time-tracking/time.models';
 import { Milliseconds, millisecondsToHumanReadable, unixTimeToDate } from '../../services/time.utils';
 import { MillisecondsToTimePipe } from '../../pipes/milliseconds-to-time.pipe';
 import { DurationPipe } from '../../pipes/duration.pipe';
