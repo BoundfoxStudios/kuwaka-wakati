@@ -28,7 +28,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Remove "v" from version
         id: version-without-prefix
-        if: matrix.platform == 'windows-latest'
         run: |
           VERSION=${{ needs.create-release.outputs.version }}
           VERSION=${VERSION//v} # replace all dots
