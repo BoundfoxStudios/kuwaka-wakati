@@ -46,4 +46,4 @@ jobs:
         with:
           name: apps
           path: |
-            src-tauri/target/release/
+            src-tauri/target/release/bundle/
