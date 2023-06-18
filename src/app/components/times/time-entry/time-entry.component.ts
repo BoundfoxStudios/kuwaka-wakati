@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, inject, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormModel, InferModeFromModel, Replace } from 'ngx-mf';
@@ -27,6 +27,10 @@ type EntryModel = FormModel<
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TimeEntryComponent {
+    /**
+     * Enabled the today mode hides the date entry.
+     */
+    @Input() isTodayMode = false;
     @Output() timeEntry = new EventEmitter<TimeEntryCreate>();
 
     protected readonly maximumDate = DateTime.now().toISODate();

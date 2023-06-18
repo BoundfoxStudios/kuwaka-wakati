@@ -12,16 +12,22 @@ import { RouterLink } from '@angular/router';
 import { TimeService } from '../../services/time-tracking/time.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
+import { faClose, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { TimeEntryComponent } from '../times/time-entry/time-entry.component';
+import { TimeEntry, TimeEntryCreate } from '../../services/time-tracking/time.models';
 
 @Component({
     selector: 'kw-dashboard',
     standalone: true,
-    imports: [CommonModule, CardComponent, NgxChartsModule, HistoryChartComponent, TodayComponent, RouterLink, FontAwesomeModule],
+    imports: [CommonModule, CardComponent, NgxChartsModule, HistoryChartComponent, TodayComponent, RouterLink, FontAwesomeModule, TimeEntryComponent],
     templateUrl: './dashboard.component.html',
     styleUrls: ['./dashboard.component.css'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class DashboardComponent {
+    protected isTimeEntryVisible = false;
+    protected readonly faCheckCircle = faCheckCircle;
+    protected readonly faPlus = faPlus;
     private readonly timeTable = inject(TimeTable);
     protected readonly chartData = toSignal(this.timeTable.groupByDay$(0, DateTime.now().toMillis()), { initialValue: [] });
     private readonly settingsTable = inject(SettingsTable);
@@ -31,7 +37,16 @@ export default class DashboardComponent {
     protected readonly isWorkDayDone = computed(() => {
         const today = this.today();
 
-        return !today?.remainingTime;
+        if (!today) {
+            return;
+        }
+
+        return !today.remainingTime;
     });
-    protected readonly faCheckCircle = faCheckCircle;
+    protected readonly faClose = faClose;
+
+    protected async addTimeEntry(timeEntry: TimeEntryCreate): Promise<void> {
+        await this.timeTable.add(timeEntry);
+        this.isTimeEntryVisible = false;
+    }
 }

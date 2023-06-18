@@ -30,5 +30,5 @@
 }
 
 body {
-    @apply h-screen w-screen text-base;
+    @apply h-screen w-screen select-none text-base;
 }

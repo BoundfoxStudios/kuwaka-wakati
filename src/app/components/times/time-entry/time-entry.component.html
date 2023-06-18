@@ -1,5 +1,5 @@
 <form class="flex items-end space-x-3" (ngSubmit)="submit()" [formGroup]="formGroup">
-    <div>
+    <div *ngIf="!isTodayMode">
         <label class="kw-label" for="utcDate">Date:</label>
         <input class="kw-input" id="utcDate" type="date" [formControl]="formGroup.controls.utcDate" [max]="maximumDate" />
     </div>
