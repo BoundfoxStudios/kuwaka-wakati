@@ -4,7 +4,7 @@ import { SidebarComponent } from '../sidebar/sidebar.component';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { SidebarItemComponent } from '../sidebar/sidebar-item/sidebar-item.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faCogs, faDashboard, faDatabase } from '@fortawesome/free-solid-svg-icons';
+import { faCogs, faDashboard, faClock } from '@fortawesome/free-solid-svg-icons';
 import { SidebarIconComponent } from '../sidebar/sidebar-icon/sidebar-icon.component';
 import { TauriService } from '../../services/tauri.service';
 import { SidebarFooterComponent } from '../sidebar/sidebar-footer/sidebar-footer.component';
@@ -32,6 +32,6 @@ export class KuwakaWakatiComponent {
     protected readonly version$ = this.tauriService.getVersion();
 
     protected readonly faDashboard = faDashboard;
-    protected readonly faDatabase = faDatabase;
     protected readonly faCogs = faCogs;
+    protected readonly faClock = faClock;
 }
