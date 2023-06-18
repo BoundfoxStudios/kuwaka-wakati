@@ -12,8 +12,7 @@ jobs:
     runs-on: ubuntu-20.04
     outputs:
       release-id: ${{ steps.create-release.outputs.result }}
-      version-with-prefix: ${{ steps.get-next-version.outputs.new-release-version }}
-      version: ${{ steps.version-without-prefix.outputs.version }}
+      version: ${{ steps.get-next-version.outputs.new-release-version }}
 
     steps:
       - uses: actions/checkout@v3
@@ -26,14 +25,8 @@ jobs:
         id: get-next-version
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Remove "v" from version
-        id: version-without-prefix
-        run: |
-          VERSION=${{ steps.get-next-version.outputs.new-release-version }}
-          VERSION=${VERSION//v} # replace all dots
-          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
       - name: get version
-        run: echo "PACKAGE_VERSION=${{ steps.version-without-prefix.outputs.version }}" >> $GITHUB_ENV
+        run: echo "PACKAGE_VERSION=${{ steps.get-next-version.outputs.new-release-version }}" >> $GITHUB_ENV
       - name: create release
         id: create-release
         uses: actions/github-script@v6
@@ -92,7 +85,7 @@ jobs:
           TAURI_KEY_PASSWORD: ${{ secrets.TAURI_KEY_PASSWORD }}
         with:
           releaseId: ${{ needs.create-release.outputs.release-id }}
-          tagName: ${{ needs.create-release.outputs.version-with-prefix }}
+          tagName: v${{ needs.create-release.outputs.version }}
       - uses: actions/upload-artifact@v3
         with:
           name: apps
@@ -148,7 +141,7 @@ jobs:
         id: publish-release
         uses: actions/github-script@v6
         env:
-          release_id: ${{ needs.create-release.outputs.release_id }}
+          release_id: ${{ needs.create-release.outputs.release-id }}
         with:
           script: |
             github.rest.repos.updateRelease({
