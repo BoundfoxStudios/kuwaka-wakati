@@ -1,4 +1,13 @@
 <kw-card>
-    <div header>Chart</div>
-    <kw-history-chart body [data]="chartData()" [dailyWork]="settings().workPerDay"></kw-history-chart>
+    <h2 header>Chart</h2>
+    <kw-history-chart body [data]="chartData()" [dailyWork]="settings().workPerDay" />
 </kw-card>
+
+<kw-card class="mt-4">
+    <h2 header><fa-icon *ngIf="isWorkDayDone()" [icon]="faCheckCircle" class="text-green-500"></fa-icon> Today</h2>
+    <kw-today *ngIf="today() as today; else noData" [today]="today" body />
+</kw-card>
+
+<ng-template #noData>
+    <a class="kw-submit-button" [routerLink]="['/times']">No data yet. Create?</a>
+</ng-template>

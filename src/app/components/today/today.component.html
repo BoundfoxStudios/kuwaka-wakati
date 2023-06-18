@@ -1,0 +1,45 @@
+<table class="min-w-full">
+    <tbody>
+        <tr>
+            <td class="bg-slate-50 px-2 py-2 text-slate-500">Date</td>
+            <td class="text-right">{{ today.utcDate | unixDate }}</td>
+        </tr>
+        <tr>
+            <td class="bg-slate-50 px-2 py-2 text-slate-500">Time worked</td>
+            <td class="text-right">{{ today.duration | duration }}</td>
+        </tr>
+        <tr *ngIf="today.remainingTime">
+            <td class="bg-slate-50 px-2 py-2 text-slate-500">Remaining time</td>
+            <td class="text-right text-red-600">{{ today.remainingTime | duration }}</td>
+        </tr>
+        <tr *ngIf="today.overtime">
+            <td class="bg-slate-50 px-2 py-2 text-slate-500">Overtime</td>
+            <td class="text-right text-green-500">{{ today.overtime | duration }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<!--
+<table class="min-w-full">
+    <thead class="rounded-sm bg-slate-50 text-left text-sm text-slate-500">
+        <tr>
+            <th class="px-2 py-2 font-semibold">Date</th>
+            <th class="px-2 py-2 font-semibold">Start Time</th>
+            <th class="px-2 py-2 font-semibold">End Time</th>
+            <th class="px-2 py-2 font-semibold">Time</th>
+            <th class="px-2 py-2 font-semibold"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let time of times">
+            <td class="border-t border-slate-100 px-2 py-2">{{ time.utcDate | unixDate }}</td>
+            <td class="border-t border-slate-100 px-2 py-2">{{ time.start | millisecondsToTime }}</td>
+            <td class="border-t border-slate-100 px-2 py-2">{{ time.end | millisecondsToTime }}</td>
+            <td class="border-t border-slate-100 px-2 py-2">{{ time.duration | duration }}</td>
+            <td class="border-t border-slate-100 px-2 py-2">
+                <fa-icon (click)="delete.next(time)" [icon]="faTrashAlt" class="cursor-pointer"></fa-icon>
+            </td>
+        </tr>
+    </tbody>
+</table>
+-->

@@ -30,3 +30,5 @@ export const dailyWorkAsWeek = (duration: Duration, days = 5): Duration => {
 
 export const unixTimeToLocaleDate = (milliseconds: Milliseconds): string => DateTime.fromMillis(milliseconds).toLocaleString({ dateStyle: 'medium' });
 export const unixTimeToDate = (milliseconds: Milliseconds): string => DateTime.fromMillis(milliseconds).toFormat('dd.MM');
+
+export const todayDateMilliseconds = DateTime.now().set({ hour: 0, minute: 0, second: 0, millisecond: 0 }).toMillis();

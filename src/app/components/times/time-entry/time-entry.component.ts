@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, EventEmitter, inject, Output } from
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormModel, InferModeFromModel, Replace } from 'ngx-mf';
-import { TimeEntryCreate } from '../../../services/time-tracking/time.entry';
+import { TimeEntryCreate } from '../../../services/time-tracking/time.models';
 import { DateTime } from 'luxon';
 import { validateTime } from '../../../validators/validate-time';
 import { parseTime } from '../../../services/time.utils';
@@ -31,7 +31,7 @@ export class TimeEntryComponent {
 
     protected readonly maximumDate = DateTime.now().toISODate();
     private readonly formBuilder = inject(FormBuilder);
-    protected formGroup = this.formBuilder.group<EntryModel['controls']>(
+    protected readonly formGroup = this.formBuilder.group<EntryModel['controls']>(
         {
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             utcDate: new FormControl<string>(DateTime.now().toISODate()!, {
@@ -43,6 +43,7 @@ export class TimeEntryComponent {
         },
         { validators: [validateStartEndGroup<EntryModel['controls']>('start', 'end')] },
     );
+    private readonly formInitialState = this.formGroup.value;
 
     submit(): void {
         if (!this.formGroup.valid) {
@@ -56,5 +57,7 @@ export class TimeEntryComponent {
             start: parseTime(formValue.start),
             end: parseTime(formValue.end),
         });
+
+        this.formGroup.reset(this.formInitialState);
     }
 }

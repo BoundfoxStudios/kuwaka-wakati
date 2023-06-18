@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from 
 import { CommonModule } from '@angular/common';
 import { MillisecondsToTimePipe } from '../../../pipes/milliseconds-to-time.pipe';
 import { DurationPipe } from '../../../pipes/duration.pipe';
-import { TimeEntryWithDuration } from '../../../services/time-tracking/time.entry';
+import { TimeEntryWithDuration } from '../../../services/time-tracking/time.models';
 import { UnixDatePipe } from '../../../pipes/unix-date.pipe';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';

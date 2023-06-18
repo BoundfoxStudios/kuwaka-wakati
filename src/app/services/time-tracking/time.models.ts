@@ -21,3 +21,8 @@ export interface TimeEntryGroup {
     utcDate: Milliseconds;
     duration: Duration;
 }
+
+export interface Today extends TimeEntryGroup {
+    remainingTime?: Duration;
+    overtime?: Duration;
+}
