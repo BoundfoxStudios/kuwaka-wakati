@@ -7,13 +7,21 @@ export type Milliseconds = number;
  */
 export const parseTimeToDuration = (time: string): Duration => {
     const [hours, minutes] = time.split(':');
-    return Duration.fromObject({ hours: +hours, minutes: +minutes });
+    return Duration.fromObject({ hour: +hours, minute: +minutes });
+};
+
+/**
+ * Parses a tiem string in the format HH:mm.
+ */
+export const parseTimeToDateTime = (time: string): DateTime => {
+    const [hours, minutes] = time.split(':');
+    return DateTime.fromObject({ hour: +hours, minute: +minutes });
 };
 
 /**
  * Parses a time string in the format HH:mm.
  */
-export const parseTime = (time: string): Milliseconds => parseTimeToDuration(time).toMillis();
+export const parseTime = (time: string): Milliseconds => parseTimeToDateTime(time).toMillis();
 
 export const millisecondsToHumanReadable = (milliseconds: Milliseconds): string => durationToHumanReadable(Duration.fromMillis(milliseconds));
 export const durationToHumanReadable = (duration: Duration): string => duration.toFormat('hh:mm');
