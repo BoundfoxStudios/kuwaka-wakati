@@ -144,7 +144,8 @@ jobs:
             }
 
             const latestJsonContent = await github.request(latestJson.browser_download_url);
-            return latestJsonContent;
+            const textDecoder = new TextDecoder('utf-8');
+            return textDecoder.decode(latestJsonContent.data);
       - name: Deploy update.json to Gist
         uses: actions/github-script@v6
         with:
