@@ -154,7 +154,7 @@ jobs:
               gist_id: 'c65aab8be88bbbb49f82b1d060e26e52',
               files: {
                 'update.json': {
-                  content: '${{ steps.latest.json.outputs.result }}'
+                  content: '${{ steps.latest-json.outputs.result }}'
                 }
               }
             })
