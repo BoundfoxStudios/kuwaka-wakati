@@ -1,4 +1,25 @@
 {
-  "branches": ["main"],
-  "plugins": ["@semantic-release/commit-analyzer", "@semantic-release/release-notes-generator", "semantic-release-export-data"]
+  "branches": [
+    "main"
+  ],
+  "plugins": [
+    "@semantic-release/commit-analyzer",
+    "@semantic-release/release-notes-generator",
+    "semantic-release-export-data",
+    [
+      "@semantic-release/changelog",
+      {
+        "changelogFile": "CHANGELOG.md"
+      }
+    ],
+    [
+      "@semantic-release/git",
+      {
+        "assets": [
+          "CHANGELOG.md"
+        ],
+        "message": "docs(release): ${nextRelease.version} [skip ci]\\n\\n${nextRelease.notes}"
+      }
+    ]
+  ]
 }

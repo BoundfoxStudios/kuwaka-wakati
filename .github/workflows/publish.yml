@@ -26,6 +26,13 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: get version
         run: echo "PACKAGE_VERSION=${{ steps.get-next-version.outputs.new-release-version }}" >> $GITHUB_ENV
+      - name: get changelog
+        run: |
+          CHANGELOG=$(npx conventional-changelog | tail -n +3)
+
+          echo "CHANGELOG<<EOF" >> $GITHUB_ENV
+          echo "$CHANGELOG" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
       - name: create release
         id: create-release
         uses: actions/github-script@v6
@@ -36,7 +43,7 @@ jobs:
               repo: context.repo.repo,
               tag_name: `v${process.env.PACKAGE_VERSION}`,
               name: `Kuwaka Wakati v${process.env.PACKAGE_VERSION}`,
-              body: 'Take a look at the assets to download and install this app.',
+              body: `${process.env.CHANGELOG}`,
               draft: true,
               prerelease: false
             })
@@ -88,6 +95,8 @@ jobs:
   publish-release:
     permissions:
       contents: write
+      issues: write
+      pull-requests: write
     runs-on: ubuntu-20.04
     needs: [ create-release, build-tauri ]
     steps:
