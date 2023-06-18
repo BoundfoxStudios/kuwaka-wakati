@@ -118,7 +118,9 @@ jobs:
           release_id: ${{ needs.create-release.outputs.release-id }}
         with:
           script: |
-            const release = await github.rest.repos.getRelease({
+            const {
+              data: { release },
+            } = await github.rest.repos.getRelease({
               owner: context.repo.owner,
               repo: context.repo.repo,
               release_id: process.env.release_id
