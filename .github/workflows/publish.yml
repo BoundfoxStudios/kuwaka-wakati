@@ -130,6 +130,7 @@ jobs:
         env:
           release_id: ${{ needs.create-release.outputs.release-id }}
         with:
+          result-encoding: string
           script: |
             const result = await github.rest.repos.getRelease({
               owner: context.repo.owner,
