@@ -131,15 +131,13 @@ jobs:
           release_id: ${{ needs.create-release.outputs.release-id }}
         with:
           script: |
-            const {
-              data: { release },
-            } = await github.rest.repos.getRelease({
+            const result = await github.rest.repos.getRelease({
               owner: context.repo.owner,
               repo: context.repo.repo,
               release_id: process.env.release_id
             });
 
-            const latestJson = release.assets.find(asset => asset.name === 'latest.json');
+            const latestJson = result.data.assets.find(asset => asset.name === 'latest.json');
 
             if (!latestJson) {
               throw new Error('latest.json not found.');
