@@ -27,7 +27,7 @@ export class TimeService {
     readonly overall$ = combineLatest([this.timeTable.groupByDay$(0, Number.MAX_SAFE_INTEGER), this.settingsTable.current$]).pipe(
         map(([groups, settings]) => {
             const workPerDay = Duration.fromMillis(settings.workPerDay);
-            const amountOfDaysWorked = groups.length;
+            const amountOfDaysWorked = groups.filter(group => !group.isNonWorkday).length;
 
             const nominalTime = multiplyDuration(workPerDay, amountOfDaysWorked);
             const actualTime = calculateTimeEntryGroupDuration(groups);
@@ -64,6 +64,7 @@ export class TimeService {
                     remainingTime,
                     overtime,
                     weekNumber,
+                    isNonWorkday: groups.every(group => group.isNonWorkday),
                 };
             }),
             shareReplay({ refCount: true }),
