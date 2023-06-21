@@ -44,6 +44,7 @@ export class TimeEntryComponent {
             }),
             start: new FormControl<string>('', { nonNullable: true, validators: [validateTime, Validators.required] }),
             end: new FormControl<string>('', { nonNullable: true, validators: [validateTime, Validators.required] }),
+            isNonWorkday: new FormControl<boolean>(false, { nonNullable: true }),
         },
         { validators: [validateStartEndGroup<EntryModel['controls']>('start', 'end')] },
     );
@@ -60,6 +61,7 @@ export class TimeEntryComponent {
             utcDate: DateTime.fromISO(formValue.utcDate).toMillis(),
             start: parseTime(formValue.start),
             end: parseTime(formValue.end),
+            isNonWorkday: formValue.isNonWorkday,
         });
 
         this.formGroup.reset(this.formInitialState);

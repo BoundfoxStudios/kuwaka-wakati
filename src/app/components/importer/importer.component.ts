@@ -43,12 +43,12 @@ export default class ImporterComponent {
             const start1Millis = DateTime.fromFormat(start1, 'HH:mm').toMillis();
             const end1Millis = DateTime.fromFormat(end1, 'HH:mm').toMillis();
 
-            await this.timeTable.add({ utcDate, start: start1Millis, end: end1Millis });
+            await this.timeTable.add({ utcDate, start: start1Millis, end: end1Millis, isNonWorkday: false });
 
             if (start2 !== end2) {
                 const end2Millis = DateTime.fromFormat(end2, 'HH:mm').toMillis();
                 const start2Millis = DateTime.fromFormat(start2, 'HH:mm').toMillis();
-                await this.timeTable.add({ utcDate, start: start2Millis, end: end2Millis });
+                await this.timeTable.add({ utcDate, start: start2Millis, end: end2Millis, isNonWorkday: false });
             }
             this.currentLine.set(this.currentLine() + 1);
         }

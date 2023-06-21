@@ -1,18 +1,19 @@
 <div class="flex h-full w-full flex-col text-left text-gray-500">
     <div
         class="grid bg-gray-100 text-xs font-semibold uppercase text-gray-700"
-        [class.grid-cols-10]="delete.observed"
-        [class.grid-cols-9]="!delete.observed">
+        [class.grid-cols-12]="delete.observed"
+        [class.grid-cols-11]="!delete.observed">
         <div class="col-span-3 px-6 py-3">Date</div>
         <div class="col-span-2 px-6 py-3">Start</div>
         <div class="col-span-2 px-6 py-3">End</div>
         <div class="col-span-2 px-6 py-3">Time</div>
+        <div class="col-span-2 px-6 py-3">Non workday</div>
         <div *ngIf="delete.observed"></div>
     </div>
     <cdk-virtual-scroll-viewport itemSize="50" class="h-full" *ngIf="useVirtualScroll" #scrollViewport>
         <!-- https://github.com/angular/components/issues/27358 -->
         <!--<ng-container *ngTemplateOutlet="itemGridTemplate; context: { $implicit: virtualFor, scrollViewport: scrollViewport }" />-->
-        <div class="grid text-gray-900" [class.grid-cols-10]="delete.observed" [class.grid-cols-9]="!delete.observed">
+        <div class="grid text-gray-900" [class.grid-cols-12]="delete.observed" [class.grid-cols-11]="!delete.observed">
             <ng-container *cdkVirtualFor="let time of times; let odd = odd">
                 <ng-container *ngTemplateOutlet="itemTemplate; context: { $implicit: time, odd }"></ng-container>
             </ng-container>
@@ -25,7 +26,7 @@
 
 <ng-template #itemGridTemplate let-template let-scrollViewport="scrollViewport">
     <ng-container [kwScrollViewportProvider]="scrollViewport" #scrollViewportProvider="kwScrollViewportProvider">
-        <div class="grid text-gray-900" [class.grid-cols-10]="delete.observed" [class.grid-cols-9]="!delete.observed">
+        <div class="grid text-gray-900" [class.grid-cols-12]="delete.observed" [class.grid-cols-11]="!delete.observed">
             <ng-container *ngTemplateOutlet="template; injector: scrollViewportProvider.injector;"></ng-container>
         </div>
     </ng-container>
@@ -50,6 +51,9 @@
     </div>
     <div class="col-span-2 flex h-[50px] items-center px-6" [class.bg-gray-50]="odd">{{ time.end | millisecondsToTime }}</div>
     <div class="col-span-2 flex h-[50px] items-center px-6" [class.bg-gray-50]="odd">{{ time.duration | duration }}</div>
+    <div class="col-span-2 flex h-[50px] items-center px-6" [class.bg-gray-50]="odd">
+        <fa-icon *ngIf="time.isNonWorkday" [icon]="faCheck" class="ml-1 text-green" />
+    </div>
     <div *ngIf="delete.observed" class="flex items-center px-6" [class.bg-gray-50]="odd">
         <fa-icon (click)="delete.next(time)" [icon]="faTrashAlt" class="cursor-pointer"></fa-icon>
     </div>

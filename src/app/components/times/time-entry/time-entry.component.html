@@ -12,6 +12,15 @@
         <input class="kw-input" id="end" type="time" [formControl]="formGroup.controls.end" />
     </div>
     <div>
+        <span class="kw-label">No workday</span>
+        <div class="kw-input kw-toggle-input">
+            <label class="relative inline-flex cursor-pointer items-center">
+                <input type="checkbox" class="peer sr-only" [formControl]="formGroup.controls.isNonWorkday" />
+                <div class="kw-toggle peer"></div>
+            </label>
+        </div>
+    </div>
+    <div>
         <button class="kw-button" type="submit" [disabled]="formGroup.invalid">Ok</button>
     </div>
 </form>
