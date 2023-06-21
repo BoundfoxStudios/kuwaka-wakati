@@ -1,20 +1,20 @@
-<table class="min-w-full">
-    <thead class="rounded-sm bg-slate-50 text-left text-sm text-slate-500">
+<table class="w-full text-left text-gray-500">
+    <thead class="bg-gray-50 text-xs uppercase text-gray-700">
         <tr>
-            <th class="px-2 py-2 font-semibold">Date</th>
-            <th class="px-2 py-2 font-semibold">Start Time</th>
-            <th class="px-2 py-2 font-semibold">End Time</th>
-            <th class="px-2 py-2 font-semibold">Time</th>
-            <th class="px-2 py-2 font-semibold"></th>
+            <th class="px-6 py-3 font-semibold">Date</th>
+            <th class="px-6 py-3 font-semibold">Start Time</th>
+            <th class="px-6 py-3 font-semibold">End Time</th>
+            <th class="px-6 py-3 font-semibold">Time</th>
+            <th class="px-6 py-3 font-semibold" *ngIf="delete.observed"></th>
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let time of times">
-            <td class="border-t border-slate-100 px-2 py-2">{{ time.utcDate | unixDate }}</td>
-            <td class="border-t border-slate-100 px-2 py-2">{{ time.start | millisecondsToTime }}</td>
-            <td class="border-t border-slate-100 px-2 py-2">{{ time.end | millisecondsToTime }}</td>
-            <td class="border-t border-slate-100 px-2 py-2">{{ time.duration | duration }}</td>
-            <td class="border-t border-slate-100 px-2 py-2">
+        <tr *ngFor="let time of times" class="border-b bg-white">
+            <td class="whitespace-nowrap px-6 py-4 font-medium text-gray-900">{{ time.utcDate | unixDate }}</td>
+            <td class="whitespace-nowrap px-6 py-4 font-medium text-gray-900">{{ time.start | millisecondsToTime }}</td>
+            <td class="whitespace-nowrap px-6 py-4 font-medium text-gray-900">{{ time.end | millisecondsToTime }}</td>
+            <td class="whitespace-nowrap px-6 py-4 font-medium text-gray-900">{{ time.duration | duration }}</td>
+            <td class="whitespace-nowrap px-6 py-4 font-medium text-gray-900" *ngIf="delete.observed">
                 <fa-icon (click)="delete.next(time)" [icon]="faTrashAlt" class="cursor-pointer"></fa-icon>
             </td>
         </tr>

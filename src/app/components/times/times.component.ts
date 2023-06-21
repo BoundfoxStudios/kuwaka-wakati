@@ -7,11 +7,12 @@ import { TimeTableComponent } from './time-table/time-table.component';
 import { CardComponent } from '../card/card.component';
 import { toSignal } from '@angular/core/rxjs-interop';
 import ImporterComponent from '../importer/importer.component';
+import { PageTitleComponent } from '../page-title/page-title.component';
 
 @Component({
     selector: 'kw-times',
     standalone: true,
-    imports: [CommonModule, TimeEntryComponent, TimeTableComponent, CardComponent, ImporterComponent],
+    imports: [CommonModule, TimeEntryComponent, TimeTableComponent, CardComponent, ImporterComponent, PageTitleComponent],
     templateUrl: './times.component.html',
     styleUrls: ['./times.component.css'],
     changeDetection: ChangeDetectionStrategy.OnPush,

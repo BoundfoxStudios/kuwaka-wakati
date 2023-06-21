@@ -8,6 +8,7 @@ import { faCogs, faDashboard, faClock, faFileImport } from '@fortawesome/free-so
 import { SidebarIconComponent } from '../sidebar/sidebar-icon/sidebar-icon.component';
 import { TauriService } from '../../services/tauri.service';
 import { SidebarFooterComponent } from '../sidebar/sidebar-footer/sidebar-footer.component';
+import { SidebarHeaderComponent } from '../sidebar/sidebar-header/sidebar-header.component';
 
 @Component({
     selector: 'kw-kuwaka-wakati',
@@ -18,6 +19,7 @@ import { SidebarFooterComponent } from '../sidebar/sidebar-footer/sidebar-footer
         SidebarComponent,
         SidebarItemComponent,
         SidebarFooterComponent,
+        SidebarHeaderComponent,
         FontAwesomeModule,
         SidebarIconComponent,
         RouterLink,

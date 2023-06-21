@@ -1,4 +1,5 @@
-<kw-sidebar>
+<kw-sidebar class="sticky top-0 h-screen w-60">
+    <kw-sidebar-header [image]="'/assets/logo-white.svg'"></kw-sidebar-header>
     <kw-sidebar-item [link]="['/dashboard']">
         <kw-sidebar-icon [icon]="faDashboard"></kw-sidebar-icon>
         Dashboard
@@ -18,6 +19,6 @@
     <kw-sidebar-footer>{{ version$ | async }}</kw-sidebar-footer>
 </kw-sidebar>
 
-<main class="m-4 flex-1">
+<main class="flex-1 p-4">
     <router-outlet></router-outlet>
 </main>

@@ -12,10 +12,11 @@ import { RouterLink } from '@angular/router';
 import { TimeService } from '../../services/time-tracking/time.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
-import { faClose, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faClose, faExclamationCircle, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { TimeEntryComponent } from '../times/time-entry/time-entry.component';
 import { TimeEntry, TimeEntryCreate } from '../../services/time-tracking/time.models';
 import { TimeTableComponent } from '../times/time-table/time-table.component';
+import { PageTitleComponent } from '../page-title/page-title.component';
 
 @Component({
     selector: 'kw-dashboard',
@@ -30,6 +31,7 @@ import { TimeTableComponent } from '../times/time-table/time-table.component';
         FontAwesomeModule,
         TimeEntryComponent,
         TimeTableComponent,
+        PageTitleComponent,
     ],
     templateUrl: './dashboard.component.html',
     styleUrls: ['./dashboard.component.css'],
@@ -65,4 +67,6 @@ export default class DashboardComponent {
     protected async deleteTimeEntry(timeEntry: TimeEntry): Promise<void> {
         return this.timeTable.delete(timeEntry.id);
     }
+
+    protected readonly faExclamationCircle = faExclamationCircle;
 }
