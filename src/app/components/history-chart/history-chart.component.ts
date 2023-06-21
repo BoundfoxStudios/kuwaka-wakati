@@ -1,72 +1,112 @@
-import { ChangeDetectionStrategy, Component, HostBinding, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, inject, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LineChartModule } from '@swimlane/ngx-charts';
 import { TimeEntryGroup } from '../../services/time-tracking/time.models';
 import { Milliseconds, millisecondsToHumanReadable, unixTimeToDate } from '../../services/time.utils';
 import { MillisecondsToTimePipe } from '../../pipes/milliseconds-to-time.pipe';
 import { DurationPipe } from '../../pipes/duration.pipe';
 import { UnixDatePipe } from '../../pipes/unix-date.pipe';
+import { Chart } from 'chart.js';
+import { StyleService } from '../../services/style.service';
 import { Duration } from 'luxon';
-
-interface SeriePoint<TValue = Milliseconds> {
-    name: string;
-    value: TValue;
-}
-
-interface Serie<TValue = Milliseconds> {
-    name: string;
-    series: SeriePoint<TValue>[];
-}
-
-function transformToSeries(input: TimeEntryGroup[]): Serie[] {
-    return [
-        {
-            name: 'Time',
-            series: input.map(data => ({
-                name: unixTimeToDate(data.utcDate),
-                value: data.duration.toMillis(),
-            })),
-        },
-    ];
-}
 
 @Component({
     selector: 'kw-history-chart',
     standalone: true,
-    imports: [CommonModule, LineChartModule, MillisecondsToTimePipe, DurationPipe, UnixDatePipe],
+    imports: [CommonModule, MillisecondsToTimePipe, DurationPipe, UnixDatePipe],
     templateUrl: './history-chart.component.html',
     styleUrls: ['./history-chart.component.css'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HistoryChartComponent {
-    @Input() @HostBinding('style.height.px') height = 200;
-    protected series: Serie[] = [];
-    protected yAxisTicks: number[] = [];
-    protected referenceLines: SeriePoint[] = [];
-    protected seriesColors: SeriePoint<string>[] = [];
+export class HistoryChartComponent implements OnInit, OnDestroy {
+    @Input() height = 200;
+    @Input() dailyWork: Milliseconds = 0;
+    @ViewChild('chart', { static: true }) chartElement!: ElementRef<HTMLCanvasElement>;
+    private readonly styleService = inject(StyleService);
+    private chart?: Chart;
 
     @Input() set data(input: TimeEntryGroup[]) {
-        this.series = transformToSeries(input);
-        const values = this.series[0].series.map(s => s.value);
-        this.yAxisTicks = [Math.min(...values), Math.max(...values)];
-        this.seriesColors = [
-            {
-                name: 'Time',
-                value: 'var(--color-blue)',
-            },
-        ];
+        this.setChartData(input);
     }
 
-    @Input() set dailyWork(value: Milliseconds) {
-        this.referenceLines = [
-            {
-                name: '',
-                value,
+    ngOnInit(): void {
+        this.chart = new Chart(this.chartElement.nativeElement, {
+            type: 'line',
+            data: {
+                datasets: [],
             },
-        ];
+            options: {
+                scales: {
+                    x: {
+                        type: 'category',
+                    },
+                    y: {
+                        type: 'linear',
+                        ticks: {
+                            callback: tickValue => millisecondsToHumanReadable(+tickValue),
+                            stepSize: Duration.fromObject({ hour: 1 }).toMillis(),
+                        },
+                        stacked: true,
+                    },
+                },
+                responsive: true,
+                maintainAspectRatio: false,
+                elements: {
+                    point: {
+                        radius: 0,
+                        hitRadius: 6,
+                        hoverRadius: 6,
+                        backgroundColor: this.styleService.getCssVariable('--color-blue'),
+                    },
+                },
+                plugins: {
+                    legend: {
+                        display: false,
+                    },
+                    tooltip: {
+                        displayColors: false,
+                        callbacks: {
+                            label: (context): string => {
+                                return millisecondsToHumanReadable(context.parsed.y);
+                            },
+                        },
+                    },
+                    annotation: {
+                        annotations: {
+                            dailyWork: {
+                                type: 'line',
+                                scaleID: 'y',
+                                borderWidth: 1,
+                                borderColor: this.styleService.getCssVariable('--color-gray-500'),
+                                value: () => this.dailyWork,
+                            },
+                        },
+                    },
+                },
+            },
+        });
     }
 
-    protected formatYAxisTicks(durationMilliseconds: Milliseconds): string {
-        return millisecondsToHumanReadable(durationMilliseconds);
+    ngOnDestroy(): void {
+        this.chart?.destroy();
+    }
+
+    private setChartData(timeEntryGroups: TimeEntryGroup[]): void {
+        if (!this.chart) {
+            return;
+        }
+
+        const labels: string[] = [];
+        const data: number[] = [];
+
+        for (const timeEntryGroup of timeEntryGroups) {
+            labels.push(unixTimeToDate(timeEntryGroup.utcDate));
+            data.push(timeEntryGroup.duration.toMillis());
+        }
+
+        this.chart.data = {
+            labels,
+            datasets: [{ data, borderColor: this.styleService.getCssVariable('--color-blue'), borderWidth: 1.5 }],
+        };
+        this.chart.update();
     }
 }

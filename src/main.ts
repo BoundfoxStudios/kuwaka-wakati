@@ -11,7 +11,11 @@ import { Settings } from 'luxon';
 import { SettingsTable } from './app/services/settings/settings.table';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { TauriService, tauriServiceFactory } from './app/services/tauri.service';
+import { Chart, registerables } from 'chart.js';
+import annotationPlugin from 'chartjs-plugin-annotation';
+import 'chartjs-adapter-luxon';
 
+Chart.register(...registerables, annotationPlugin);
 Settings.defaultLocale = 'de-DE';
 registerLocaleData(localeDe);
 
