@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CardComponent } from '../card/card.component';
-import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { TimeTable } from '../../services/time-tracking/time.table';
 import { DateTime } from 'luxon';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -24,7 +23,6 @@ import { PageTitleComponent } from '../page-title/page-title.component';
     imports: [
         CommonModule,
         CardComponent,
-        NgxChartsModule,
         HistoryChartComponent,
         TodayComponent,
         RouterLink,

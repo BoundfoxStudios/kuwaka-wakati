@@ -1,16 +1,3 @@
-<div #container class="absolute bottom-0 left-0 right-0 top-0">
-    <ngx-charts-line-chart
-        [scheme]="'ocean'"
-        [results]="series"
-        [view]="[container.offsetWidth, container.offsetHeight]"
-        [referenceLines]="referenceLines"
-        [customColors]="seriesColors"
-        [xAxis]="true"
-        [yAxis]="true"
-        [yAxisTickFormatting]="formatYAxisTicks"
-        [yAxisTicks]="yAxisTicks"
-        [showRefLines]="true">
-        <ng-template #seriesTooltipTemplate let-model="model">{{ model[0].name  }}: {{ model[0].value | duration }}</ng-template>
-        <ng-template #tooltipTemplate let-model="model">{{ model.name }}: {{ model.value | duration}} </ng-template>
-    </ngx-charts-line-chart>
+<div class="relative" [ngStyle]="{'height.px': height}">
+    <canvas #chart></canvas>
 </div>

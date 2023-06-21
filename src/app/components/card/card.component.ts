@@ -10,5 +10,14 @@ import { CommonModule } from '@angular/common';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CardComponent {
-    @Input() hasFlexBody = true;
+    @Input() contentType: 'default' | 'chart' = 'default';
+    get contentTypeClasses(): string {
+        switch (this.contentType) {
+            case 'chart':
+                return 'p-4 grid grid-cols-1';
+
+            default:
+                return 'p-4 flex flex-col';
+        }
+    }
 }

@@ -1,6 +1,6 @@
 <kw-page-title>Dashboard</kw-page-title>
 
-<kw-card [hasFlexBody]="false">
+<kw-card [contentType]="'chart'">
     <h2 header>Chart</h2>
     <kw-history-chart body [data]="chartData()" [dailyWork]="settings().workPerDay" />
 </kw-card>
