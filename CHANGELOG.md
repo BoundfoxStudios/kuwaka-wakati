@@ -1,3 +1,9 @@
+# [1.1.0](https://github.com/BoundfoxStudios/kuwaka-wakati/compare/v1.0.0...v1.1.0) (2023-06-21)
+
+### Features
+
+- overall visual update ([cddc0a4](https://github.com/BoundfoxStudios/kuwaka-wakati/commit/cddc0a49f8cecf3306823d26c30d2e66127065c6)), closes [#1](https://github.com/BoundfoxStudios/kuwaka-wakati/issues/1) [#21](https://github.com/BoundfoxStudios/kuwaka-wakati/issues/21)
+
 # 1.0.0 (2023-06-19)
 
 ### Bug Fixes
