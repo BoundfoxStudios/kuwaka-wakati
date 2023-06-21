@@ -8,14 +8,14 @@ import { DurationPipe } from '../../pipes/duration.pipe';
 import { UnixDatePipe } from '../../pipes/unix-date.pipe';
 import { Duration } from 'luxon';
 
-interface SeriePoint {
+interface SeriePoint<TValue = Milliseconds> {
     name: string;
-    value: Milliseconds;
+    value: TValue;
 }
 
-interface Serie {
+interface Serie<TValue = Milliseconds> {
     name: string;
-    series: SeriePoint[];
+    series: SeriePoint<TValue>[];
 }
 
 function transformToSeries(input: TimeEntryGroup[]): Serie[] {
@@ -43,11 +43,18 @@ export class HistoryChartComponent {
     protected series: Serie[] = [];
     protected yAxisTicks: number[] = [];
     protected referenceLines: SeriePoint[] = [];
+    protected seriesColors: SeriePoint<string>[] = [];
 
     @Input() set data(input: TimeEntryGroup[]) {
         this.series = transformToSeries(input);
         const values = this.series[0].series.map(s => s.value);
         this.yAxisTicks = [Math.min(...values), Math.max(...values)];
+        this.seriesColors = [
+            {
+                name: 'Time',
+                value: 'var(--color-blue)',
+            },
+        ];
     }
 
     @Input() set dailyWork(value: Milliseconds) {

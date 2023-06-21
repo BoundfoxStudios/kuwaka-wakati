@@ -1,3 +1,5 @@
+<kw-page-title>Dashboard</kw-page-title>
+
 <kw-card [hasFlexBody]="false">
     <h2 header>Chart</h2>
     <kw-history-chart body [data]="chartData()" [dailyWork]="settings().workPerDay" />
@@ -6,8 +8,8 @@
 <kw-card class="mt-4">
     <div header class="flex flex-1">
         <h2>
-            <fa-icon *ngIf="isWorkDayDone()" [icon]="faCheckCircle" class="text-green-500" />
             Today
+            <fa-icon *ngIf="isWorkDayDone()" [icon]="faCheckCircle" class="ml-1 text-green" />
         </h2>
         <fa-icon [icon]="isTimeEntryVisible ? faClose : faPlus" class="ml-auto cursor-pointer" (click)="isTimeEntryVisible = !isTimeEntryVisible" />
     </div>
