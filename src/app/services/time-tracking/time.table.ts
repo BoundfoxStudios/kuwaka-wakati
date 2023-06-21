@@ -13,7 +13,7 @@ export const calculateDuration = ({ start, end }: TimeEntry): Duration => Durati
 export class TimeTable implements DatabaseTable<TimeEntry> {
     readonly definition = '++id, utcDate';
     readonly name = 'times';
-    readonly version = 2;
+    readonly version = 3;
     private times!: Table<TimeEntry, number>;
 
     items$(fromTimestamp: Milliseconds = 0, toTimestamp: Milliseconds = Number.MAX_SAFE_INTEGER): Observable<TimeEntryWithDuration[]> {
@@ -46,6 +46,7 @@ export class TimeTable implements DatabaseTable<TimeEntry> {
                     items: timeEntries,
                     utcDate: timeEntries[0].utcDate,
                     duration: timeEntries.reduce((duration, current) => duration.plus(current.duration), Duration.fromMillis(0)),
+                    isNonWorkday: timeEntries.every(entry => entry.isNonWorkday),
                 }));
             }),
         );
@@ -60,6 +61,7 @@ export class TimeTable implements DatabaseTable<TimeEntry> {
                         items: [],
                         duration: Duration.fromMillis(0),
                         utcDate: todayDateMilliseconds,
+                        isNonWorkday: false,
                     };
                 }
 

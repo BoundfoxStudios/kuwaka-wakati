@@ -17,8 +17,8 @@ import { TimeEntry, TimeEntryCreate } from '../../services/time-tracking/time.mo
 import { TimeTableComponent } from '../times/time-table/time-table.component';
 import { PageTitleComponent } from '../page-title/page-title.component';
 import { OverallComponent } from '../overall/overall.component';
-import { dateTimeToDate } from '../../services/time.utils';
 import { switchMap } from 'rxjs';
+import { dateTimeToDate } from '../../services/time.utils';
 import { WeekComponent } from '../week/week.component';
 
 @Component({

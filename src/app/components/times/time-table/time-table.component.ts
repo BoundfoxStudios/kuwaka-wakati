@@ -7,6 +7,7 @@ import { UnixDatePipe } from '../../../pipes/unix-date.pipe';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
 import { CdkFixedSizeVirtualScroll, CdkVirtualForOf, CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
+import { faCheck } from '@fortawesome/free-solid-svg-icons/faCheck';
 import { ScrollViewportProviderDirective } from './scroll-viewport-provider.directive';
 
 @Component({
@@ -32,4 +33,5 @@ export class TimeTableComponent {
     @Input({ required: true }) times: TimeEntryWithDuration[] = [];
     @Output() delete = new EventEmitter<TimeEntryWithDuration>();
     protected readonly faTrashAlt = faTrashAlt;
+    protected readonly faCheck = faCheck;
 }
