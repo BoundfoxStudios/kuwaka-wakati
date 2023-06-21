@@ -1,3 +1,14 @@
+# [1.2.0](https://github.com/BoundfoxStudios/kuwaka-wakati/compare/v1.1.0...v1.2.0) (2023-06-21)
+
+### Bug Fixes
+
+- better release changelog generation ([e486fd2](https://github.com/BoundfoxStudios/kuwaka-wakati/commit/e486fd26ba6e67d2cdbda0e66d7b4563154d6241))
+- tauri updater url ([ce39e57](https://github.com/BoundfoxStudios/kuwaka-wakati/commit/ce39e57c548d6854304ca2a4738987584da424f8))
+
+### Features
+
+- use chart.js instead of ngx-charts ([3e7a77c](https://github.com/BoundfoxStudios/kuwaka-wakati/commit/3e7a77cc997a3296437b612d1db7c9cc5a69132f))
+
 # [1.1.0](https://github.com/BoundfoxStudios/kuwaka-wakati/compare/v1.0.0...v1.1.0) (2023-06-21)
 
 ### Features
