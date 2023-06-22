@@ -32,7 +32,7 @@ jobs:
           version: ${{ steps.get-next-version.outputs.new-release-version }}
       - name: get changelog
         run: |
-          CHANGELOG=$(npx conventional-changelog | tail -n +3)
+          CHANGELOG=$(npx conventional-changelog -i CHANGELOG.md -r 1 | tail -n +3)
 
           echo "CHANGELOG<<EOF" >> $GITHUB_ENV
           echo "$CHANGELOG" >> $GITHUB_ENV
