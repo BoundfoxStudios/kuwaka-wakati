@@ -1,3 +1,9 @@
+## [1.2.1](https://github.com/BoundfoxStudios/kuwaka-wakati/compare/v1.2.0...v1.2.1) (2023-06-22)
+
+### Bug Fixes
+
+- changelog formatting ([980b9cd](https://github.com/BoundfoxStudios/kuwaka-wakati/commit/980b9cd5dfb7d89a635f838c52cd6cdad505e062))
+
 # [1.2.0](https://github.com/BoundfoxStudios/kuwaka-wakati/compare/v1.1.0...v1.2.0) (2023-06-21)
 
 ### Bug Fixes
