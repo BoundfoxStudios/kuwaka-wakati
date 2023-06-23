@@ -52,7 +52,7 @@ export class HistoryChartComponent implements OnInit, OnDestroy {
                 maintainAspectRatio: false,
                 elements: {
                     point: {
-                        radius: 0,
+                        radius: 2,
                         hitRadius: 6,
                         hoverRadius: 6,
                         backgroundColor: this.styleService.getCssVariable('--color-blue'),
