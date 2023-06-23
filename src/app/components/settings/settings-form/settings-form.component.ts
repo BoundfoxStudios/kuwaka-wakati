@@ -6,7 +6,7 @@ import { FormBuilder, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Duration } from 'luxon';
 import { DurationPipe } from '../../../pipes/duration.pipe';
 import { map, publish, shareReplay, startWith, tap } from 'rxjs';
-import { dailyWorkAsWeek, durationToHumanReadable, millisecondsToHumanReadable, parseTimeToDuration } from '../../../services/time.utils';
+import { multiplyDuration, durationToHumanReadable, millisecondsToHumanReadable, parseTimeToDuration } from '../../../services/time.utils';
 import { toSignal } from '@angular/core/rxjs-interop';
 
 type SettingsModel = FormModel<
@@ -33,7 +33,7 @@ export class SettingsFormComponent implements OnInit {
     private readonly workPerDay = toSignal(this.formGroup.controls.workPerDay.valueChanges, { initialValue: 'hh:mm' });
     protected readonly workHoursPerWeek = computed(() => {
         const workPerDay = this.workPerDay();
-        return dailyWorkAsWeek(parseTimeToDuration(workPerDay));
+        return multiplyDuration(parseTimeToDuration(workPerDay));
     });
 
     ngOnInit(): void {
