@@ -26,13 +26,11 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: get version
         run: echo "PACKAGE_VERSION=${{ steps.get-next-version.outputs.new-release-version }}" >> $GITHUB_ENV
-      - name: update package.json with current version
-        uses: jaywcjlove/github-action-package@main
-        with:
-          version: ${{ steps.get-next-version.outputs.new-release-version }}
       - name: get changelog
+        env:
+          NOTES: ${{ steps.get-next-version.outputs.new-release-notes }}
         run: |
-          CHANGELOG=$(npx conventional-changelog -i CHANGELOG.md -r 1 | tail -n +3)
+          CHANGELOG=$(echo "$NOTES" | tail -n +3)
 
           echo "CHANGELOG<<EOF" >> $GITHUB_ENV
           echo "$CHANGELOG" >> $GITHUB_ENV
