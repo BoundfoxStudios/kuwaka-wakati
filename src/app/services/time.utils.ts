@@ -26,10 +26,10 @@ export const parseTime = (time: string): Milliseconds => parseTimeToDateTime(tim
 export const millisecondsToHumanReadable = (milliseconds: Milliseconds): string => durationToHumanReadable(Duration.fromMillis(milliseconds));
 export const durationToHumanReadable = (duration: Duration): string => duration.toFormat('hh:mm');
 
-export const dailyWorkAsWeek = (duration: Duration, days = 5): Duration => {
+export const multiplyDuration = (duration: Duration, times = 5): Duration => {
     let finalDuration = Duration.fromMillis(0);
 
-    for (let i = 0; i < days; i++) {
+    for (let i = 0; i < times; i++) {
         finalDuration = finalDuration.plus(duration);
     }
 

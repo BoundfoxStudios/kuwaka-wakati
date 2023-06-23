@@ -26,3 +26,10 @@ export interface Today extends TimeEntryGroup {
     remainingTime?: Duration;
     overtime?: Duration;
 }
+
+export interface Overall {
+    nominalTime: Duration;
+    actualTime: Duration;
+    remainingTime?: Duration;
+    overtime?: Duration;
+}

@@ -1,19 +1,23 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Today } from '../../services/time-tracking/time.models';
+import { Overall } from '../../services/time-tracking/time.models';
 import { DurationPipe } from '../../pipes/duration.pipe';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MillisecondsToTimePipe } from '../../pipes/milliseconds-to-time.pipe';
 import { UnixDatePipe } from '../../pipes/unix-date.pipe';
+import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
+import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
 
 @Component({
-    selector: 'kw-today',
+    selector: 'kw-overall',
     standalone: true,
     imports: [CommonModule, DurationPipe, FontAwesomeModule, MillisecondsToTimePipe, UnixDatePipe],
-    templateUrl: './today.component.html',
-    styleUrls: ['./today.component.css'],
+    templateUrl: './overall.component.html',
+    styleUrls: ['./overall.component.css'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TodayComponent {
-    @Input({ required: true }) today!: Today;
+export class OverallComponent {
+    @Input({ required: true }) overall!: Overall;
+    protected readonly faExclamationCircle = faExclamationCircle;
+    protected readonly faCheckCircle = faCheckCircle;
 }

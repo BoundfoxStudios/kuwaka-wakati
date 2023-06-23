@@ -16,6 +16,7 @@ import { TimeEntryComponent } from '../times/time-entry/time-entry.component';
 import { TimeEntry, TimeEntryCreate } from '../../services/time-tracking/time.models';
 import { TimeTableComponent } from '../times/time-table/time-table.component';
 import { PageTitleComponent } from '../page-title/page-title.component';
+import { OverallComponent } from '../overall/overall.component';
 
 @Component({
     selector: 'kw-dashboard',
@@ -30,6 +31,7 @@ import { PageTitleComponent } from '../page-title/page-title.component';
         TimeEntryComponent,
         TimeTableComponent,
         PageTitleComponent,
+        OverallComponent,
     ],
     templateUrl: './dashboard.component.html',
     styleUrls: ['./dashboard.component.css'],
@@ -42,10 +44,11 @@ export default class DashboardComponent {
     protected readonly faClose = faClose;
     private readonly timeTable = inject(TimeTable);
     protected readonly chartData = toSignal(this.timeTable.groupByDay$(0, DateTime.now().toMillis()), { initialValue: [] });
+    protected readonly todayItems = toSignal(this.timeTable.todayItems$(), { initialValue: [] });
     private readonly settingsTable = inject(SettingsTable);
     protected readonly settings = toSignal(this.settingsTable.current$(), { requireSync: true });
     private readonly timeService = inject(TimeService);
-    protected readonly today = toSignal(this.timeService.today$());
+    protected readonly today = toSignal(this.timeService.today$);
     protected readonly isWorkDayDone = computed(() => {
         const today = this.today();
 
@@ -55,7 +58,7 @@ export default class DashboardComponent {
 
         return !today.remainingTime;
     });
-    protected readonly todayItems = toSignal(this.timeTable.todayItems$(), { initialValue: [] });
+    protected readonly overall = toSignal(this.timeService.overall$);
 
     protected async addTimeEntry(timeEntry: TimeEntryCreate): Promise<void> {
         await this.timeTable.add(timeEntry);
@@ -65,6 +68,4 @@ export default class DashboardComponent {
     protected async deleteTimeEntry(timeEntry: TimeEntry): Promise<void> {
         return this.timeTable.delete(timeEntry.id);
     }
-
-    protected readonly faExclamationCircle = faExclamationCircle;
 }

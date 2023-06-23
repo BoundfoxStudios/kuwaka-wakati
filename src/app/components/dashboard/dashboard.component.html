@@ -6,6 +6,11 @@
 </kw-card>
 
 <kw-card class="mt-4">
+    <div header>Overall</div>
+    <kw-overall *ngIf="overall() as overall" body [overall]="overall"></kw-overall>
+</kw-card>
+
+<kw-card class="mt-4">
     <div header class="flex flex-1">
         <h2>
             Today
