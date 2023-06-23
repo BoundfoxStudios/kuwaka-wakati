@@ -17,13 +17,7 @@ export class TimeTable implements DatabaseTable<TimeEntry> {
     private times!: Table<TimeEntry, number>;
 
     items$(fromTimestamp: Milliseconds = 0, toTimestamp: Milliseconds = Number.MAX_SAFE_INTEGER): Observable<TimeEntryWithDuration[]> {
-        return dexieToRxObservable(
-            liveQuery(async () => {
-                const items = await this.times.where('utcDate').between(fromTimestamp, toTimestamp, true).toArray();
-                items.sort((a, b) => (a.utcDate < b.utcDate ? 1 : 0));
-                return items.map(item => ({ ...item, duration: calculateDuration(item) }));
-            }),
-        );
+        return dexieToRxObservable(liveQuery(async () => this.items(fromTimestamp, toTimestamp)));
     }
 
     initialize(table: Table<TimeEntry, number>): void {
@@ -41,21 +35,19 @@ export class TimeTable implements DatabaseTable<TimeEntry> {
     groupByDay$(fromTimestamp: Milliseconds, toTimestamp: Milliseconds): Observable<TimeEntryGroup[]> {
         return dexieToRxObservable(
             liveQuery(async () => {
-                const items = await this.times.where('utcDate').between(fromTimestamp, toTimestamp, true).toArray();
+                const items = await this.items(fromTimestamp, toTimestamp);
                 const bucket = items.reduce((bucket, item) => {
                     const list = (bucket[item.utcDate] = bucket[item.utcDate] ?? []);
                     list.push(item);
                     return bucket;
-                }, {} as { [key: number]: TimeEntry[] });
+                }, {} as { [key: number]: TimeEntryWithDuration[] });
 
                 return Object.values(bucket).map<TimeEntryGroup>(timeEntries => ({
                     ids: timeEntries.map(entry => entry.id),
                     starts: timeEntries.map(entry => entry.start),
                     ends: timeEntries.map(entry => entry.end),
                     utcDate: timeEntries[0].utcDate,
-                    duration: timeEntries
-                        .map(entry => calculateDuration(entry))
-                        .reduce((duration, current) => duration.plus(current), Duration.fromMillis(0)),
+                    duration: timeEntries.reduce((duration, current) => duration.plus(current.duration), Duration.fromMillis(0)),
                 }));
             }),
         );
@@ -83,5 +75,11 @@ export class TimeTable implements DatabaseTable<TimeEntry> {
     todayItems$(): Observable<TimeEntryWithDuration[]> {
         const todayDate = todayDateMilliseconds;
         return this.items$(todayDate, todayDate + 1);
+    }
+
+    private async items(fromTimestamp: Milliseconds = 0, toTimestamp: Milliseconds = Number.MAX_SAFE_INTEGER): Promise<TimeEntryWithDuration[]> {
+        const items = await this.times.where('utcDate').between(fromTimestamp, toTimestamp, true).toArray();
+        items.sort((a, b) => (a.utcDate < b.utcDate ? 1 : 0));
+        return items.map(item => ({ ...item, duration: calculateDuration(item) }));
     }
 }
