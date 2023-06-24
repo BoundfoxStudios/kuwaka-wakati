@@ -1,4 +1,5 @@
 import { DateTime, Duration } from 'luxon';
+import { TimeEntryGroup } from './time-tracking/time.models';
 
 export type Milliseconds = number;
 
@@ -36,8 +37,10 @@ export const multiplyDuration = (duration: Duration, times = 5): Duration => {
     return finalDuration;
 };
 
-export const unixTimeToLocaleDate = (milliseconds: Milliseconds): string => DateTime.fromMillis(milliseconds).toLocaleString({ dateStyle: 'medium' });
-export const unixTimeToDate = (milliseconds: Milliseconds): string => DateTime.fromMillis(milliseconds).toFormat('dd.MM');
+export const dateTimeToLocaleData = (dateTime: DateTime): string => dateTime.toLocaleString({ dateStyle: 'medium' });
+export const unixTimeToLocaleDate = (milliseconds: Milliseconds): string => dateTimeToLocaleData(DateTime.fromMillis(milliseconds));
+export const dateTimeToDate = (dateTime: DateTime): string => dateTime.toFormat('dd.MM');
+export const unixTimeToDate = (milliseconds: Milliseconds): string => dateTimeToDate(DateTime.fromMillis(milliseconds));
 
 export const todayDateMilliseconds = DateTime.now().set({ hour: 0, minute: 0, second: 0, millisecond: 0 }).toMillis();
 
@@ -64,3 +67,5 @@ export const calculateRemainingAndOvertime = (
 
     return { remainingTime, overtime };
 };
+export const calculateTimeEntryGroupDuration = (groups: TimeEntryGroup[]): Duration =>
+    groups.reduce((sum, current) => sum.plus(current.duration), Duration.fromMillis(0));

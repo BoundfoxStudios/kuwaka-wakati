@@ -15,21 +15,23 @@ export interface TimeEntryWithDuration extends TimeEntry {
 }
 
 export interface TimeEntryGroup {
-    ids: number[];
-    starts: Milliseconds[];
-    ends: Milliseconds[];
+    items: TimeEntryWithDuration[];
     utcDate: Milliseconds;
     duration: Duration;
 }
 
-export interface Today extends TimeEntryGroup {
+export interface RemainingTimeOvertime {
     remainingTime?: Duration;
     overtime?: Duration;
 }
 
-export interface Overall {
+export type Today = TimeEntryGroup & RemainingTimeOvertime;
+
+export interface Week extends Omit<TimeEntryGroup, 'utcDate'>, RemainingTimeOvertime {
+    weekNumber: number;
+}
+
+export interface Overall extends RemainingTimeOvertime {
     nominalTime: Duration;
     actualTime: Duration;
-    remainingTime?: Duration;
-    overtime?: Duration;
 }

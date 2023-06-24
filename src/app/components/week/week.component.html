@@ -1,0 +1,16 @@
+<table class="w-full text-left text-gray-500">
+    <tbody>
+        <tr>
+            <td class="bg-gray-50 px-6 py-3 text-xs font-semibold uppercase text-gray-700">Time worked</td>
+            <td class="whitespace-nowrap px-6 py-4 text-right font-medium text-gray-900">{{ week.duration | duration }}</td>
+        </tr>
+        <tr *ngIf="week.remainingTime">
+            <td class="bg-gray-50 px-6 py-3 text-xs font-semibold uppercase text-gray-700">Remaining time</td>
+            <td class="whitespace-nowrap px-6 py-4 text-right font-medium text-red">{{ week.remainingTime | duration }}</td>
+        </tr>
+        <tr *ngIf="week.overtime">
+            <td class="bg-gray-50 px-6 py-3 text-xs font-semibold uppercase text-gray-700">Overtime</td>
+            <td class="whitespace-nowrap px-6 py-4 text-right font-medium text-green">{{ week.overtime | duration }}</td>
+        </tr>
+    </tbody>
+</table>

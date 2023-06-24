@@ -43,9 +43,7 @@ export class TimeTable implements DatabaseTable<TimeEntry> {
                 }, {} as { [key: number]: TimeEntryWithDuration[] });
 
                 return Object.values(bucket).map<TimeEntryGroup>(timeEntries => ({
-                    ids: timeEntries.map(entry => entry.id),
-                    starts: timeEntries.map(entry => entry.start),
-                    ends: timeEntries.map(entry => entry.end),
+                    items: timeEntries,
                     utcDate: timeEntries[0].utcDate,
                     duration: timeEntries.reduce((duration, current) => duration.plus(current.duration), Duration.fromMillis(0)),
                 }));
@@ -59,9 +57,7 @@ export class TimeTable implements DatabaseTable<TimeEntry> {
             map(([today]) => {
                 if (!today) {
                     return {
-                        ids: [],
-                        ends: [],
-                        starts: [],
+                        items: [],
                         duration: Duration.fromMillis(0),
                         utcDate: todayDateMilliseconds,
                     };
@@ -70,11 +66,6 @@ export class TimeTable implements DatabaseTable<TimeEntry> {
                 return today;
             }),
         );
-    }
-
-    todayItems$(): Observable<TimeEntryWithDuration[]> {
-        const todayDate = todayDateMilliseconds;
-        return this.items$(todayDate, todayDate + 1);
     }
 
     private async items(fromTimestamp: Milliseconds = 0, toTimestamp: Milliseconds = Number.MAX_SAFE_INTEGER): Promise<TimeEntryWithDuration[]> {
