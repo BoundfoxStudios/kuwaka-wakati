@@ -15,5 +15,5 @@ import { toSignal } from '@angular/core/rxjs-interop';
 })
 export default class SettingsComponent {
     private readonly settingsTable = inject(SettingsTable);
-    protected readonly settings = toSignal(this.settingsTable.current$(), { requireSync: true });
+    protected readonly settings = toSignal(this.settingsTable.current$, { requireSync: true });
 }
