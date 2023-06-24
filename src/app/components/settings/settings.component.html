@@ -1,2 +1,21 @@
 <kw-page-title>Settings</kw-page-title>
 <kw-settings-form [settings]="settings()" />
+
+<kw-page-section-title>Danger Zone</kw-page-section-title>
+
+<p class="text-red">There are no confirmation dialogs. Take care!</p>
+
+<div class="mt-4">
+    <button class="kw-submit-button" (click)="export()">Export</button>
+</div>
+
+<div class="mt-4">
+    <p>Take care: Input will overwrite everything!</p>
+    <input type="file" accept=".json" [formControl]="fileControl" />
+    <button class="kw-submit-button" (click)="import()" [disabled]="!fileControl.value">Import</button>
+</div>
+
+<div class="mt-4">
+    This will clear the whole database.
+    <button class="kw-submit-button" (click)="clear()">Clear</button>
+</div>

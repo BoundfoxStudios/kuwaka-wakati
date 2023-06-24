@@ -1,5 +1,6 @@
 import { Inject, Injectable, InjectionToken } from '@angular/core';
 import Dexie, { Table } from 'dexie';
+import 'dexie-export-import';
 
 export interface DatabaseTable<T = unknown, TKey = number> {
     readonly version: number;
@@ -41,6 +42,18 @@ export class DatabaseService extends Dexie implements DatabaseCleanup {
                 await table.cleanup();
             }
         }
+    }
+
+    async exportToBlob(): Promise<Blob> {
+        return this.export();
+    }
+
+    async importFromBlob(blob: Blob): Promise<void> {
+        return this.import(blob, { clearTablesBeforeImport: true });
+    }
+
+    async clear(): Promise<void> {
+        await this.delete();
     }
 }
 
