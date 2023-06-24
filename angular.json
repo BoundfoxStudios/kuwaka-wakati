@@ -52,7 +52,7 @@
             "styles": [
               "src/styles.css"
             ],
-            "allowedCommonJsDependencies": ["rfdc"]
+            "allowedCommonJsDependencies": ["rfdc", "file-saver"]
           },
           "configurations": {
             "production": {
