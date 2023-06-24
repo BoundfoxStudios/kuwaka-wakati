@@ -40,3 +40,27 @@ export const unixTimeToLocaleDate = (milliseconds: Milliseconds): string => Date
 export const unixTimeToDate = (milliseconds: Milliseconds): string => DateTime.fromMillis(milliseconds).toFormat('dd.MM');
 
 export const todayDateMilliseconds = DateTime.now().set({ hour: 0, minute: 0, second: 0, millisecond: 0 }).toMillis();
+
+export const calculateRemainingAndOvertime = (
+    nominalTime: Duration,
+    actualTime: Duration,
+): {
+    remainingTime?: Duration;
+    overtime?: Duration;
+} => {
+    const nominalTimeMilliseconds = nominalTime.toMillis();
+    const actualTimeMilliseconds = actualTime.toMillis();
+
+    let remainingTime: Duration | undefined;
+    let overtime: Duration | undefined;
+
+    if (nominalTimeMilliseconds > actualTimeMilliseconds) {
+        remainingTime = nominalTime.minus(actualTime);
+    }
+
+    if (nominalTimeMilliseconds < actualTimeMilliseconds) {
+        overtime = actualTime.minus(nominalTime);
+    }
+
+    return { remainingTime, overtime };
+};
