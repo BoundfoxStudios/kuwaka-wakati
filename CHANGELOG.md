@@ -1,3 +1,14 @@
+# [1.4.0](https://github.com/BoundfoxStudios/kuwaka-wakati/compare/v1.3.0...v1.4.0) (2023-06-25)
+
+### Bug Fixes
+
+- settings actually saves the settings ([7c83bfb](https://github.com/BoundfoxStudios/kuwaka-wakati/commit/7c83bfb009b6460f85be194c7451e68bef1e0d04)), closes [#30](https://github.com/BoundfoxStudios/kuwaka-wakati/issues/30)
+
+### Features
+
+- styling and settings confirmations ([6b31c0e](https://github.com/BoundfoxStudios/kuwaka-wakati/commit/6b31c0ef790d1801bd0f0b5a76b873fc8ba81ff8))
+- update app-icon ([0e5c782](https://github.com/BoundfoxStudios/kuwaka-wakati/commit/0e5c7827d39e248cdbfe397e0905cd71c16d7406))
+
 # [1.3.0](https://github.com/BoundfoxStudios/kuwaka-wakati/compare/v1.2.1...v1.3.0) (2023-06-25)
 
 ### Bug Fixes
