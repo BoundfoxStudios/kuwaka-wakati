@@ -1,12 +1,10 @@
-import { ChangeDetectionStrategy, Component, computed, inject, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Settings } from '../../../services/settings/settings';
 import { FormModel, Replace } from 'ngx-mf';
 import { FormBuilder, FormControl, ReactiveFormsModule } from '@angular/forms';
-import { Duration } from 'luxon';
 import { DurationPipe } from '../../../pipes/duration.pipe';
-import { map, publish, shareReplay, startWith, tap } from 'rxjs';
-import { multiplyDuration, durationToHumanReadable, millisecondsToHumanReadable, parseTimeToDuration } from '../../../services/time.utils';
+import { millisecondsToHumanReadable, multiplyDuration, parseTimeToDuration } from '../../../services/time.utils';
 import { toSignal } from '@angular/core/rxjs-interop';
 
 type SettingsModel = FormModel<
@@ -26,6 +24,7 @@ type SettingsModel = FormModel<
 })
 export class SettingsFormComponent implements OnInit {
     @Input({ required: true }) settings!: Settings;
+    @Output() readonly settingsChange = new EventEmitter<Settings>();
     private readonly formBuilder = inject(FormBuilder);
     protected formGroup = this.formBuilder.group<SettingsModel['controls']>({
         workPerDay: new FormControl<string>('', { nonNullable: true }),
@@ -39,6 +38,18 @@ export class SettingsFormComponent implements OnInit {
     ngOnInit(): void {
         this.formGroup.setValue({
             workPerDay: millisecondsToHumanReadable(this.settings.workPerDay),
+        });
+    }
+
+    submit(): void {
+        if (this.formGroup.invalid) {
+            return;
+        }
+
+        const formValue = { ...this.formGroup.value } as Required<SettingsModel['value']>;
+
+        this.settingsChange.next({
+            workPerDay: parseTimeToDuration(formValue.workPerDay).toMillis(),
         });
     }
 }
