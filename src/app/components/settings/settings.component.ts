@@ -12,6 +12,7 @@ import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TauriService } from '../../services/tauri.service';
 import { CardComponent } from '../card/card.component';
 import { CardSectionTitleComponent } from '../card/card-section-title/card-section-title.component';
+import { Settings } from '../../services/settings/settings';
 
 @Component({
     selector: 'kw-settings',
@@ -25,7 +26,7 @@ export default class SettingsComponent {
     protected readonly fileControl = new FormControl<File | null>(null, { validators: [Validators.required] });
     private readonly databaseService = inject(DatabaseService);
     private readonly settingsTable = inject(SettingsTable);
-    protected readonly settings = toSignal(this.settingsTable.current$, { requireSync: true });
+    protected readonly settings = toSignal(this.settingsTable.current$);
     private readonly tauriService = inject(TauriService);
 
     protected async export(): Promise<void> {
@@ -64,5 +65,9 @@ export default class SettingsComponent {
 
         await this.databaseService.clear();
         window.location.reload();
+    }
+
+    protected async updateSettings(settings: Settings): Promise<void> {
+        await this.settingsTable.update(settings);
     }
 }

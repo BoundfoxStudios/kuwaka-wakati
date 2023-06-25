@@ -2,7 +2,7 @@ import { DatabaseCleanup, DatabaseTable } from '../database/database.service';
 import { Settings } from './settings';
 import { liveQuery, Table } from 'dexie';
 import { Injectable } from '@angular/core';
-import { Observable, shareReplay, startWith } from 'rxjs';
+import { shareReplay, startWith } from 'rxjs';
 import { dexieToRxObservable } from '../dexie-to-rxjs';
 
 interface SettingsEntity extends Settings {
@@ -30,7 +30,11 @@ export class SettingsTable implements DatabaseTable<SettingsEntity>, DatabaseCle
 
             return { ...entity, id: undefined };
         }),
-    ).pipe(startWith(defaultSettings), shareReplay());
+    ).pipe(shareReplay());
+
+    async update(settings: Settings): Promise<void> {
+        await this.settings.add(settings);
+    }
 
     initialize(table: Table<SettingsEntity, number>): void {
         this.settings = table;

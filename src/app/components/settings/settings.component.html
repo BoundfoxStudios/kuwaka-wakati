@@ -2,7 +2,7 @@
 
 <kw-card>
     <h2 header>Basic settings</h2>
-    <kw-settings-form body [settings]="settings()" />
+    <kw-settings-form body *ngIf="settings() as settings" [settings]="settings" (settingsChange)="updateSettings($event)" />
 </kw-card>
 
 <kw-card>
