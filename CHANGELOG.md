@@ -1,3 +1,19 @@
+# [1.3.0](https://github.com/BoundfoxStudios/kuwaka-wakati/compare/v1.2.1...v1.3.0) (2023-06-25)
+
+### Bug Fixes
+
+- allow export download in the app ([a76f24a](https://github.com/BoundfoxStudios/kuwaka-wakati/commit/a76f24aff9c4f496c4537cd0b627bd35b1628bbc)), closes [#34](https://github.com/BoundfoxStudios/kuwaka-wakati/issues/34)
+- sidebar stays at their its size ([01103c0](https://github.com/BoundfoxStudios/kuwaka-wakati/commit/01103c031fbb93775fa3ccfc0b3fa53de754ecee))
+
+### Features
+
+- **history-chart:** show a tiny dot for a data point ([17f8b06](https://github.com/BoundfoxStudios/kuwaka-wakati/commit/17f8b06fe5153de5379626fbe13097fe35cd39a1))
+- overall implementation ([bac7c29](https://github.com/BoundfoxStudios/kuwaka-wakati/commit/bac7c297609537036e184ce646dcdbbdb93b439b)), closes [#8](https://github.com/BoundfoxStudios/kuwaka-wakati/issues/8)
+- simple import/export possibility ([b649642](https://github.com/BoundfoxStudios/kuwaka-wakati/commit/b649642992c63e81499a1f2366de3f86a6cb1818)), closes [#31](https://github.com/BoundfoxStudios/kuwaka-wakati/issues/31)
+- single instance plugin ([c10d7e0](https://github.com/BoundfoxStudios/kuwaka-wakati/commit/c10d7e0a9b5c7a43b44ae06d6d59a14fdb248447)), closes [#28](https://github.com/BoundfoxStudios/kuwaka-wakati/issues/28)
+- virtual scrolling ([1e37e48](https://github.com/BoundfoxStudios/kuwaka-wakati/commit/1e37e481ac92cbc5d2532c160d403da4ca79e3a2))
+- week overview ([fa956fb](https://github.com/BoundfoxStudios/kuwaka-wakati/commit/fa956fb181b9dad4e8f1daf7e75a6ed8c5e5dad9)), closes [#7](https://github.com/BoundfoxStudios/kuwaka-wakati/issues/7)
+
 ## [1.2.1](https://github.com/BoundfoxStudios/kuwaka-wakati/compare/v1.2.0...v1.2.1) (2023-06-22)
 
 ### Bug Fixes
