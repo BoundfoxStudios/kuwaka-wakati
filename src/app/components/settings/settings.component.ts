@@ -7,10 +7,10 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { DatabaseService } from '../../services/database/database.service';
 import { DateTime } from 'luxon';
 import { dateTimeToLocaleData } from '../../services/time.utils';
-import { saveAs } from 'file-saver';
 import { PageSectionTitleComponent } from '../page-section-title/page-section-title.component';
 import { FileDirective } from '../../directives/file.directive';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { TauriService } from '../../services/tauri.service';
 
 @Component({
     selector: 'kw-settings',
@@ -21,14 +21,15 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class SettingsComponent {
+    protected readonly fileControl = new FormControl<File | null>(null);
     private readonly databaseService = inject(DatabaseService);
     private readonly settingsTable = inject(SettingsTable);
     protected readonly settings = toSignal(this.settingsTable.current$, { requireSync: true });
-    protected readonly fileControl = new FormControl<File | null>(null);
+    private readonly tauriService = inject(TauriService);
 
     protected async export(): Promise<void> {
         const blob = await this.databaseService.exportToBlob();
-        saveAs(blob, `KuwakaWakati-${dateTimeToLocaleData(DateTime.now())}.json`);
+        await this.tauriService.save(blob, `KuwakaWakati-${dateTimeToLocaleData(DateTime.now())}.json`);
     }
 
     protected async import(): Promise<void> {
