@@ -12,6 +12,7 @@ import { CommonModule } from '@angular/common';
 export class CardComponent {
     @Input() fullSize = false;
     @Input() contentType: 'default' | 'chart' = 'default';
+    @Input() displayType: 'default' | 'danger' = 'default';
 
     get contentTypeClasses(): string {
         switch (this.contentType) {
@@ -20,6 +21,16 @@ export class CardComponent {
 
             default:
                 return ['flex flex-col', this.fullSize ? 'h-full' : 'p-4'].join(' ');
+        }
+    }
+
+    get displayTypeClasses(): string {
+        switch (this.displayType) {
+            case 'danger':
+                return 'bg-red';
+
+            default:
+                return 'bg-blue';
         }
     }
 }

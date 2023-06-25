@@ -31,7 +31,8 @@
       },
       "dialog": {
         "all": false,
-        "save": true
+        "save": true,
+        "confirm": true
       },
       "fs": {
         "all": false,
