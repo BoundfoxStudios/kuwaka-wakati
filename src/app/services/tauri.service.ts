@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { getVersion } from '@tauri-apps/api/app';
-import { save } from '@tauri-apps/api/dialog';
+import { save, confirm as tauriConfirm } from '@tauri-apps/api/dialog';
 import { saveAs } from 'file-saver';
 import { writeBinaryFile } from '@tauri-apps/api/fs';
 
@@ -9,6 +9,8 @@ export abstract class TauriService {
     abstract getVersion(): Promise<string>;
 
     abstract save(blob: Blob, filename: string): Promise<void>;
+
+    abstract confirm(message: string): Promise<boolean>;
 }
 
 @Injectable()
@@ -21,6 +23,11 @@ class BrowserTauriService extends TauriService {
     save(blob: Blob, filename: string): Promise<void> {
         saveAs(blob, filename);
         return Promise.resolve();
+    }
+
+    confirm(message: string): Promise<boolean> {
+        const result = confirm(message);
+        return Promise.resolve(result);
     }
 }
 
@@ -38,6 +45,10 @@ class RealTauriService extends TauriService {
         }
 
         await writeBinaryFile(filePath, await blob.arrayBuffer());
+    }
+
+    confirm(message: string): Promise<boolean> {
+        return tauriConfirm(message);
     }
 }
 

@@ -11,8 +11,12 @@
         @apply rounded border border-slate-200 px-3.5 py-1.5 drop-shadow;
     }
 
-    .kw-submit-button {
-        @apply rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-400 disabled:cursor-not-allowed disabled:bg-blue-200;
+    .kw-button {
+        @apply cursor-pointer rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-400 disabled:cursor-not-allowed disabled:bg-blue-200;
+    }
+
+    input[type='file']::file-selector-button {
+        @apply cursor-pointer rounded border-0 bg-blue-600 px-2 py-1 text-white hover:bg-blue-400 disabled:cursor-not-allowed disabled:bg-blue-200;
     }
 
     .kw-hint {
