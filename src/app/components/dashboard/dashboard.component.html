@@ -2,7 +2,7 @@
 
 <kw-card [contentType]="'chart'">
     <h2 header>Chart</h2>
-    <kw-history-chart body [data]="chartData()" [dailyWork]="settings().workPerDay" />
+    <kw-history-chart body *ngIf="settings() as settings" [data]="chartData()" [dailyWork]="settings.workPerDay" />
 </kw-card>
 
 <kw-card class="mt-4">

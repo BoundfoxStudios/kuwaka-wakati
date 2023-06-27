@@ -70,7 +70,7 @@ export default class DashboardComponent {
     private readonly timeTable = inject(TimeTable);
     protected readonly chartData = toSignal(this.timeTable.groupByDay$(0, DateTime.now().toMillis()), { initialValue: [] });
     private readonly settingsTable = inject(SettingsTable);
-    protected readonly settings = toSignal(this.settingsTable.current$, { requireSync: true });
+    protected readonly settings = toSignal(this.settingsTable.current$);
     private readonly timeService = inject(TimeService);
     protected readonly today = toSignal(this.timeService.today$);
     protected readonly overall = toSignal(this.timeService.overall$);
