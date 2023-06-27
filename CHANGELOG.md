@@ -1,3 +1,14 @@
+# [1.5.0](https://github.com/BoundfoxStudios/kuwaka-wakati/compare/v1.4.0...v1.5.0) (2023-06-27)
+
+### Bug Fixes
+
+- requireSync failure on the dashboard ([e8830f5](https://github.com/BoundfoxStudios/kuwaka-wakati/commit/e8830f5f89aee0236fb91df967cbeb5c51d2f172))
+- sorting of dates defaults to DESC now ([21bf25f](https://github.com/BoundfoxStudios/kuwaka-wakati/commit/21bf25fcd1169f2ba2fb53b7ba87773a76f5d066))
+
+### Features
+
+- implement non-workdays ([d07703f](https://github.com/BoundfoxStudios/kuwaka-wakati/commit/d07703f16bb08da6154b299c2752d848dbdc6fc5))
+
 # [1.4.0](https://github.com/BoundfoxStudios/kuwaka-wakati/compare/v1.3.0...v1.4.0) (2023-06-25)
 
 ### Bug Fixes
