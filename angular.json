@@ -76,14 +76,12 @@
             "development": {
               "buildOptimizer": false,
               "optimization": false,
-              "vendorChunk": true,
               "extractLicenses": false,
               "sourceMap": {
                 "scripts": true,
                 "styles": true,
                 "vendor": true
-              },
-              "namedChunks": true
+              }
             }
           },
           "defaultConfiguration": "production"
