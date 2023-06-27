@@ -7,7 +7,7 @@ import { UnixDatePipe } from '../../../pipes/unix-date.pipe';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
 import { CdkFixedSizeVirtualScroll, CdkVirtualForOf, CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
-import { faCheck } from '@fortawesome/free-solid-svg-icons/faCheck';
+import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { ScrollViewportProviderDirective } from './scroll-viewport-provider.directive';
 
 @Component({

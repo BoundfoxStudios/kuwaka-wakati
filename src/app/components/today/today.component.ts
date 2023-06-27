@@ -5,7 +5,7 @@ import { DurationPipe } from '../../pipes/duration.pipe';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MillisecondsToTimePipe } from '../../pipes/milliseconds-to-time.pipe';
 import { UnixDatePipe } from '../../pipes/unix-date.pipe';
-import { faCheck } from '@fortawesome/free-solid-svg-icons/faCheck';
+import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
 
 @Component({
