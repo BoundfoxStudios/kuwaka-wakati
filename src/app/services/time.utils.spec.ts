@@ -119,7 +119,7 @@ describe('Time Utils', () => {
 
             expect(result.overtime).toBeUndefined();
             expect(result.remainingTime).toBeDefined();
-            expect(result.remainingTime!.hours).toEqual(4);
+            expect(result.remainingTime?.hours).toEqual(4);
         });
 
         it('correctly calculates overtime', () => {
@@ -127,7 +127,7 @@ describe('Time Utils', () => {
 
             expect(result.remainingTime).toBeUndefined();
             expect(result.overtime).toBeDefined();
-            expect(result.overtime!.hours).toEqual(4);
+            expect(result.overtime?.hours).toEqual(4);
         });
     });
 });
