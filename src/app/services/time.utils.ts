@@ -12,7 +12,7 @@ export const parseTimeToDuration = (time: string): Duration => {
 };
 
 /**
- * Parses a tiem string in the format HH:mm.
+ * Parses a time string in the format HH:mm.
  */
 export const parseTimeToDateTime = (time: string): DateTime => {
     const [hours, minutes] = time.split(':');

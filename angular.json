@@ -52,7 +52,10 @@
             "styles": [
               "src/styles.css"
             ],
-            "allowedCommonJsDependencies": ["rfdc", "file-saver"]
+            "allowedCommonJsDependencies": [
+              "rfdc",
+              "file-saver"
+            ]
           },
           "configurations": {
             "production": {
@@ -96,6 +99,13 @@
             }
           },
           "defaultConfiguration": "development"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:jest",
+          "options": {
+            "tsConfig": "tsconfig.spec.json",
+            "polyfills": ["zone.js", "zone.js/testing"]
+          }
         },
         "lint": {
           "builder": "@angular-eslint/builder:lint",
