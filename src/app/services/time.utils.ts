@@ -42,7 +42,7 @@ export const unixTimeToLocaleDate = (milliseconds: Milliseconds): string => date
 export const dateTimeToDate = (dateTime: DateTime): string => dateTime.toFormat('dd.MM');
 export const unixTimeToDate = (milliseconds: Milliseconds): string => dateTimeToDate(DateTime.fromMillis(milliseconds));
 
-export const todayDateMilliseconds = DateTime.now().set({ hour: 0, minute: 0, second: 0, millisecond: 0 }).toMillis();
+export const todayDateMilliseconds = (): number => DateTime.now().set({ hour: 0, minute: 0, second: 0, millisecond: 0 }).toMillis();
 
 export const calculateRemainingAndOvertime = (
     nominalTime: Duration,

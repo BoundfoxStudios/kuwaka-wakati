@@ -53,14 +53,14 @@ export class TimeTable implements DatabaseTable<TimeEntry> {
     }
 
     todayGroup$(): Observable<TimeEntryGroup> {
-        const todayDate = todayDateMilliseconds;
+        const todayDate = todayDateMilliseconds();
         return this.groupByDay$(todayDate, todayDate + 1).pipe(
             map(([today]) => {
                 if (!today) {
                     return {
                         items: [],
                         duration: Duration.fromMillis(0),
-                        utcDate: todayDateMilliseconds,
+                        utcDate: todayDate,
                         isNonWorkday: false,
                     };
                 }
