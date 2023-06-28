@@ -17,7 +17,7 @@ import { TimeEntry, TimeEntryCreate } from '../../services/time-tracking/time.mo
 import { TimeTableComponent } from '../times/time-table/time-table.component';
 import { PageTitleComponent } from '../page-title/page-title.component';
 import { OverallComponent } from '../overall/overall.component';
-import { switchMap } from 'rxjs';
+import { map, switchMap } from 'rxjs';
 import { dateTimeToDate } from '../../services/time.utils';
 import { WeekComponent } from '../week/week.component';
 
@@ -68,7 +68,9 @@ export default class DashboardComponent {
     private readonly weekDate = signal(DateTime.now());
     protected readonly weekNumber = computed(() => this.weekDate().get('weekNumber'));
     private readonly timeTable = inject(TimeTable);
-    protected readonly chartData = toSignal(this.timeTable.groupByDay$(0, DateTime.now().toMillis()), { initialValue: [] });
+    protected readonly chartData = toSignal(this.timeTable.groupByDay$(0, DateTime.now().toMillis()).pipe(map(data => data.reverse())), {
+        initialValue: [],
+    });
     private readonly settingsTable = inject(SettingsTable);
     protected readonly settings = toSignal(this.settingsTable.current$);
     private readonly timeService = inject(TimeService);
