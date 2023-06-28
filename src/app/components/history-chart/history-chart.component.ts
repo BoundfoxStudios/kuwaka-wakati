@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ElementRef, inject, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, inject, Input, OnDestroy, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TimeEntryGroup } from '../../services/time-tracking/time.models';
 import { Milliseconds, millisecondsToHumanReadable, unixTimeToDate } from '../../services/time.utils';
@@ -17,7 +17,7 @@ import { Duration } from 'luxon';
     styleUrls: ['./history-chart.component.css'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HistoryChartComponent implements OnInit, OnDestroy {
+export class HistoryChartComponent implements AfterViewInit, OnDestroy {
     @Input() height = 200;
     @Input() dailyWork: Milliseconds = 0;
     @ViewChild('chart', { static: true }) chartElement!: ElementRef<HTMLCanvasElement>;
@@ -28,7 +28,7 @@ export class HistoryChartComponent implements OnInit, OnDestroy {
         this.setChartData(input);
     }
 
-    ngOnInit(): void {
+    ngAfterViewInit(): void {
         this.chart = new Chart(this.chartElement.nativeElement, {
             type: 'line',
             data: {
