@@ -1,3 +1,38 @@
+# [1.6.0](https://github.com/BoundfoxStudios/kuwaka-wakati/compare/v1.5.0...v1.6.0) (2023-06-29)
+
+### Bug Fixes
+
+- allow export download in the app ([1e1540b](https://github.com/BoundfoxStudios/kuwaka-wakati/commit/1e1540bed81626faa7bf53a8719ae784738d7391)), closes [#34](https://github.com/BoundfoxStudios/kuwaka-wakati/issues/34)
+- better release changelog generation ([3ae3cdb](https://github.com/BoundfoxStudios/kuwaka-wakati/commit/3ae3cdb3e63fa724003c0335f8ce8ee55cf7603b))
+- changelog formatting ([36e46ea](https://github.com/BoundfoxStudios/kuwaka-wakati/commit/36e46ea9d24f3a2bb47c49ce7de07a2b115a3645))
+- convert todayMilliseconds to a function ([7bef3a3](https://github.com/BoundfoxStudios/kuwaka-wakati/commit/7bef3a366d50c56e418e362af7b2bcb2fd01ab0c))
+- convert todayMilliseconds to a function ([670de9d](https://github.com/BoundfoxStudios/kuwaka-wakati/commit/670de9d1d9ec1b1f8440260411edebcfe18762a2))
+- daily work line sits now on the correct position ([c156c6d](https://github.com/BoundfoxStudios/kuwaka-wakati/commit/c156c6d84959c58e54a328c3e129d258c7bcac68)), closes [#25](https://github.com/BoundfoxStudios/kuwaka-wakati/issues/25)
+- daily work line sits now on the correct position ([de2da15](https://github.com/BoundfoxStudios/kuwaka-wakati/commit/de2da158a8abe9525f2e9c5c96404f96e6f9df0a)), closes [#25](https://github.com/BoundfoxStudios/kuwaka-wakati/issues/25)
+- requireSync failure on the dashboard ([914b011](https://github.com/BoundfoxStudios/kuwaka-wakati/commit/914b0119d9094326641d524eb5c51119be1be435))
+- reverse the chart data so its going from oldest to newest ([9894516](https://github.com/BoundfoxStudios/kuwaka-wakati/commit/989451623f397aa904162113cc36b3d839b4a3c2))
+- reverse the chart data so its going from oldest to newest ([51f071e](https://github.com/BoundfoxStudios/kuwaka-wakati/commit/51f071e23ee3ca87f38a4e19c967372f5a419b7b))
+- settings actually saves the settings ([9933174](https://github.com/BoundfoxStudios/kuwaka-wakati/commit/9933174f6665f6a27265f84e262ff58c1238fd39)), closes [#30](https://github.com/BoundfoxStudios/kuwaka-wakati/issues/30)
+- show non-workday directly in the time table ([3d6306e](https://github.com/BoundfoxStudios/kuwaka-wakati/commit/3d6306e2fbb12cf205dd3adac20052becb12867b))
+- show non-workday directly in the time table ([ad4140d](https://github.com/BoundfoxStudios/kuwaka-wakati/commit/ad4140d6c94d2c0356dcf19dfbd8ba89eda662dd))
+- sidebar stays at their its size ([5690c36](https://github.com/BoundfoxStudios/kuwaka-wakati/commit/5690c361cc1431fb4085b1b4da6dd3fc518fadbc))
+- sorting of dates defaults to DESC now ([3cdd57a](https://github.com/BoundfoxStudios/kuwaka-wakati/commit/3cdd57aceb1878272478bad8e888dc8b8e350c88))
+- tauri updater url ([615af67](https://github.com/BoundfoxStudios/kuwaka-wakati/commit/615af6795d8fae8d08f27e59e56e8c9738594961))
+
+### Features
+
+- **history-chart:** show a tiny dot for a data point ([bc334d0](https://github.com/BoundfoxStudios/kuwaka-wakati/commit/bc334d00a78162895bbc932fe702c56a645643e6))
+- implement non-workdays ([f2fcab4](https://github.com/BoundfoxStudios/kuwaka-wakati/commit/f2fcab4f1b034294e57018ed82a4c843d92cc6ab))
+- overall implementation ([9401ed4](https://github.com/BoundfoxStudios/kuwaka-wakati/commit/9401ed40376a0c8256e90420ff29446194791de2)), closes [#8](https://github.com/BoundfoxStudios/kuwaka-wakati/issues/8)
+- overall visual update ([2a93516](https://github.com/BoundfoxStudios/kuwaka-wakati/commit/2a93516a3786b6eaca8ea3455d3538dbb2123b62)), closes [#1](https://github.com/BoundfoxStudios/kuwaka-wakati/issues/1) [#21](https://github.com/BoundfoxStudios/kuwaka-wakati/issues/21)
+- simple import/export possibility ([b5f34e7](https://github.com/BoundfoxStudios/kuwaka-wakati/commit/b5f34e71a345b0fc7981a156f3ca177da32186c0)), closes [#31](https://github.com/BoundfoxStudios/kuwaka-wakati/issues/31)
+- single instance plugin ([65cb0ee](https://github.com/BoundfoxStudios/kuwaka-wakati/commit/65cb0eedfffba44fa0f36606eed1f0cbf86d89de)), closes [#28](https://github.com/BoundfoxStudios/kuwaka-wakati/issues/28)
+- styling and settings confirmations ([26e89fc](https://github.com/BoundfoxStudios/kuwaka-wakati/commit/26e89fc084d7392fff41eeaea9f09dac5fffa088))
+- update app-icon ([c83179a](https://github.com/BoundfoxStudios/kuwaka-wakati/commit/c83179a0d698adacc798389cdff05553421ec1d3))
+- use chart.js instead of ngx-charts ([bb2deba](https://github.com/BoundfoxStudios/kuwaka-wakati/commit/bb2debaab4245e629a8f846184631b46a46c7f8f))
+- virtual scrolling ([697c707](https://github.com/BoundfoxStudios/kuwaka-wakati/commit/697c7070b08b77692dca44c356d785f3c67a579a))
+- week overview ([430fd2d](https://github.com/BoundfoxStudios/kuwaka-wakati/commit/430fd2d7872c9279939c75ee08ed76df174921cc)), closes [#7](https://github.com/BoundfoxStudios/kuwaka-wakati/issues/7)
+
 # [1.5.0](https://github.com/BoundfoxStudios/kuwaka-wakati/compare/v1.4.0...v1.5.0) (2023-06-27)
 
 ### Bug Fixes
