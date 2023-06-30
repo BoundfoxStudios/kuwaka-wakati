@@ -11,6 +11,8 @@ export class DurationPipe implements PipeTransform {
             duration = Duration.fromMillis(duration);
         }
 
-        return duration.toFormat('hh:mm');
+        const milliseconds = duration.toMillis();
+
+        return milliseconds < 0 ? duration.negate().toFormat('-hh:mm') : duration.toFormat('hh:mm');
     }
 }
