@@ -3,7 +3,7 @@ import { DatabaseTable } from '../database/database.service';
 import { TimeEntry, TimeEntryCreate, TimeEntryGroup, TimeEntryWithDuration } from './time.models';
 import { liveQuery, Table } from 'dexie';
 import { Duration } from 'luxon';
-import { Milliseconds, todayDateMilliseconds } from '../time.utils';
+import { calculateGroup, Milliseconds, todayDateMilliseconds } from '../time.utils';
 import { map, Observable } from 'rxjs';
 import { dexieToRxObservable } from '../dexie-to-rxjs';
 
@@ -36,18 +36,7 @@ export class TimeTable implements DatabaseTable<TimeEntry> {
         return dexieToRxObservable(
             liveQuery(async () => {
                 const items = await this.items(fromTimestamp, toTimestamp);
-                const bucket = items.reduce((bucket, item) => {
-                    const list = (bucket[item.utcDate] = bucket[item.utcDate] ?? []);
-                    list.push(item);
-                    return bucket;
-                }, {} as { [key: number]: TimeEntryWithDuration[] });
-
-                return Object.values(bucket).map<TimeEntryGroup>(timeEntries => ({
-                    items: timeEntries,
-                    utcDate: timeEntries[0].utcDate,
-                    duration: timeEntries.reduce((duration, current) => duration.plus(current.duration), Duration.fromMillis(0)),
-                    isNonWorkday: timeEntries.every(entry => entry.isNonWorkday),
-                }));
+                return calculateGroup(items);
             }),
         );
     }
@@ -62,6 +51,7 @@ export class TimeTable implements DatabaseTable<TimeEntry> {
                         duration: Duration.fromMillis(0),
                         utcDate: todayDate,
                         isNonWorkday: false,
+                        isADayOff: false,
                     };
                 }
 

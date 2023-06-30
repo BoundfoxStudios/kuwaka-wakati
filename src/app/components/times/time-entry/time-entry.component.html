@@ -21,6 +21,15 @@
         </div>
     </div>
     <div>
+        <span class="kw-label">A day off?</span>
+        <div class="kw-input kw-toggle-input">
+            <label class="relative inline-flex cursor-pointer items-center">
+                <input type="checkbox" class="peer sr-only" [formControl]="formGroup.controls.isADayOff" />
+                <div class="kw-toggle peer"></div>
+            </label>
+        </div>
+    </div>
+    <div>
         <button class="kw-button" type="submit" [disabled]="formGroup.invalid">Ok</button>
     </div>
 </form>

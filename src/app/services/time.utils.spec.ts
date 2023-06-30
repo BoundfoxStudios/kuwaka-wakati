@@ -1,5 +1,6 @@
 import { DateTime, Duration } from 'luxon';
 import {
+    calculateGroup,
     calculateRemainingAndOvertime,
     calculateTimeEntryGroupDuration,
     multiplyDuration,
@@ -128,6 +129,38 @@ describe('Time Utils', () => {
             expect(result.remainingTime).toBeUndefined();
             expect(result.overtime).toBeDefined();
             expect(result.overtime?.hours).toEqual(4);
+        });
+    });
+
+    describe('calculateGroup', () => {
+        it('calculates a group without any special days', () => {
+            const start1 = Duration.fromObject({ hour: 1 }).toMillis();
+            const end1 = Duration.fromObject({ hour: 3 }).toMillis();
+            const start2 = Duration.fromObject({ hour: 4 }).toMillis();
+            const end2 = Duration.fromObject({ hour: 5 }).toMillis();
+
+            const result = calculateGroup([
+                {
+                    start: start1,
+                    end: end1,
+                    duration: Duration.fromMillis(end1 - start1),
+                    utcDate: 0,
+                    id: 0,
+                    isADayOff: false,
+                    isNonWorkday: false,
+                },
+                {
+                    start: start2,
+                    end: end2,
+                    duration: Duration.fromMillis(end2 - start2),
+                    utcDate: 0,
+                    id: 1,
+                    isADayOff: false,
+                    isNonWorkday: false,
+                },
+            ]);
+
+            expect(result[0].duration.toMillis()).toEqual(end1 - start1 + end2 - start2);
         });
     });
 });

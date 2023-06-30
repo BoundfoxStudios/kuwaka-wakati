@@ -1,18 +1,24 @@
 <table class="w-full text-left text-gray-500">
     <tbody>
+        <tr *ngIf="today.isADayOff">
+            <td colspan="2" class="whitespace-nowrap px-6 py-4 text-center font-medium text-green">
+                Enjoy your day off
+                <fa-icon [icon]="faSun" class="text-yellow"></fa-icon>
+            </td>
+        </tr>
         <tr>
             <td class="bg-gray-100 px-6 py-3 text-xs font-semibold uppercase text-gray-700">Date</td>
             <td class="whitespace-nowrap px-6 py-4 text-right font-medium text-gray-900">{{ today.utcDate | unixDate }}</td>
         </tr>
-        <tr>
+        <tr *ngIf="!today.isADayOff">
             <td class="bg-gray-100 px-6 py-3 text-xs font-semibold uppercase text-gray-700">Time worked</td>
             <td class="whitespace-nowrap px-6 py-4 text-right font-medium text-gray-900">{{ today.duration | duration }}</td>
         </tr>
-        <tr *ngIf="today.remainingTime">
+        <tr *ngIf="today.remainingTime && !today.isADayOff">
             <td class="bg-gray-100 px-6 py-3 text-xs font-semibold uppercase text-gray-700">Remaining time</td>
             <td class="whitespace-nowrap px-6 py-4 text-right font-medium text-red">{{ today.remainingTime | duration }}</td>
         </tr>
-        <tr *ngIf="today.overtime">
+        <tr *ngIf="today.overtime && !today.isADayOff">
             <td class="bg-gray-100 px-6 py-3 text-xs font-semibold uppercase text-gray-700">Overtime</td>
             <td class="whitespace-nowrap px-6 py-4 text-right font-medium text-green">{{ today.overtime | duration }}</td>
         </tr>

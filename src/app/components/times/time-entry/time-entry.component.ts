@@ -1,12 +1,14 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
 import { FormModel, InferModeFromModel, Replace } from 'ngx-mf';
 import { TimeEntryCreate } from '../../../services/time-tracking/time.models';
 import { DateTime } from 'luxon';
 import { validateTime } from '../../../validators/validate-time';
-import { parseTime } from '../../../services/time.utils';
+import { millisecondsToHumanReadable, parseTime } from '../../../services/time.utils';
 import { validateStartEndGroup } from '../../../validators/validate-start-end-time-group';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Settings } from '../../../services/settings/settings';
 
 type EntryModel = FormModel<
     TimeEntryCreate,
@@ -17,6 +19,16 @@ type EntryModel = FormModel<
     },
     InferModeFromModel
 >;
+
+const changeFormControlDisable = (state: boolean, ...formControls: FormControl<unknown>[]): void => {
+    if (state) {
+        return formControls.forEach(formControl => formControl.disabled && formControl.enable());
+    }
+
+    if (!state) {
+        return formControls.forEach(formControl => formControl.enabled && formControl.disable());
+    }
+};
 
 @Component({
     selector: 'kw-time-entry',
@@ -31,6 +43,7 @@ export class TimeEntryComponent {
      * Enabled the today mode hides the date entry.
      */
     @Input() isTodayMode = false;
+    @Input({ required: true }) settings!: Settings;
     @Output() timeEntry = new EventEmitter<TimeEntryCreate>();
 
     protected readonly maximumDate = DateTime.now().toISODate();
@@ -45,23 +58,42 @@ export class TimeEntryComponent {
             start: new FormControl<string>('', { nonNullable: true, validators: [validateTime, Validators.required] }),
             end: new FormControl<string>('', { nonNullable: true, validators: [validateTime, Validators.required] }),
             isNonWorkday: new FormControl<boolean>(false, { nonNullable: true }),
+            isADayOff: new FormControl<boolean>(false, { nonNullable: true }),
         },
-        { validators: [validateStartEndGroup<EntryModel['controls']>('start', 'end')] },
+        { validators: [validateStartEndGroup<EntryModel['controls']>('start', 'end', 'isADayOff')] },
     );
     private readonly formInitialState = this.formGroup.value;
+
+    constructor() {
+        this.formGroup.valueChanges.pipe(takeUntilDestroyed()).subscribe(value => {
+            const formValue = value as Required<EntryModel['value']>;
+
+            changeFormControlDisable(!formValue.isNonWorkday, this.formGroup.controls.isADayOff);
+            changeFormControlDisable(
+                !formValue.isADayOff,
+                this.formGroup.controls.isNonWorkday,
+                this.formGroup.controls.start,
+                this.formGroup.controls.end,
+            );
+        });
+    }
 
     submit(): void {
         if (!this.formGroup.valid) {
             return;
         }
 
-        const formValue = { ...(this.formGroup.value as Required<EntryModel['value']>) };
+        const formValue = this.formGroup.value;
 
         this.timeEntry.emit({
-            utcDate: DateTime.fromISO(formValue.utcDate).toMillis(),
-            start: parseTime(formValue.start),
-            end: parseTime(formValue.end),
-            isNonWorkday: formValue.isNonWorkday,
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            utcDate: DateTime.fromISO(formValue.utcDate!).toMillis(),
+            start: parseTime(formValue.start ?? '00:00'),
+            end: parseTime(formValue.end ?? millisecondsToHumanReadable(this.settings.workPerDay)),
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            isNonWorkday: formValue.isNonWorkday!,
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            isADayOff: formValue.isADayOff!,
         });
 
         this.formGroup.reset(this.formInitialState);

@@ -62,9 +62,12 @@ export default class DashboardComponent {
     );
     private readonly timeTable = inject(TimeTable);
     private readonly settingsTable = inject(SettingsTable);
+    protected readonly settings$ = this.settingsTable.current$;
     protected readonly chartData$ = combineLatest({
-        settings: this.settingsTable.current$,
-        data: this.timeTable.groupByDay$(0, DateTime.now().toMillis()).pipe(map(data => data.reverse())),
+        settings: this.settings$,
+        data: this.timeTable
+            .groupByDay$(0, DateTime.now().toMillis())
+            .pipe(map(data => data.filter(item => !item.isADayOff && !item.isNonWorkday).reverse())),
     });
     private readonly timeService = inject(TimeService);
     protected readonly today$ = this.timeService.today$;

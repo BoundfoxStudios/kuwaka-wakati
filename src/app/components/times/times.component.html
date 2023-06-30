@@ -2,7 +2,7 @@
 
 <kw-card>
     <h2 header>Create Time Entry</h2>
-    <kw-time-entry class="mb-4 block" (timeEntry)="add($event)" body />
+    <kw-time-entry *ngIf="settings$ | async as settings; else loading" class="mb-4 block" (timeEntry)="add($event)" [settings]="settings" body />
 </kw-card>
 
 <ng-container *ngIf="times$ | async as times">
@@ -13,3 +13,7 @@
         <kw-time-table [times]="times" [useVirtualScroll]="true" (delete)="delete($event)" class="block h-full pb-4" body />
     </kw-card>
 </ng-container>
+
+<ng-template #loading>
+    <kw-loading-spinner></kw-loading-spinner>
+</ng-template>

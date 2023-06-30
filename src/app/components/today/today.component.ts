@@ -5,8 +5,7 @@ import { DurationPipe } from '../../pipes/duration.pipe';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MillisecondsToTimePipe } from '../../pipes/milliseconds-to-time.pipe';
 import { UnixDatePipe } from '../../pipes/unix-date.pipe';
-import { faCheck } from '@fortawesome/free-solid-svg-icons';
-import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
+import { faCheck, faSun } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
     selector: 'kw-today',
@@ -19,5 +18,5 @@ import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
 export class TodayComponent {
     @Input({ required: true }) today!: Today;
     protected readonly faCheck = faCheck;
-    protected readonly faCheckCircle = faCheckCircle;
+    protected readonly faSun = faSun;
 }
