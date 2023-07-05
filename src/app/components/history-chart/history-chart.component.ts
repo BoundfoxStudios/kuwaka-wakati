@@ -25,7 +25,9 @@ export class HistoryChartComponent implements AfterViewInit, OnDestroy {
     private chart?: Chart;
 
     @Input() set data(input: TimeEntryGroup[]) {
-        this.setChartData(input);
+        // Sorry :(
+        // Easiest way to delay setting the data to let the component initialize first.
+        void Promise.resolve().then(() => this.setChartData(input));
     }
 
     ngAfterViewInit(): void {

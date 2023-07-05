@@ -1,11 +1,11 @@
-import { ChangeDetectionStrategy, Component, computed, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Settings } from '../../../services/settings/settings';
-import { FormModel, Replace } from 'ngx-mf';
 import { FormBuilder, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { DurationPipe } from '../../../pipes/duration.pipe';
 import { millisecondsToHumanReadable, multiplyDuration, parseTimeToDuration } from '../../../services/time.utils';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { map } from 'rxjs';
+import { FormModel, Replace } from 'ngx-mf';
 
 type SettingsModel = FormModel<
     Settings,
@@ -29,16 +29,18 @@ export class SettingsFormComponent implements OnInit {
     protected formGroup = this.formBuilder.group<SettingsModel['controls']>({
         workPerDay: new FormControl<string>('', { nonNullable: true }),
     });
-    private readonly workPerDay = toSignal(this.formGroup.controls.workPerDay.valueChanges, { initialValue: 'hh:mm' });
-    protected readonly workHoursPerWeek = computed(() => {
-        const workPerDay = this.workPerDay();
-        return multiplyDuration(parseTimeToDuration(workPerDay));
-    });
+    protected readonly workHoursPerWeek$ = this.formGroup.controls.workPerDay.valueChanges.pipe(
+        map(workPerDay => multiplyDuration(parseTimeToDuration(workPerDay))),
+    );
 
     ngOnInit(): void {
-        this.formGroup.setValue({
-            workPerDay: millisecondsToHumanReadable(this.settings.workPerDay),
-        });
+        // Sorry :(
+        // Easiest way to delay setting the data to let the component initialize first.
+        void Promise.resolve().then(() =>
+            this.formGroup.setValue({
+                workPerDay: millisecondsToHumanReadable(this.settings.workPerDay),
+            }),
+        );
     }
 
     submit(): void {
