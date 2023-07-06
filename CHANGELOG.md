@@ -1,3 +1,13 @@
+# [1.7.0](https://github.com/BoundfoxStudios/kuwaka-wakati/compare/v1.6.0...v1.7.0) (2023-07-06)
+
+### Bug Fixes
+
+- table headers ([8915ec6](https://github.com/BoundfoxStudios/kuwaka-wakati/commit/8915ec61ceb7f906fb1180568b9e005349485818))
+
+### Features
+
+- drop signals for now… ([be179de](https://github.com/BoundfoxStudios/kuwaka-wakati/commit/be179dec218580052d3ba0a2add4d71d694564a1))
+
 # [1.6.0](https://github.com/BoundfoxStudios/kuwaka-wakati/compare/v1.5.0...v1.6.0) (2023-06-29)
 
 ### Bug Fixes
