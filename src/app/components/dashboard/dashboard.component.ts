@@ -1,9 +1,8 @@
-import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CardComponent } from '../card/card.component';
 import { TimeTable } from '../../services/time-tracking/time.table';
 import { DateTime } from 'luxon';
-import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { HistoryChartComponent } from '../history-chart/history-chart.component';
 import { SettingsTable } from '../../services/settings/settings.table';
 import { TodayComponent } from '../today/today.component';
@@ -17,9 +16,10 @@ import { TimeEntry, TimeEntryCreate } from '../../services/time-tracking/time.mo
 import { TimeTableComponent } from '../times/time-table/time-table.component';
 import { PageTitleComponent } from '../page-title/page-title.component';
 import { OverallComponent } from '../overall/overall.component';
-import { map, switchMap } from 'rxjs';
+import { BehaviorSubject, combineLatest, map, switchMap } from 'rxjs';
 import { dateTimeToDate } from '../../services/time.utils';
 import { WeekComponent } from '../week/week.component';
+import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.component';
 
 @Component({
     selector: 'kw-dashboard',
@@ -36,6 +36,7 @@ import { WeekComponent } from '../week/week.component';
         PageTitleComponent,
         OverallComponent,
         WeekComponent,
+        LoadingSpinnerComponent,
     ],
     templateUrl: './dashboard.component.html',
     styleUrls: ['./dashboard.component.css'],
@@ -49,34 +50,27 @@ export default class DashboardComponent {
     protected readonly faChevronLeft = faChevronLeft;
     protected readonly faChevronRight = faChevronRight;
     protected readonly faCalendar = faCalendar;
-    protected readonly weekFromTo = computed(() => {
-        const weekNumber = this.weekNumber();
-        const week = DateTime.fromObject({ weekNumber });
-        const start = week.startOf('week');
-        const end = week.endOf('week');
-        return `${dateTimeToDate(start)} - ${dateTimeToDate(end)}`;
-    });
-    protected readonly isWorkDayDone = computed(() => {
-        const today = this.today();
-
-        if (!today) {
-            return;
-        }
-
-        return !today.remainingTime;
-    });
-    private readonly weekDate = signal(DateTime.now());
-    protected readonly weekNumber = computed(() => this.weekDate().get('weekNumber'));
+    private readonly weekDate$ = new BehaviorSubject<DateTime>(DateTime.now());
+    protected readonly weekNumber$ = this.weekDate$.pipe(map(weekDate => weekDate.get('weekNumber')));
+    protected readonly weekFromTo$ = this.weekNumber$.pipe(
+        map(weekNumber => {
+            const week = DateTime.fromObject({ weekNumber });
+            const start = week.startOf('week');
+            const end = week.endOf('week');
+            return `${dateTimeToDate(start)} - ${dateTimeToDate(end)}`;
+        }),
+    );
     private readonly timeTable = inject(TimeTable);
-    protected readonly chartData = toSignal(this.timeTable.groupByDay$(0, DateTime.now().toMillis()).pipe(map(data => data.reverse())), {
-        initialValue: [],
-    });
     private readonly settingsTable = inject(SettingsTable);
-    protected readonly settings = toSignal(this.settingsTable.current$);
+    protected readonly chartData$ = combineLatest({
+        settings: this.settingsTable.current$,
+        data: this.timeTable.groupByDay$(0, DateTime.now().toMillis()).pipe(map(data => data.reverse())),
+    });
     private readonly timeService = inject(TimeService);
-    protected readonly today = toSignal(this.timeService.today$);
-    protected readonly overall = toSignal(this.timeService.overall$);
-    protected readonly week = toSignal(toObservable(this.weekNumber).pipe(switchMap(weekNumber => this.timeService.week$(weekNumber))));
+    protected readonly today$ = this.timeService.today$;
+    protected readonly isWorkDayDone$ = this.today$.pipe(map(today => (today ? !today.remainingTime : undefined)));
+    protected readonly overall$ = this.timeService.overall$;
+    protected readonly week$ = this.weekNumber$.pipe(switchMap(weekNumber => this.timeService.week$(weekNumber)));
 
     protected async addTimeEntry(timeEntry: TimeEntryCreate): Promise<void> {
         await this.timeTable.add(timeEntry);
@@ -88,10 +82,10 @@ export default class DashboardComponent {
     }
 
     protected updateWeek(delta: number): void {
-        this.weekDate.update(current => current.plus({ week: delta }));
+        this.weekDate$.next(this.weekDate$.value.plus({ week: delta }));
     }
 
     protected showThisWeek(): void {
-        this.weekDate.set(DateTime.now());
+        this.weekDate$.next(DateTime.now());
     }
 }

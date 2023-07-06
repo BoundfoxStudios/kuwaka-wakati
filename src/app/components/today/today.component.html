@@ -1,23 +1,23 @@
 <table class="w-full text-left text-gray-500">
     <tbody>
         <tr>
-            <td class="bg-gray-50 px-6 py-3 text-xs font-semibold uppercase text-gray-700">Date</td>
+            <td class="bg-gray-100 px-6 py-3 text-xs font-semibold uppercase text-gray-700">Date</td>
             <td class="whitespace-nowrap px-6 py-4 text-right font-medium text-gray-900">{{ today.utcDate | unixDate }}</td>
         </tr>
         <tr>
-            <td class="bg-gray-50 px-6 py-3 text-xs font-semibold uppercase text-gray-700">Time worked</td>
+            <td class="bg-gray-100 px-6 py-3 text-xs font-semibold uppercase text-gray-700">Time worked</td>
             <td class="whitespace-nowrap px-6 py-4 text-right font-medium text-gray-900">{{ today.duration | duration }}</td>
         </tr>
         <tr *ngIf="today.remainingTime">
-            <td class="bg-gray-50 px-6 py-3 text-xs font-semibold uppercase text-gray-700">Remaining time</td>
+            <td class="bg-gray-100 px-6 py-3 text-xs font-semibold uppercase text-gray-700">Remaining time</td>
             <td class="whitespace-nowrap px-6 py-4 text-right font-medium text-red">{{ today.remainingTime | duration }}</td>
         </tr>
         <tr *ngIf="today.overtime">
-            <td class="bg-gray-50 px-6 py-3 text-xs font-semibold uppercase text-gray-700">Overtime</td>
+            <td class="bg-gray-100 px-6 py-3 text-xs font-semibold uppercase text-gray-700">Overtime</td>
             <td class="whitespace-nowrap px-6 py-4 text-right font-medium text-green">{{ today.overtime | duration }}</td>
         </tr>
         <tr *ngIf="today.isNonWorkday">
-            <td class="bg-gray-50 px-6 py-3 text-xs font-semibold uppercase text-gray-700">Non workday</td>
+            <td class="bg-gray-100 px-6 py-3 text-xs font-semibold uppercase text-gray-700">Non workday</td>
             <td class="whitespace-nowrap px-6 py-4 text-right font-medium text-green">
                 <fa-icon [icon]="faCheck" class="ml-1" />
             </td>

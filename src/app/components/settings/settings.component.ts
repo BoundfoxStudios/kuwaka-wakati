@@ -1,9 +1,8 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, inject, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SettingsTable } from '../../services/settings/settings.table';
 import { SettingsFormComponent } from './settings-form/settings-form.component';
 import { PageTitleComponent } from '../page-title/page-title.component';
-import { toSignal } from '@angular/core/rxjs-interop';
 import { DatabaseService } from '../../services/database/database.service';
 import { DateTime } from 'luxon';
 import { dateTimeToLocaleData } from '../../services/time.utils';
@@ -13,11 +12,21 @@ import { TauriService } from '../../services/tauri.service';
 import { CardComponent } from '../card/card.component';
 import { CardSectionTitleComponent } from '../card/card-section-title/card-section-title.component';
 import { Settings } from '../../services/settings/settings';
+import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.component';
 
 @Component({
     selector: 'kw-settings',
     standalone: true,
-    imports: [CommonModule, SettingsFormComponent, PageTitleComponent, FileDirective, ReactiveFormsModule, CardComponent, CardSectionTitleComponent],
+    imports: [
+        CommonModule,
+        SettingsFormComponent,
+        PageTitleComponent,
+        FileDirective,
+        ReactiveFormsModule,
+        CardComponent,
+        CardSectionTitleComponent,
+        LoadingSpinnerComponent,
+    ],
     templateUrl: './settings.component.html',
     styleUrls: ['./settings.component.css'],
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -26,7 +35,7 @@ export default class SettingsComponent {
     protected readonly fileControl = new FormControl<File | null>(null, { validators: [Validators.required] });
     private readonly databaseService = inject(DatabaseService);
     private readonly settingsTable = inject(SettingsTable);
-    protected readonly settings = toSignal(this.settingsTable.current$);
+    protected readonly settings$ = this.settingsTable.current$;
     private readonly tauriService = inject(TauriService);
 
     protected async export(): Promise<void> {

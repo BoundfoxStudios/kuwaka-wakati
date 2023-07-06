@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@a
 import { CommonModule } from '@angular/common';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { TimeTable } from '../../services/time-tracking/time.table';
-import { DateTime, Duration } from 'luxon';
+import { DateTime } from 'luxon';
 import { PageTitleComponent } from '../page-title/page-title.component';
 
 @Component({

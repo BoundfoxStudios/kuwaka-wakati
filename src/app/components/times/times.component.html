@@ -5,9 +5,11 @@
     <kw-time-entry class="mb-4 block" (timeEntry)="add($event)" body />
 </kw-card>
 
-<kw-card *ngIf="times().length" class="h-full" [fullSize]="true">
-    <h2 header>
-        History <span class="ml-1 text-sm font-normal text-slate-400">{{ times().length }}</span>
-    </h2>
-    <kw-time-table [times]="times()" [useVirtualScroll]="true" (delete)="delete($event)" class="block h-full pb-4" body />
-</kw-card>
+<ng-container *ngIf="times$ | async as times">
+    <kw-card *ngIf="times.length" class="h-full" [fullSize]="true">
+        <h2 header>
+            History <span class="ml-1 text-sm font-normal text-slate-400">{{ times.length }}</span>
+        </h2>
+        <kw-time-table [times]="times" [useVirtualScroll]="true" (delete)="delete($event)" class="block h-full pb-4" body />
+    </kw-card>
+</ng-container>
