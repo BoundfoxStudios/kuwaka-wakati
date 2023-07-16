@@ -1,5 +1,5 @@
 import { DateTime, Duration } from 'luxon';
-import { TimeEntryGroup } from './time-tracking/time.models';
+import { TimeEntryGroup, TimeEntryWithDuration } from './time-tracking/time.models';
 
 export type Milliseconds = number;
 
@@ -44,6 +44,25 @@ export const unixTimeToDate = (milliseconds: Milliseconds): string => dateTimeTo
 
 export const todayDateMilliseconds = (): number => DateTime.now().set({ hour: 0, minute: 0, second: 0, millisecond: 0 }).toMillis();
 
+export const calculateGroup = (items: TimeEntryWithDuration[]): TimeEntryGroup[] => {
+    const bucket = items.reduce((bucket, item) => {
+        const list = (bucket[item.utcDate] = bucket[item.utcDate] ?? []);
+        list.push(item);
+        return bucket;
+    }, {} as { [key: number]: TimeEntryWithDuration[] });
+
+    return Object.values(bucket).map<TimeEntryGroup>(timeEntries => ({
+        items: timeEntries,
+        utcDate: timeEntries[0].utcDate,
+        duration: timeEntries.reduce(
+            (duration, current) => (current.isADayOff ? duration.minus(current.duration) : duration.plus(current.duration)),
+            Duration.fromMillis(0),
+        ),
+        isNonWorkday: timeEntries.every(entry => entry.isNonWorkday),
+        isADayOff: timeEntries.every(entry => entry.isADayOff),
+    }));
+};
+
 export const calculateRemainingAndOvertime = (
     nominalTime: Duration,
     actualTime: Duration,
@@ -67,5 +86,5 @@ export const calculateRemainingAndOvertime = (
 
     return { remainingTime, overtime };
 };
-export const calculateTimeEntryGroupDuration = (groups: TimeEntryGroup[]): Duration =>
-    groups.reduce((sum, current) => sum.plus(current.duration), Duration.fromMillis(0));
+export const calculateTimeEntryGroupDuration = (groups: TimeEntryGroup[], workPerDay: Duration): Duration =>
+    groups.reduce((sum, current) => (current.isADayOff ? sum.minus(workPerDay) : sum.plus(current.duration)), Duration.fromMillis(0));

@@ -7,6 +7,7 @@ export interface TimeEntry {
     start: Milliseconds;
     end: Milliseconds;
     isNonWorkday: boolean;
+    isADayOff: boolean;
 }
 
 export type TimeEntryCreate = Omit<TimeEntry, 'id'>;
@@ -20,6 +21,7 @@ export interface TimeEntryGroup {
     utcDate: Milliseconds;
     duration: Duration;
     isNonWorkday: boolean;
+    isADayOff: boolean;
 }
 
 export interface RemainingTimeOvertime {
