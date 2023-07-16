@@ -1,3 +1,9 @@
+# [1.8.0](https://github.com/BoundfoxStudios/kuwaka-wakati/compare/v1.7.0...v1.8.0) (2023-07-16)
+
+### Features
+
+- time consumtion ([cb494bd](https://github.com/BoundfoxStudios/kuwaka-wakati/commit/cb494bdef54b5ffcbc38031947c77a43f9ad4ff6)), closes [#2](https://github.com/BoundfoxStudios/kuwaka-wakati/issues/2)
+
 # [1.7.0](https://github.com/BoundfoxStudios/kuwaka-wakati/compare/v1.6.0...v1.7.0) (2023-07-06)
 
 ### Bug Fixes
