@@ -87,30 +87,67 @@ describe('Time Utils', () => {
 
     describe('calculateTimeEntryGroupDuration', () => {
         it('calculates correct duration with 1 item', () => {
-            const result = calculateTimeEntryGroupDuration([
-                {
-                    duration: Duration.fromObject({ minutes: 40 }),
-                } as TimeEntryGroup,
-            ]);
+            const result = calculateTimeEntryGroupDuration(
+                [
+                    {
+                        duration: Duration.fromObject({ minutes: 40 }),
+                    } as TimeEntryGroup,
+                ],
+                Duration.fromMillis(0),
+            );
 
             expect(result.minutes).toEqual(40);
         });
 
-        it('calculates correct duration with 3 item', () => {
-            const result = calculateTimeEntryGroupDuration([
-                {
-                    duration: Duration.fromObject({ hours: 1, minutes: 40 }),
-                } as TimeEntryGroup,
-                {
-                    duration: Duration.fromObject({ hours: 3, minutes: 40 }),
-                } as TimeEntryGroup,
-                {
-                    duration: Duration.fromObject({ minutes: 40 }),
-                } as TimeEntryGroup,
-            ]);
+        it('calculates correct duration with 3 items', () => {
+            const result = calculateTimeEntryGroupDuration(
+                [
+                    {
+                        duration: Duration.fromObject({ hours: 1, minutes: 40 }),
+                    } as TimeEntryGroup,
+                    {
+                        duration: Duration.fromObject({ hours: 3, minutes: 40 }),
+                    } as TimeEntryGroup,
+                    {
+                        duration: Duration.fromObject({ minutes: 40 }),
+                    } as TimeEntryGroup,
+                ],
+                Duration.fromMillis(0),
+            );
 
             expect(result.minutes).toEqual(40 * 3);
             expect(result.hours).toEqual(4);
+        });
+
+        it('calculates correct duration with a day off and no other days', () => {
+            const result = calculateTimeEntryGroupDuration(
+                [
+                    {
+                        isADayOff: true,
+                    } as TimeEntryGroup,
+                ],
+                Duration.fromObject({ hours: 7, minutes: 30 }),
+            );
+
+            expect(result.minutes).toEqual(-30);
+            expect(result.hours).toEqual(-7);
+        });
+
+        it('calculates correct duration with a day off and a normal working day', () => {
+            const result = calculateTimeEntryGroupDuration(
+                [
+                    {
+                        isADayOff: true,
+                    } as TimeEntryGroup,
+                    {
+                        duration: Duration.fromObject({ hours: 7, minutes: 30 }),
+                    } as TimeEntryGroup,
+                ],
+                Duration.fromObject({ hours: 7, minutes: 30 }),
+            );
+
+            expect(result.minutes).toEqual(0);
+            expect(result.hours).toEqual(0);
         });
     });
 
