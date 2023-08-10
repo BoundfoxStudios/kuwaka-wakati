@@ -1,3 +1,9 @@
+# [1.9.0](https://github.com/BoundfoxStudios/kuwaka-wakati/compare/v1.8.0...v1.9.0) (2023-08-10)
+
+### Features
+
+- show overtime/remaining time in chart tooltip ([dc40109](https://github.com/BoundfoxStudios/kuwaka-wakati/commit/dc40109a830db852c6c179266845cff200ae72e2))
+
 # [1.8.0](https://github.com/BoundfoxStudios/kuwaka-wakati/compare/v1.7.0...v1.8.0) (2023-07-16)
 
 ### Features
