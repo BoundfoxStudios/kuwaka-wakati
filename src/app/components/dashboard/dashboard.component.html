@@ -19,13 +19,13 @@
 </kw-card>
 
 <kw-card class="mt-4">
-    <div header class="flex flex-1">
+    <div class="flex flex-1" header>
         <h2 class="whitespace-nowrap">
             Today @if (isWorkDayDone$ | async) {
             <fa-icon [icon]="faCheckCircle" class="ml-1 text-green" />
             }
         </h2>
-        <fa-icon [icon]="isTimeEntryVisible ? faClose : faPlus" class="ml-auto cursor-pointer" (click)="isTimeEntryVisible = !isTimeEntryVisible" />
+        <fa-icon (click)="isTimeEntryVisible = !isTimeEntryVisible" [icon]="isTimeEntryVisible ? faClose : faPlus" class="ml-auto cursor-pointer" />
     </div>
     @if (today$ | async; as today) {
     <ng-container body>
@@ -45,12 +45,12 @@
 </kw-card>
 
 <kw-card class="mt-4">
-    <div header class="flex flex-1">
+    <div class="flex flex-1" header>
         <h2>Week {{ weekNumber$ | async }} ({{ weekFromTo$ | async }})</h2>
         <div class="ml-auto">
-            <fa-icon [icon]="faChevronLeft" (click)="updateWeek(-1)" class="cursor-pointer"></fa-icon>
-            <fa-icon [icon]="faCalendar" class="ml-4 cursor-pointer" (click)="showThisWeek()"></fa-icon>
-            <fa-icon [icon]="faChevronRight" class="ml-4 cursor-pointer" (click)="updateWeek(1)"></fa-icon>
+            <fa-icon (click)="updateWeek(-1)" [icon]="faChevronLeft" class="cursor-pointer"></fa-icon>
+            <fa-icon (click)="showThisWeek()" [icon]="faCalendar" class="ml-4 cursor-pointer"></fa-icon>
+            <fa-icon (click)="updateWeek(1)" [icon]="faChevronRight" class="ml-4 cursor-pointer"></fa-icon>
         </div>
     </div>
     @if (week$ | async; as week) {

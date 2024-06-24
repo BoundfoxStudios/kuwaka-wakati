@@ -14,7 +14,7 @@
     <ng-container body>
         <p>This will export everything, all tracked times, all your settings.</p>
         <div class="mt-4">
-            <button class="kw-button" (click)="export()">Export</button>
+            <button (click)="export()" class="kw-button">Export</button>
         </div>
     </ng-container>
 </kw-card>
@@ -23,15 +23,15 @@
     <h2 header>Danger Zone</h2>
     <ng-container body>
         <kw-card-section-title>Import</kw-card-section-title>
-        <input type="file" accept=".json" [formControl]="fileControl" />
+        <input [formControl]="fileControl" accept=".json" type="file" />
         <div class="mt-4">
-            <button class="kw-button" (click)="import()" [disabled]="fileControl.invalid">Import</button>
+            <button (click)="import()" [disabled]="fileControl.invalid" class="kw-button">Import</button>
         </div>
 
         <kw-card-section-title class="mt-8">Clear Database</kw-card-section-title>
         <p>This will clear the whole database.</p>
         <div class="mt-4">
-            <button class="kw-button bg-red" (click)="clear()">Clear</button>
+            <button (click)="clear()" class="kw-button bg-red">Clear</button>
         </div>
     </ng-container>
 </kw-card>

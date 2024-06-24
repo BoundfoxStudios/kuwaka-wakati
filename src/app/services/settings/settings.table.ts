@@ -2,7 +2,7 @@ import { DatabaseCleanup, DatabaseTable } from '../database/database.service';
 import { Settings } from './settings';
 import { liveQuery, Table } from 'dexie';
 import { Injectable } from '@angular/core';
-import { shareReplay, startWith } from 'rxjs';
+import { shareReplay } from 'rxjs';
 import { dexieToRxObservable } from '../dexie-to-rxjs';
 
 interface SettingsEntity extends Settings {

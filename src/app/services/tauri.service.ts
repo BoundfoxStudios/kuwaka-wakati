@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { getVersion } from '@tauri-apps/api/app';
-import { save, confirm as tauriConfirm } from '@tauri-apps/api/dialog';
+import { confirm as tauriConfirm, save } from '@tauri-apps/api/dialog';
 import { saveAs } from 'file-saver';
 import { writeBinaryFile } from '@tauri-apps/api/fs';
 

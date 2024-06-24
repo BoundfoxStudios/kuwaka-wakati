@@ -18,15 +18,6 @@ export class FileDirective implements ControlValueAccessor {
 
     private onChange?: (file: File | null) => void;
 
-    @HostListener('change', ['$event.target.files'])
-    private emitFiles(event: FileList): void {
-        const file = event && event.item(0);
-
-        if (this.onChange) {
-            this.onChange(file);
-        }
-    }
-
     registerOnChange(fn: (file: File | null) => void): void {
         this.onChange = fn;
     }
@@ -37,5 +28,14 @@ export class FileDirective implements ControlValueAccessor {
 
     writeValue(): void {
         this.hostElement.nativeElement.value = '';
+    }
+
+    @HostListener('change', ['$event.target.files'])
+    private emitFiles(event: FileList): void {
+        const file = event && event.item(0);
+
+        if (this.onChange) {
+            this.onChange(file);
+        }
     }
 }

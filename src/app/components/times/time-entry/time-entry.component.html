@@ -1,4 +1,4 @@
-<form class="flex items-end space-x-3" (ngSubmit)="submit()" [formGroup]="formGroup">
+<form (ngSubmit)="submit()" [formGroup]="formGroup" class="flex items-end space-x-3">
     @if (!isTodayMode) {
     <div>
         <label class="kw-label" for="utcDate">Date</label>
@@ -7,17 +7,17 @@
     }
     <div>
         <label class="kw-label" for="start">Start</label>
-        <input class="kw-input" id="start" type="time" [formControl]="formGroup.controls.start" />
+        <input [formControl]="formGroup.controls.start" class="kw-input" id="start" type="time" />
     </div>
     <div>
         <label class="kw-label" for="end">End</label>
-        <input class="kw-input" id="end" type="time" [formControl]="formGroup.controls.end" />
+        <input [formControl]="formGroup.controls.end" class="kw-input" id="end" type="time" />
     </div>
     <div>
         <span class="kw-label">No workday</span>
         <div class="kw-input kw-toggle-input">
             <label class="relative inline-flex cursor-pointer items-center">
-                <input type="checkbox" class="peer sr-only" [formControl]="formGroup.controls.isNonWorkday" />
+                <input [formControl]="formGroup.controls.isNonWorkday" class="peer sr-only" type="checkbox" />
                 <div class="kw-toggle peer"></div>
             </label>
         </div>
@@ -26,12 +26,12 @@
         <span class="kw-label">A day off?</span>
         <div class="kw-input kw-toggle-input">
             <label class="relative inline-flex cursor-pointer items-center">
-                <input type="checkbox" class="peer sr-only" [formControl]="formGroup.controls.isADayOff" />
+                <input [formControl]="formGroup.controls.isADayOff" class="peer sr-only" type="checkbox" />
                 <div class="kw-toggle peer"></div>
             </label>
         </div>
     </div>
     <div>
-        <button class="kw-button" type="submit" [disabled]="formGroup.invalid">Ok</button>
+        <button [disabled]="formGroup.invalid" class="kw-button" type="submit">Ok</button>
     </div>
 </form>

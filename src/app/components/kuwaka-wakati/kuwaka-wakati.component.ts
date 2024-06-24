@@ -30,11 +30,10 @@ import { SidebarHeaderComponent } from '../sidebar/sidebar-header/sidebar-header
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class KuwakaWakatiComponent {
-    private readonly tauriService = inject(TauriService);
-    protected readonly version$ = this.tauriService.getVersion();
-
     protected readonly faDashboard = faDashboard;
     protected readonly faCogs = faCogs;
     protected readonly faClock = faClock;
     protected readonly faFileImport = faFileImport;
+    private readonly tauriService = inject(TauriService);
+    protected readonly version$ = this.tauriService.getVersion();
 }
