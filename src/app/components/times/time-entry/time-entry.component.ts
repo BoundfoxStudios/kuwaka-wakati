@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
-import { FormModel, InferModeFromModel, Replace } from 'ngx-mf';
+import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormModel, Replace } from 'ngx-mf';
 import { TimeEntryCreate } from '../../../services/time-tracking/time.models';
 import { DateTime } from 'luxon';
 import { validateTime } from '../../../validators/validate-time';
@@ -16,8 +16,7 @@ type EntryModel = FormModel<
         utcDate: Replace<FormControl<string>>;
         start: Replace<FormControl<string>>;
         end: Replace<FormControl<string>>;
-    },
-    InferModeFromModel
+    }
 >;
 
 const changeFormControlDisable = (state: boolean, ...formControls: FormControl<unknown>[]): void => {
@@ -51,7 +50,7 @@ export class TimeEntryComponent {
     protected readonly formGroup = this.formBuilder.group<EntryModel['controls']>(
         {
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            utcDate: new FormControl<string>(DateTime.now().toISODate()!, {
+            utcDate: new FormControl<string>(DateTime.now().toISODate(), {
                 nonNullable: true,
                 validators: [Validators.required],
             }),
