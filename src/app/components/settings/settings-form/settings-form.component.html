@@ -1,8 +1,15 @@
-<form [formGroup]="formGroup" (ngSubmit)="submit()">
+<form (ngSubmit)="submit()" [formGroup]="formGroup" class="space-y-2">
     <div>
         <label class="kw-label" for="hoursPerWeek">Work hours per day:</label>
-        <div class="kw-hint" *ngIf="workHoursPerWeek$ | async as workHoursPerWeek">Work hours per week: {{ workHoursPerWeek | duration }}</div>
-        <input id="hoursPerWeek" class="kw-input" type="time" [formControl]="formGroup.controls.workPerDay" />
+        @if (workHoursPerWeek$ | async; as workHoursPerWeek) {
+        <div class="kw-hint">Work hours per week: {{ workHoursPerWeek | duration }}</div>
+        }
+        <input [formControl]="formGroup.controls.workPerDay" class="kw-input" id="hoursPerWeek" type="time" />
+    </div>
+    <div>
+        <label class="kw-label" for="preFillEndTime">Pre-fill end time:</label>
+        <div class="kw-hint">Will set the end time to "now" each time you create a new entry in the dashboard.</div>
+        <input [formControl]="formGroup.controls.preFillEndTime" class="kw-input" id="preFillEndTime" type="checkbox" />
     </div>
     <div class="mt-2">
         <button class="kw-button">Save</button>

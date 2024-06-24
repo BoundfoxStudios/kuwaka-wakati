@@ -3,22 +3,28 @@
         <tr>
             <th class="px-6 py-3 font-semibold">Nominal Time</th>
             <th class="px-6 py-3 font-semibold">Actual Time</th>
-            <th *ngIf="overall.remainingTime" class="px-6 py-3 font-semibold">Remaining time</th>
-            <th *ngIf="overall.overtime" class="px-6 py-3 font-semibold">Overtime</th>
+            @if (overall.remainingTime) {
+            <th class="px-6 py-3 font-semibold">Remaining time</th>
+            } @if (overall.overtime) {
+            <th class="px-6 py-3 font-semibold">Overtime</th>
+            }
         </tr>
     </thead>
     <tbody>
         <tr class="border-b bg-white">
             <td class="whitespace-nowrap px-6 py-4 font-medium text-gray-900">{{ overall.nominalTime | duration }}</td>
             <td class="whitespace-nowrap px-6 py-4 font-medium text-gray-900">{{ overall.actualTime | duration }}</td>
-            <td *ngIf="overall.remainingTime" class="whitespace-nowrap px-6 py-4 font-medium text-red">
+            @if (overall.remainingTime) {
+            <td class="whitespace-nowrap px-6 py-4 font-medium text-red">
                 <fa-icon [icon]="faExclamationCircle"></fa-icon>
                 {{ overall.remainingTime | duration }}
             </td>
-            <td *ngIf="overall.overtime" class="whitespace-nowrap px-6 py-4 font-medium text-green">
+            } @if (overall.overtime) {
+            <td class="whitespace-nowrap px-6 py-4 font-medium text-green">
                 {{ overall.overtime | duration }}
                 <fa-icon [icon]="faCheckCircle"></fa-icon>
             </td>
+            }
         </tr>
     </tbody>
 </table>

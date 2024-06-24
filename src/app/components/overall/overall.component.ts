@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { Overall } from '../../services/time-tracking/time.models';
 import { DurationPipe } from '../../pipes/duration.pipe';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -11,7 +11,7 @@ import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
 @Component({
     selector: 'kw-overall',
     standalone: true,
-    imports: [CommonModule, DurationPipe, FontAwesomeModule, MillisecondsToTimePipe, UnixDatePipe],
+    imports: [DurationPipe, FontAwesomeModule, MillisecondsToTimePipe, UnixDatePipe],
     templateUrl: './overall.component.html',
     styleUrls: ['./overall.component.css'],
     changeDetection: ChangeDetectionStrategy.OnPush,

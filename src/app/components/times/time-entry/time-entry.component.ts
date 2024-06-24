@@ -1,14 +1,15 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, inject, Input, Output } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
-import { FormModel, InferModeFromModel, Replace } from 'ngx-mf';
-import { TimeEntryCreate } from '../../../services/time-tracking/time.models';
+import { ChangeDetectionStrategy, Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
+
+import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormModel, Replace } from 'ngx-mf';
+import { TimeEntryCreate, TimeEntryDescriptions } from '../../../services/time-tracking/time.models';
 import { DateTime } from 'luxon';
 import { validateTime } from '../../../validators/validate-time';
 import { millisecondsToHumanReadable, parseTime } from '../../../services/time.utils';
 import { validateStartEndGroup } from '../../../validators/validate-start-end-time-group';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Settings } from '../../../services/settings/settings';
+import { KeyValuePipe } from '@angular/common';
 
 type EntryModel = FormModel<
     TimeEntryCreate,
@@ -16,8 +17,7 @@ type EntryModel = FormModel<
         utcDate: Replace<FormControl<string>>;
         start: Replace<FormControl<string>>;
         end: Replace<FormControl<string>>;
-    },
-    InferModeFromModel
+    }
 >;
 
 const changeFormControlDisable = (state: boolean, ...formControls: FormControl<unknown>[]): void => {
@@ -33,12 +33,12 @@ const changeFormControlDisable = (state: boolean, ...formControls: FormControl<u
 @Component({
     selector: 'kw-time-entry',
     standalone: true,
-    imports: [CommonModule, FormsModule, ReactiveFormsModule],
+    imports: [FormsModule, ReactiveFormsModule, KeyValuePipe],
     templateUrl: './time-entry.component.html',
     styleUrls: ['./time-entry.component.css'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TimeEntryComponent {
+export class TimeEntryComponent implements OnInit {
     /**
      * Enabled the today mode hides the date entry.
      */
@@ -46,17 +46,19 @@ export class TimeEntryComponent {
     @Input({ required: true }) settings!: Settings;
     @Output() timeEntry = new EventEmitter<TimeEntryCreate>();
 
+    protected readonly TimeEntryDescriptions = TimeEntryDescriptions;
     protected readonly maximumDate = DateTime.now().toISODate();
     private readonly formBuilder = inject(FormBuilder);
     protected readonly formGroup = this.formBuilder.group<EntryModel['controls']>(
         {
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            utcDate: new FormControl<string>(DateTime.now().toISODate()!, {
+            utcDate: new FormControl<string>(DateTime.now().toISODate(), {
                 nonNullable: true,
                 validators: [Validators.required],
             }),
             start: new FormControl<string>('', { nonNullable: true, validators: [validateTime, Validators.required] }),
             end: new FormControl<string>('', { nonNullable: true, validators: [validateTime, Validators.required] }),
+            description: new FormControl<string>(TimeEntryDescriptions[0], { nonNullable: true }),
             isNonWorkday: new FormControl<boolean>(false, { nonNullable: true }),
             isADayOff: new FormControl<boolean>(false, { nonNullable: true }),
         },
@@ -78,6 +80,12 @@ export class TimeEntryComponent {
         });
     }
 
+    ngOnInit(): void {
+        if (this.isTodayMode && this.settings.preFillEndTime) {
+            this.formGroup.controls.end.setValue(DateTime.now().toFormat('HH:mm'));
+        }
+    }
+
     submit(): void {
         if (!this.formGroup.valid) {
             return;
@@ -86,14 +94,12 @@ export class TimeEntryComponent {
         const formValue = this.formGroup.value;
 
         this.timeEntry.emit({
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             utcDate: DateTime.fromISO(formValue.utcDate!).toMillis(),
             start: parseTime(formValue.start ?? '00:00'),
             end: parseTime(formValue.end ?? millisecondsToHumanReadable(this.settings.workPerDay)),
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             isNonWorkday: formValue.isNonWorkday!,
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             isADayOff: formValue.isADayOff!,
+            description: formValue.description!,
         });
 
         this.formGroup.reset(this.formInitialState);

@@ -20,9 +20,8 @@ import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.comp
 })
 export default class TimesComponent {
     private readonly timeTable = inject(TimeTable);
-    private readonly settingsTable = inject(SettingsTable);
-
     times$ = this.timeTable.items$();
+    private readonly settingsTable = inject(SettingsTable);
     settings$ = this.settingsTable.current$;
 
     add(timeEntry: TimeEntryCreate): void {

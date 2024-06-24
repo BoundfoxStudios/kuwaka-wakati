@@ -13,7 +13,7 @@ export const calculateDuration = ({ start, end }: TimeEntry): Duration => Durati
 export class TimeTable implements DatabaseTable<TimeEntry> {
     readonly definition = '++id, utcDate';
     readonly name = 'times';
-    readonly version = 3;
+    readonly version = 4;
     private times!: Table<TimeEntry, number>;
 
     items$(fromTimestamp: Milliseconds = 0, toTimestamp: Milliseconds = Number.MAX_SAFE_INTEGER): Observable<TimeEntryWithDuration[]> {
