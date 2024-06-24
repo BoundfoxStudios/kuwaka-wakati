@@ -7,9 +7,12 @@
         <div class="col-span-2 px-6 py-3">Start</div>
         <div class="col-span-2 px-6 py-3">End</div>
         <div class="col-span-2 px-6 py-3">Time</div>
-        <div *ngIf="delete.observed"></div>
+        @if (delete.observed) {
+        <div></div>
+        }
     </div>
-    <cdk-virtual-scroll-viewport itemSize="50" class="h-full" *ngIf="useVirtualScroll" #scrollViewport>
+    @if (useVirtualScroll) {
+    <cdk-virtual-scroll-viewport itemSize="50" class="h-full" #scrollViewport>
         <!-- https://github.com/angular/components/issues/27358 -->
         <!--<ng-container *ngTemplateOutlet="itemGridTemplate; context: { $implicit: virtualFor, scrollViewport: scrollViewport }" />-->
         <div class="grid text-gray-900" [class.grid-cols-10]="delete.observed" [class.grid-cols-9]="!delete.observed">
@@ -18,9 +21,9 @@
             </ng-container>
         </div>
     </cdk-virtual-scroll-viewport>
-    <ng-container *ngIf="!useVirtualScroll">
-        <ng-container *ngTemplateOutlet="itemGridTemplate; context: { $implicit: normalFor }" />
-    </ng-container>
+    } @if (!useVirtualScroll) {
+    <ng-container *ngTemplateOutlet="itemGridTemplate; context: { $implicit: normalFor }" />
+    }
 </div>
 
 <ng-template #itemGridTemplate let-template let-scrollViewport="scrollViewport">
@@ -38,25 +41,28 @@
 </ng-template>
 
 <ng-template #normalFor>
-    <ng-container *ngFor="let time of times; let odd = odd">
-        <ng-container *ngTemplateOutlet="itemTemplate; context: { $implicit: time, odd }"></ng-container>
-    </ng-container>
+    @for (time of times; track time; let odd = $odd) {
+    <ng-container *ngTemplateOutlet="itemTemplate; context: { $implicit: time, odd }"></ng-container>
+    }
 </ng-template>
 
 <ng-template #itemTemplate let-time let-odd="odd">
     <div class="col-span-3 flex h-[50px] items-center px-6" [class.bg-gray-50]="odd">
         {{ time.utcDate | unixDate }}
-        <fa-icon [icon]="faClockRotateLeft" *ngIf="time.isNonWorkday" class="ml-2 text-green" title="Non Workday"></fa-icon>
-        <fa-icon [icon]="faLeaf" *ngIf="time.isADayOff" class="ml-2 text-green" title="Is a day off"></fa-icon>
+        @if (time.isNonWorkday) {
+        <fa-icon [icon]="faClockRotateLeft" class="ml-2 text-green" title="Non Workday"></fa-icon>
+        } @if (time.isADayOff) {
+        <fa-icon [icon]="faLeaf" class="ml-2 text-green" title="Is a day off"></fa-icon>
+        }
     </div>
     <div class="col-span-2 flex h-[50px] items-center px-6" [class.bg-gray-50]="odd">
         {{ time.start | millisecondsToTime }}
     </div>
     <div class="col-span-2 flex h-[50px] items-center px-6" [class.bg-gray-50]="odd">{{ time.end | millisecondsToTime }}</div>
-    <div class="col-span-2 flex h-[50px] items-center px-6" [class.bg-gray-50]="odd">
-        <ng-container *ngIf="time.isADayOff">-</ng-container>{{ time.duration | duration }}
-    </div>
-    <div *ngIf="delete.observed" class="flex items-center px-6" [class.bg-gray-50]="odd">
+    <div class="col-span-2 flex h-[50px] items-center px-6" [class.bg-gray-50]="odd">@if (time.isADayOff) { - }{{ time.duration | duration }}</div>
+    @if (delete.observed) {
+    <div class="flex items-center px-6" [class.bg-gray-50]="odd">
         <fa-icon (click)="delete.next(time)" [icon]="faTrashAlt" class="cursor-pointer"></fa-icon>
     </div>
+    }
 </ng-template>

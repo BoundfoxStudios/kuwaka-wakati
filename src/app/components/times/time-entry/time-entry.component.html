@@ -1,8 +1,10 @@
 <form class="flex items-end space-x-3" (ngSubmit)="submit()" [formGroup]="formGroup">
-    <div *ngIf="!isTodayMode">
+    @if (!isTodayMode) {
+    <div>
         <label class="kw-label" for="utcDate">Date</label>
         <input class="kw-input" id="utcDate" type="date" [formControl]="formGroup.controls.utcDate" [max]="maximumDate" />
     </div>
+    }
     <div>
         <label class="kw-label" for="start">Start</label>
         <input class="kw-input" id="start" type="time" [formControl]="formGroup.controls.start" />

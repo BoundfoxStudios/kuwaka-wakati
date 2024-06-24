@@ -2,38 +2,46 @@
 
 <kw-card [contentType]="'chart'">
     <h2 header>Chart</h2>
-    <kw-history-chart
-        body
-        *ngIf="chartData$ | async as chartData; else loading"
-        [data]="chartData.data"
-        [dailyWork]="chartData.settings.workPerDay" />
+    @if (chartData$ | async; as chartData) {
+    <kw-history-chart body [data]="chartData.data" [dailyWork]="chartData.settings.workPerDay" />
+    } @else {
+    <kw-loading-spinner></kw-loading-spinner>
+    }
 </kw-card>
 
 <kw-card class="mt-4">
     <div header>Overall</div>
-    <kw-overall *ngIf="overall$ | async as overall; else loading" body [overall]="overall"></kw-overall>
+    @if (overall$ | async; as overall) {
+    <kw-overall body [overall]="overall"></kw-overall>
+    } @else {
+    <kw-loading-spinner></kw-loading-spinner>
+    }
 </kw-card>
 
 <kw-card class="mt-4">
     <div header class="flex flex-1">
         <h2 class="whitespace-nowrap">
-            Today
-            <fa-icon *ngIf="isWorkDayDone$ | async" [icon]="faCheckCircle" class="ml-1 text-green" />
+            Today @if (isWorkDayDone$ | async) {
+            <fa-icon [icon]="faCheckCircle" class="ml-1 text-green" />
+            }
         </h2>
         <fa-icon [icon]="isTimeEntryVisible ? faClose : faPlus" class="ml-auto cursor-pointer" (click)="isTimeEntryVisible = !isTimeEntryVisible" />
     </div>
-    <ng-container body *ngIf="today$ | async as today; else loading">
-        <ng-container *ngIf="settings$ | async as settings; else loading">
-            <kw-time-entry
-                *ngIf="isTimeEntryVisible"
-                [isTodayMode]="true"
-                (timeEntry)="addTimeEntry($event)"
-                [settings]="settings"
-                class="mb-2 self-end" />
-        </ng-container>
+    @if (today$ | async; as today) {
+    <ng-container body>
+        @if (settings$ | async; as settings) { @if (isTimeEntryVisible) {
+        <kw-time-entry [isTodayMode]="true" (timeEntry)="addTimeEntry($event)" [settings]="settings" class="mb-2 self-end" />
+        } } @else {
+        <kw-loading-spinner></kw-loading-spinner>
+        }
         <kw-today [today]="today" />
-        <kw-time-table *ngIf="today.items.length" [times]="today.items" (delete)="deleteTimeEntry($event)"></kw-time-table>
+        @if (today.items.length) {
+        <kw-time-table [times]="today.items" (delete)="deleteTimeEntry($event)"></kw-time-table>
+        }
     </ng-container>
+    } @else {
+    <kw-loading-spinner></kw-loading-spinner>
+    }
 </kw-card>
 
 <kw-card class="mt-4">
@@ -45,12 +53,12 @@
             <fa-icon [icon]="faChevronRight" class="ml-4 cursor-pointer" (click)="updateWeek(1)"></fa-icon>
         </div>
     </div>
-    <ng-container body *ngIf="week$ | async as week; else loading">
+    @if (week$ | async; as week) {
+    <ng-container body>
         <kw-week [week]="week"></kw-week>
         <kw-time-table [times]="week.items"></kw-time-table>
     </ng-container>
-</kw-card>
-
-<ng-template #loading>
+    } @else {
     <kw-loading-spinner></kw-loading-spinner>
-</ng-template>
+    }
+</kw-card>

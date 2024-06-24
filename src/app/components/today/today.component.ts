@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { Today } from '../../services/time-tracking/time.models';
 import { DurationPipe } from '../../pipes/duration.pipe';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -10,7 +10,7 @@ import { faCheck, faSun } from '@fortawesome/free-solid-svg-icons';
 @Component({
     selector: 'kw-today',
     standalone: true,
-    imports: [CommonModule, DurationPipe, FontAwesomeModule, MillisecondsToTimePipe, UnixDatePipe],
+    imports: [DurationPipe, FontAwesomeModule, MillisecondsToTimePipe, UnixDatePipe],
     templateUrl: './today.component.html',
     styleUrls: ['./today.component.css'],
     changeDetection: ChangeDetectionStrategy.OnPush,

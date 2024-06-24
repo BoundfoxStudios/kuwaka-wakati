@@ -1,10 +1,9 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'kw-sidebar',
     standalone: true,
-    imports: [CommonModule],
+    imports: [],
     templateUrl: './sidebar.component.html',
     styleUrls: ['./sidebar.component.css'],
     changeDetection: ChangeDetectionStrategy.OnPush,

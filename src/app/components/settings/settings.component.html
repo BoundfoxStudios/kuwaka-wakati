@@ -2,7 +2,11 @@
 
 <kw-card>
     <h2 header>Basic settings</h2>
-    <kw-settings-form body *ngIf="settings$ | async as settings; else loading" [settings]="settings" (settingsChange)="updateSettings($event)" />
+    @if (settings$ | async; as settings) {
+    <kw-settings-form body [settings]="settings" (settingsChange)="updateSettings($event)" />
+    } @else {
+    <kw-loading-spinner></kw-loading-spinner>
+    }
 </kw-card>
 
 <kw-card>
@@ -31,7 +35,3 @@
         </div>
     </ng-container>
 </kw-card>
-
-<ng-template #loading>
-    <kw-loading-spinner></kw-loading-spinner>
-</ng-template>

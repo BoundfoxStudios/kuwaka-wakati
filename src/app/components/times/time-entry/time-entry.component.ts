@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, inject, Input, Output } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormModel, Replace } from 'ngx-mf';
 import { TimeEntryCreate } from '../../../services/time-tracking/time.models';
@@ -32,7 +32,7 @@ const changeFormControlDisable = (state: boolean, ...formControls: FormControl<u
 @Component({
     selector: 'kw-time-entry',
     standalone: true,
-    imports: [CommonModule, FormsModule, ReactiveFormsModule],
+    imports: [FormsModule, ReactiveFormsModule],
     templateUrl: './time-entry.component.html',
     styleUrls: ['./time-entry.component.css'],
     changeDetection: ChangeDetectionStrategy.OnPush,
