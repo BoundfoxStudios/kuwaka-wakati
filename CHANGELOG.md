@@ -1,3 +1,19 @@
+# [1.10.0](https://github.com/BoundfoxStudios/kuwaka-wakati/compare/v1.9.0...v1.10.0) (2024-06-24)
+
+### Bug Fixes
+
+- today marker line break ([b9b590d](https://github.com/BoundfoxStudios/kuwaka-wakati/commit/b9b590d0a519710e0ab539df9a454f4e5fbdce8a))
+- typing after ngx-mf update ([16e1635](https://github.com/BoundfoxStudios/kuwaka-wakati/commit/16e163594dc0610ac0e6da4e28e4177716611c34))
+
+### Features
+
+- allow description & prefill end time ([c46e861](https://github.com/BoundfoxStudios/kuwaka-wakati/commit/c46e8610b5c77772095eaaa39e85e1a548cb5873))
+- more package updates ([0f64b60](https://github.com/BoundfoxStudios/kuwaka-wakati/commit/0f64b603e29c970626e709c8928656c3fec0fcc1))
+- turn off overscroll ([4864124](https://github.com/BoundfoxStudios/kuwaka-wakati/commit/486412470b040c64ffd197e146f81ed9b214486e))
+- update tauri ([860a748](https://github.com/BoundfoxStudios/kuwaka-wakati/commit/860a748c81c4c1daa4755cbb233e09e888833ee8))
+- update to Angular 17 ([a6d85ed](https://github.com/BoundfoxStudios/kuwaka-wakati/commit/a6d85eda28da284243bfa1169cd1ed14afbf2fca))
+- update to Angular 18 ([bc7d79b](https://github.com/BoundfoxStudios/kuwaka-wakati/commit/bc7d79b870ec71ddefa4fc7e83ea5daef5605453))
+
 # [1.9.0](https://github.com/BoundfoxStudios/kuwaka-wakati/compare/v1.8.0...v1.9.0) (2023-08-10)
 
 ### Features
