@@ -1,11 +1,14 @@
 import { Duration } from 'luxon';
 import { Milliseconds } from '../time.utils';
 
+export const TimeEntryDescriptions = ['Development', 'Meeting', 'Support (Development)', 'Support (Customer)'];
+
 export interface TimeEntry {
     id: number;
     utcDate: Milliseconds;
     start: Milliseconds;
     end: Milliseconds;
+    description: string;
     isNonWorkday: boolean;
     isADayOff: boolean;
 }

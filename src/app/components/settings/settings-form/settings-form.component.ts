@@ -11,6 +11,7 @@ type SettingsModel = FormModel<
     Settings,
     {
         workPerDay: Replace<FormControl<string>>;
+        preFillEndTime: Replace<FormControl<boolean>>;
     }
 >;
 
@@ -28,6 +29,7 @@ export class SettingsFormComponent implements OnInit {
     private readonly formBuilder = inject(FormBuilder);
     protected formGroup = this.formBuilder.group<SettingsModel['controls']>({
         workPerDay: new FormControl<string>('', { nonNullable: true }),
+        preFillEndTime: new FormControl<boolean>(true, { nonNullable: true }),
     });
     protected readonly workHoursPerWeek$ = this.formGroup.controls.workPerDay.valueChanges.pipe(
         map(workPerDay => multiplyDuration(parseTimeToDuration(workPerDay))),
@@ -39,6 +41,7 @@ export class SettingsFormComponent implements OnInit {
         void Promise.resolve().then(() =>
             this.formGroup.setValue({
                 workPerDay: millisecondsToHumanReadable(this.settings.workPerDay),
+                preFillEndTime: this.settings.preFillEndTime,
             }),
         );
     }
@@ -52,6 +55,7 @@ export class SettingsFormComponent implements OnInit {
 
         this.settingsChange.next({
             workPerDay: parseTimeToDuration(formValue.workPerDay).toMillis(),
+            preFillEndTime: formValue.preFillEndTime,
         });
     }
 }

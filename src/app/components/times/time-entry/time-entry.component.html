@@ -1,4 +1,4 @@
-<form (ngSubmit)="submit()" [formGroup]="formGroup" class="flex items-end space-x-3">
+<form (ngSubmit)="submit()" [formGroup]="formGroup" class="flex items-stretch space-x-3">
     @if (!isTodayMode) {
     <div>
         <label class="kw-label" for="utcDate">Date</label>
@@ -12,6 +12,14 @@
     <div>
         <label class="kw-label" for="end">End</label>
         <input [formControl]="formGroup.controls.end" class="kw-input" id="end" type="time" />
+    </div>
+    <div class="flex flex-col justify-between">
+        <label class="kw-label" for="description">Description</label>
+        <select [formControl]="formGroup.controls.description" class="kw-input mb-2" id="description">
+            @for (description of TimeEntryDescriptions; track description) {
+            <option [ngValue]="description">{{ description }}</option>
+            }
+        </select>
     </div>
     <div>
         <span class="kw-label">No workday</span>

@@ -11,6 +11,7 @@ interface SettingsEntity extends Settings {
 
 const defaultSettings: Settings = {
     workPerDay: 27_000_000, // 7.5 hours
+    preFillEndTime: true,
 };
 
 @Injectable()
@@ -28,7 +29,7 @@ export class SettingsTable implements DatabaseTable<SettingsEntity>, DatabaseCle
                 return defaultSettings;
             }
 
-            return { ...entity, id: undefined };
+            return { ...entity, preFillEndTime: entity.preFillEndTime ?? true, id: undefined };
         }),
     ).pipe(shareReplay());
 

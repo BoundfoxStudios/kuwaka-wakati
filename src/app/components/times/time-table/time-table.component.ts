@@ -5,7 +5,7 @@ import { DurationPipe } from '../../../pipes/duration.pipe';
 import { TimeEntryWithDuration } from '../../../services/time-tracking/time.models';
 import { UnixDatePipe } from '../../../pipes/unix-date.pipe';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
+import { faNoteSticky, faTrashAlt } from '@fortawesome/free-regular-svg-icons';
 import { CdkFixedSizeVirtualScroll, CdkVirtualForOf, CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { faCheck, faClockRotateLeft, faLeaf } from '@fortawesome/free-solid-svg-icons';
 import { ScrollViewportProviderDirective } from './scroll-viewport-provider.directive';
@@ -36,4 +36,5 @@ export class TimeTableComponent {
     protected readonly faCheck = faCheck;
     protected readonly faClockRotateLeft = faClockRotateLeft;
     protected readonly faLeaf = faLeaf;
+    protected readonly faNoteSticky = faNoteSticky;
 }
