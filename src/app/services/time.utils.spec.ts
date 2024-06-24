@@ -185,6 +185,7 @@ describe('Time Utils', () => {
                     id: 0,
                     isADayOff: false,
                     isNonWorkday: false,
+                    description: '',
                 },
                 {
                     start: start2,
@@ -194,6 +195,7 @@ describe('Time Utils', () => {
                     id: 1,
                     isADayOff: false,
                     isNonWorkday: false,
+                    description: '',
                 },
             ]);
 
