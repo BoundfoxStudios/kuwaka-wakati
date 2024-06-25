@@ -1,3 +1,9 @@
+## [1.10.1](https://github.com/BoundfoxStudios/kuwaka-wakati/compare/v1.10.0...v1.10.1) (2024-06-25)
+
+### Bug Fixes
+
+- use the correct path for tauri build ([f14d3aa](https://github.com/BoundfoxStudios/kuwaka-wakati/commit/f14d3aac21a8d09778ff23c54fd1bc7759a6690a))
+
 # [1.10.0](https://github.com/BoundfoxStudios/kuwaka-wakati/compare/v1.9.0...v1.10.0) (2024-06-24)
 
 ### Bug Fixes
