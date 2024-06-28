@@ -69,9 +69,9 @@
         "fullscreen": false,
         "resizable": true,
         "title": "Kuwaka Wakati",
-        "minWidth": 800,
+        "minWidth": 1000,
         "minHeight": 600,
-        "width": 800,
+        "width": 1000,
         "height": 600,
         "fileDropEnabled": false,
         "acceptFirstMouse": true
