@@ -1,3 +1,9 @@
+# [1.11.0](https://github.com/BoundfoxStudios/kuwaka-wakati/compare/v1.10.1...v1.11.0) (2024-06-28)
+
+### Features
+
+- increase minWidth to 1000 to prevent manual resizing all the time ([8688664](https://github.com/BoundfoxStudios/kuwaka-wakati/commit/8688664c83c9fd9db28a3f8aec4168f3c5faf17a))
+
 ## [1.10.1](https://github.com/BoundfoxStudios/kuwaka-wakati/compare/v1.10.0...v1.10.1) (2024-06-25)
 
 ### Bug Fixes
