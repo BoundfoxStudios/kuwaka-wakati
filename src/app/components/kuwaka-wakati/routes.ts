@@ -15,10 +15,6 @@ export const routes: Routes = [
         loadComponent: () => import('../times/times.component'),
     },
     {
-        path: 'importer',
-        loadComponent: () => import('../importer/importer.component'),
-    },
-    {
         path: 'settings',
         loadComponent: () => import('../settings/settings.component'),
     },
