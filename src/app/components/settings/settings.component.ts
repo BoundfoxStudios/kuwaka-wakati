@@ -5,7 +5,7 @@ import { SettingsFormComponent } from './settings-form/settings-form.component';
 import { PageTitleComponent } from '../page-title/page-title.component';
 import { DatabaseService } from '../../services/database/database.service';
 import { DateTime } from 'luxon';
-import { dateTimeToLocaleData } from '../../services/time.utils';
+import { dateTimeToLocaleData, millisecondsToHumanReadable } from '../../services/time.utils';
 import { FileDirective } from '../../directives/file.directive';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TauriService } from '../../services/tauri.service';
@@ -13,6 +13,8 @@ import { CardComponent } from '../card/card.component';
 import { CardSectionTitleComponent } from '../card/card-section-title/card-section-title.component';
 import { Settings } from '../../services/settings/settings';
 import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.component';
+import { TimeTable } from '../../services/time-tracking/time.table';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
     selector: 'kw-settings',
@@ -37,10 +39,45 @@ export default class SettingsComponent {
     private readonly settingsTable = inject(SettingsTable);
     protected readonly settings$ = this.settingsTable.current$;
     private readonly tauriService = inject(TauriService);
+    private readonly timeTable = inject(TimeTable);
 
     protected async export(): Promise<void> {
         const blob = await this.databaseService.exportToBlob();
         await this.tauriService.save(blob, `KuwakaWakati-${dateTimeToLocaleData(DateTime.now())}.json`);
+    }
+
+    protected async exportCSV(days: number): Promise<void> {
+        const today = DateTime.now().set({ hour: 0, minute: 0, second: 0, millisecond: 0 });
+        const startDay = today.minus({ day: days });
+        const items = await firstValueFrom(this.timeTable.groupByDay$(startDay.toMillis(), today.toMillis()));
+        const rows = items.flatMap(item => [
+            ['Date', 'Start Time', 'End Time', 'Duration', 'Is A Day Off?', 'Is a non work day?', 'description'],
+            ...item.items.map(timeEntry => [
+                DateTime.fromMillis(item.utcDate).toISODate(),
+                DateTime.fromMillis(timeEntry.start).toISOTime({
+                    includeOffset: false,
+                    includePrefix: false,
+                    suppressMilliseconds: true,
+                    suppressSeconds: true,
+                    extendedZone: false,
+                }),
+                DateTime.fromMillis(timeEntry.end).toISOTime({
+                    includeOffset: false,
+                    includePrefix: false,
+                    suppressMilliseconds: true,
+                    suppressSeconds: true,
+                    extendedZone: false,
+                }),
+                millisecondsToHumanReadable(timeEntry.duration.toMillis()),
+                timeEntry.isADayOff,
+                timeEntry.isNonWorkday,
+                timeEntry.description,
+            ]),
+        ]);
+
+        const csv = rows.map(row => row.join(',')).join('\n');
+        const csvBlob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
+        await this.tauriService.save(csvBlob, `KuwakaWakati-${days}days-${dateTimeToLocaleData(DateTime.now())}.csv`);
     }
 
     protected async import(): Promise<void> {
