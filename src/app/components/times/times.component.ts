@@ -5,7 +5,6 @@ import { TimeTable } from '../../services/time-tracking/time.table';
 import { TimeEntry, TimeEntryCreate } from '../../services/time-tracking/time.models';
 import { TimeTableComponent } from './time-table/time-table.component';
 import { CardComponent } from '../card/card.component';
-import ImporterComponent from '../importer/importer.component';
 import { PageTitleComponent } from '../page-title/page-title.component';
 import { SettingsTable } from '../../services/settings/settings.table';
 import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.component';
@@ -13,7 +12,7 @@ import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.comp
 @Component({
     selector: 'kw-times',
     standalone: true,
-    imports: [CommonModule, TimeEntryComponent, TimeTableComponent, CardComponent, ImporterComponent, PageTitleComponent, LoadingSpinnerComponent],
+    imports: [CommonModule, TimeEntryComponent, TimeTableComponent, CardComponent, PageTitleComponent, LoadingSpinnerComponent],
     templateUrl: './times.component.html',
     styleUrls: ['./times.component.css'],
     changeDetection: ChangeDetectionStrategy.OnPush,

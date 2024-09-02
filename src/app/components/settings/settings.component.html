@@ -12,9 +12,17 @@
 <kw-card>
     <h2 header>Export</h2>
     <ng-container body>
+        <kw-card-section-title>Export everything</kw-card-section-title>
         <p>This will export everything, all tracked times, all your settings.</p>
         <div class="mt-4">
             <button (click)="export()" class="kw-button">Export</button>
+        </div>
+        <kw-card-section-title class="mt-8">CSV Export</kw-card-section-title>
+        <p>This will export your times as CSV.</p>
+        <div class="mt-4 space-x-4">
+            <button (click)="exportCSV(7)" class="kw-button">7 Days</button>
+            <button (click)="exportCSV(14)" class="kw-button">14 Days</button>
+            <button (click)="exportCSV(30)" class="kw-button">30 Days</button>
         </div>
     </ng-container>
 </kw-card>

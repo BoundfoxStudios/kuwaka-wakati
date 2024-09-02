@@ -43,7 +43,7 @@ export class TimeTable implements DatabaseTable<TimeEntry> {
 
     todayGroup$(): Observable<TimeEntryGroup> {
         const todayDate = todayDateMilliseconds();
-        return this.groupByDay$(todayDate, todayDate + 1).pipe(
+        return this.groupByDay$(todayDate, todayDate).pipe(
             map(([today]) => {
                 if (!today) {
                     return {
@@ -61,8 +61,16 @@ export class TimeTable implements DatabaseTable<TimeEntry> {
     }
 
     private async items(fromTimestamp: Milliseconds = 0, toTimestamp: Milliseconds = Number.MAX_SAFE_INTEGER): Promise<TimeEntryWithDuration[]> {
-        const items = await this.times.where('utcDate').between(fromTimestamp, toTimestamp, true).toArray();
-        items.sort((a, b) => (a.utcDate < b.utcDate ? 1 : a.utcDate > b.utcDate ? -1 : 0));
+        const items = await this.times.where('utcDate').between(fromTimestamp, toTimestamp, true, true).toArray();
+        items.sort((a, b) => {
+            if (a.utcDate < b.utcDate) {
+                return 1;
+            } else if (a.utcDate > b.utcDate) {
+                return -1;
+            }
+
+            return a.start < b.start ? 1 : a.start > b.start ? -1 : 0;
+        });
         return items.map(item => ({ ...item, duration: calculateDuration(item) }));
     }
 }
