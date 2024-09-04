@@ -1,3 +1,12 @@
+# [1.12.0](https://github.com/BoundfoxStudios/kuwaka-wakati/compare/v1.11.0...v1.12.0) (2024-09-04)
+
+### Features
+
+- export CSV ([440bb12](https://github.com/BoundfoxStudios/kuwaka-wakati/commit/440bb12ecfb3503f71cc319c711aa795a2578434)), closes [#38](https://github.com/BoundfoxStudios/kuwaka-wakati/issues/38)
+- remove the importer ([bd249f3](https://github.com/BoundfoxStudios/kuwaka-wakati/commit/bd249f31bc9ac0f5768c5a4c0b1d476e17e4aabb))
+- sort by date then by start time ([1edfec9](https://github.com/BoundfoxStudios/kuwaka-wakati/commit/1edfec96569f3e9b70dae4e858a301e148251c21))
+- use the new app id ([d3bfd46](https://github.com/BoundfoxStudios/kuwaka-wakati/commit/d3bfd46fa4e4fb91b5e2c81815dd89eeff42d91b))
+
 # [1.11.0](https://github.com/BoundfoxStudios/kuwaka-wakati/compare/v1.10.1...v1.11.0) (2024-06-28)
 
 ### Features
