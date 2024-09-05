@@ -1,3 +1,9 @@
+## [1.12.1](https://github.com/BoundfoxStudios/kuwaka-wakati/compare/v1.12.0...v1.12.1) (2024-09-05)
+
+### Bug Fixes
+
+- correctly export the CSV ([970505a](https://github.com/BoundfoxStudios/kuwaka-wakati/commit/970505ac88ffabfacf54b9cf481d2952c22dafe7))
+
 # [1.12.0](https://github.com/BoundfoxStudios/kuwaka-wakati/compare/v1.11.0...v1.12.0) (2024-09-04)
 
 ### Features
