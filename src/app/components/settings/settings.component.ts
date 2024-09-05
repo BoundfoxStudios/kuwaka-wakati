@@ -51,7 +51,7 @@ export default class SettingsComponent {
         const startDay = today.minus({ day: days });
         const items = await firstValueFrom(this.timeTable.groupByDay$(startDay.toMillis(), today.toMillis()));
         const rows = [
-            ['Date', 'Start Time', 'End Time', 'Duration', 'Is A Day Off?', 'Is a non work day?', 'description'],
+            ['Date', 'Start Time', 'End Time', 'Duration', 'Duration (float)', 'Is A Day Off?', 'Is a non work day?', 'description'],
             ...items.flatMap(item => [
                 ...item.items.map(timeEntry => [
                     DateTime.fromMillis(item.utcDate).toISODate(),
@@ -70,6 +70,7 @@ export default class SettingsComponent {
                         extendedZone: false,
                     }),
                     millisecondsToHumanReadable(timeEntry.duration.toMillis()),
+                    timeEntry.duration.shiftTo('hours').hours,
                     timeEntry.isADayOff,
                     timeEntry.isNonWorkday,
                     timeEntry.description,
