@@ -50,30 +50,32 @@ export default class SettingsComponent {
         const today = DateTime.now().set({ hour: 0, minute: 0, second: 0, millisecond: 0 });
         const startDay = today.minus({ day: days });
         const items = await firstValueFrom(this.timeTable.groupByDay$(startDay.toMillis(), today.toMillis()));
-        const rows = items.flatMap(item => [
+        const rows = [
             ['Date', 'Start Time', 'End Time', 'Duration', 'Is A Day Off?', 'Is a non work day?', 'description'],
-            ...item.items.map(timeEntry => [
-                DateTime.fromMillis(item.utcDate).toISODate(),
-                DateTime.fromMillis(timeEntry.start).toISOTime({
-                    includeOffset: false,
-                    includePrefix: false,
-                    suppressMilliseconds: true,
-                    suppressSeconds: true,
-                    extendedZone: false,
-                }),
-                DateTime.fromMillis(timeEntry.end).toISOTime({
-                    includeOffset: false,
-                    includePrefix: false,
-                    suppressMilliseconds: true,
-                    suppressSeconds: true,
-                    extendedZone: false,
-                }),
-                millisecondsToHumanReadable(timeEntry.duration.toMillis()),
-                timeEntry.isADayOff,
-                timeEntry.isNonWorkday,
-                timeEntry.description,
+            ...items.flatMap(item => [
+                ...item.items.map(timeEntry => [
+                    DateTime.fromMillis(item.utcDate).toISODate(),
+                    DateTime.fromMillis(timeEntry.start).toISOTime({
+                        includeOffset: false,
+                        includePrefix: false,
+                        suppressMilliseconds: true,
+                        suppressSeconds: true,
+                        extendedZone: false,
+                    }),
+                    DateTime.fromMillis(timeEntry.end).toISOTime({
+                        includeOffset: false,
+                        includePrefix: false,
+                        suppressMilliseconds: true,
+                        suppressSeconds: true,
+                        extendedZone: false,
+                    }),
+                    millisecondsToHumanReadable(timeEntry.duration.toMillis()),
+                    timeEntry.isADayOff,
+                    timeEntry.isNonWorkday,
+                    timeEntry.description,
+                ]),
             ]),
-        ]);
+        ];
 
         const csv = rows.map(row => row.join(',')).join('\n');
         const csvBlob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
