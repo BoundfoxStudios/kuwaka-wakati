@@ -1,3 +1,9 @@
+# [1.13.0](https://github.com/BoundfoxStudios/kuwaka-wakati/compare/v1.12.1...v1.13.0) (2024-09-05)
+
+### Features
+
+- add hours as float to the csv export ([b20bc2f](https://github.com/BoundfoxStudios/kuwaka-wakati/commit/b20bc2f7c73f31d3dbd11d89d473842978066222))
+
 ## [1.12.1](https://github.com/BoundfoxStudios/kuwaka-wakati/compare/v1.12.0...v1.12.1) (2024-09-05)
 
 ### Bug Fixes
