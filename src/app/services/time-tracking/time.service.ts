@@ -55,7 +55,10 @@ export class TimeService {
                 const amountOfDaysOff = groups.filter(group => group.isADayOff).length;
 
                 const nominalTime = multiplyDuration(workPerDay, 5 - amountOfDaysOff);
-                const actualTime = calculateTimeEntryGroupDuration(groups, workPerDay);
+                const actualTime = calculateTimeEntryGroupDuration(
+                    groups.filter(group => !group.isADayOff),
+                    workPerDay,
+                );
 
                 const { remainingTime, overtime } = calculateRemainingAndOvertime(nominalTime, actualTime);
 
