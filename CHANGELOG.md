@@ -1,3 +1,9 @@
+## [1.13.1](https://github.com/BoundfoxStudios/kuwaka-wakati/compare/v1.13.0...v1.13.1) (2024-09-11)
+
+### Bug Fixes
+
+- don’t calculate the day off time into the weekly overview ([dbb9b88](https://github.com/BoundfoxStudios/kuwaka-wakati/commit/dbb9b88440663cce51a27636d7ec3aae2c1d77f5))
+
 # [1.13.0](https://github.com/BoundfoxStudios/kuwaka-wakati/compare/v1.12.1...v1.13.0) (2024-09-05)
 
 ### Features
