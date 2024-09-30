@@ -17,9 +17,11 @@ import { TimeTableComponent } from '../times/time-table/time-table.component';
 import { PageTitleComponent } from '../page-title/page-title.component';
 import { OverallComponent } from '../overall/overall.component';
 import { BehaviorSubject, combineLatest, map, switchMap } from 'rxjs';
-import { dateTimeToDate } from '../../services/time.utils';
+import { dateTimeToDate, Milliseconds } from '../../services/time.utils';
 import { WeekComponent } from '../week/week.component';
 import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.component';
+
+type Resolution = 'all' | '1 m' | '6 m' | '12 m';
 
 @Component({
     selector: 'kw-dashboard',
@@ -50,6 +52,7 @@ export default class DashboardComponent {
     protected readonly faChevronLeft = faChevronLeft;
     protected readonly faChevronRight = faChevronRight;
     protected readonly faCalendar = faCalendar;
+    protected readonly chartResolution$ = new BehaviorSubject<Resolution>('1 m');
     private readonly weekDate$ = new BehaviorSubject<DateTime>(DateTime.now());
     protected readonly weekNumber$ = this.weekDate$.pipe(map(weekDate => weekDate.get('weekNumber')));
     protected readonly weekFromTo$ = this.weekNumber$.pipe(
@@ -63,12 +66,16 @@ export default class DashboardComponent {
     private readonly timeTable = inject(TimeTable);
     private readonly settingsTable = inject(SettingsTable);
     protected readonly settings$ = this.settingsTable.current$;
-    protected readonly chartData$ = combineLatest({
-        settings: this.settings$,
-        data: this.timeTable
-            .groupByDay$(0, DateTime.now().toMillis())
-            .pipe(map(data => data.filter(item => !item.isADayOff && !item.isNonWorkday).reverse())),
-    });
+    protected readonly chartData$ = this.chartResolution$.pipe(
+        switchMap(resolution =>
+            combineLatest({
+                settings: this.settings$,
+                data: this.timeTable
+                    .groupByDay$(this.resolutionMillisecondsAgo(resolution), DateTime.now().toMillis())
+                    .pipe(map(data => data.filter(item => !item.isADayOff && !item.isNonWorkday).reverse())),
+            }),
+        ),
+    );
     private readonly timeService = inject(TimeService);
     protected readonly today$ = this.timeService.today$;
     protected readonly isWorkDayDone$ = this.today$.pipe(map(today => (today ? !today.remainingTime : undefined)));
@@ -90,5 +97,17 @@ export default class DashboardComponent {
 
     protected showThisWeek(): void {
         this.weekDate$.next(DateTime.now());
+    }
+
+    private resolutionMillisecondsAgo(resolution: Resolution): Milliseconds {
+        if (resolution === 'all') {
+            return 0;
+        }
+
+        return DateTime.now()
+            .minus({
+                month: parseInt(resolution.split(' ')[0], 10),
+            })
+            .toMillis();
     }
 }
