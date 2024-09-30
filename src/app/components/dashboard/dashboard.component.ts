@@ -66,6 +66,9 @@ export default class DashboardComponent {
     private readonly timeTable = inject(TimeTable);
     private readonly settingsTable = inject(SettingsTable);
     protected readonly settings$ = this.settingsTable.current$;
+    protected readonly showBackupNotice$ = this.settings$.pipe(
+        map(settings => DateTime.now().diff(DateTime.fromMillis(settings.lastBackup), 'days').days > 14),
+    );
     protected readonly chartData$ = this.chartResolution$.pipe(
         switchMap(resolution =>
             combineLatest({

@@ -1,5 +1,11 @@
 <kw-page-title>Dashboard</kw-page-title>
 
+@if (showBackupNotice$ | async) {
+<div class="mb-4 cursor-pointer rounded bg-red px-4 py-2 text-white" [routerLink]="['/settings']">
+    <p>The last backup is older than 14 days. Please make a backup.</p>
+</div>
+}
+
 <kw-card [contentType]="'chart'">
     <div class="flex flex-1" header>
         <h2>Chart</h2>
