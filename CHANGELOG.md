@@ -1,3 +1,14 @@
+# [1.14.0](https://github.com/BoundfoxStudios/kuwaka-wakati/compare/v1.13.1...v1.14.0) (2024-09-30)
+
+### Bug Fixes
+
+- angular content projection warning ([a78e5f8](https://github.com/BoundfoxStudios/kuwaka-wakati/commit/a78e5f88bfdd466f54394bea8b7ef28324a41e06))
+
+### Features
+
+- add backup notice ([e4c4401](https://github.com/BoundfoxStudios/kuwaka-wakati/commit/e4c4401b3e1933acc0d2bc67b504c26ffcf6349b))
+- add chart resolution ([f4db042](https://github.com/BoundfoxStudios/kuwaka-wakati/commit/f4db0422c14e1d583d56485a16dfc81364f137e8))
+
 ## [1.13.1](https://github.com/BoundfoxStudios/kuwaka-wakati/compare/v1.13.0...v1.13.1) (2024-09-11)
 
 ### Bug Fixes
