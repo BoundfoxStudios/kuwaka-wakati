@@ -1,7 +1,25 @@
 <kw-page-title>Dashboard</kw-page-title>
 
+@if (showBackupNotice$ | async) {
+<div class="mb-4 cursor-pointer rounded bg-red px-4 py-2 text-white" [routerLink]="['/settings']">
+    <p>The last backup is older than 14 days. Please make a backup.</p>
+</div>
+}
+
 <kw-card [contentType]="'chart'">
-    <h2 header>Chart</h2>
+    <div class="flex flex-1" header>
+        <h2>Chart</h2>
+
+        <div class="ml-auto font-medium text-gray-400">
+            <span (click)="chartResolution$.next('1 m')" [class.active]="(chartResolution$ | async) === '1 m'" class="cursor-pointer">1 m</span>
+            |
+            <span (click)="chartResolution$.next('6 m')" [class.active]="(chartResolution$ | async) === '6 m'" class="cursor-pointer">6 m</span>
+            |
+            <span (click)="chartResolution$.next('12 m')" [class.active]="(chartResolution$ | async) === '12 m'" class="cursor-pointer">12 m</span>
+            |
+            <span (click)="chartResolution$.next('all')" [class.active]="(chartResolution$ | async) === 'all'" class="cursor-pointer">all</span>
+        </div>
+    </div>
     @if (chartData$ | async; as chartData) {
     <kw-history-chart body [data]="chartData.data" [dailyWork]="chartData.settings.workPerDay" />
     } @else {

@@ -44,6 +44,9 @@ export default class SettingsComponent {
     protected async export(): Promise<void> {
         const blob = await this.databaseService.exportToBlob();
         await this.tauriService.save(blob, `KuwakaWakati-${dateTimeToLocaleData(DateTime.now())}.json`);
+
+        const currentSettings = await firstValueFrom(this.settings$);
+        await this.settingsTable.update({ ...currentSettings, lastBackup: DateTime.now().toMillis() });
     }
 
     protected async exportCSV(days: number): Promise<void> {
@@ -116,7 +119,8 @@ export default class SettingsComponent {
         window.location.reload();
     }
 
-    protected async updateSettings(settings: Settings): Promise<void> {
-        await this.settingsTable.update(settings);
+    protected async updateSettings(settings: Omit<Settings, 'lastBackup'>): Promise<void> {
+        const currentSettings = await firstValueFrom(this.settings$);
+        await this.settingsTable.update({ ...settings, lastBackup: currentSettings.lastBackup });
     }
 }

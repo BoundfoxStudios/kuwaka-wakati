@@ -8,7 +8,7 @@ import { map } from 'rxjs';
 import { FormModel, Replace } from 'ngx-mf';
 
 type SettingsModel = FormModel<
-    Settings,
+    Omit<Settings, 'lastBackup'>,
     {
         workPerDay: Replace<FormControl<string>>;
         preFillEndTime: Replace<FormControl<boolean>>;
@@ -25,7 +25,7 @@ type SettingsModel = FormModel<
 })
 export class SettingsFormComponent implements OnInit {
     @Input({ required: true }) settings!: Settings;
-    @Output() readonly settingsChange = new EventEmitter<Settings>();
+    @Output() readonly settingsChange = new EventEmitter<Omit<Settings, 'lastBackup'>>();
     private readonly formBuilder = inject(FormBuilder);
     protected formGroup = this.formBuilder.group<SettingsModel['controls']>({
         workPerDay: new FormControl<string>('', { nonNullable: true }),

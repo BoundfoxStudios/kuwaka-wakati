@@ -1,6 +1,8 @@
 import { Inject, Injectable, InjectionToken } from '@angular/core';
 import Dexie, { Table } from 'dexie';
 import 'dexie-export-import';
+import { SettingsEntity } from '../settings/settings.table';
+import { DateTime } from 'luxon';
 
 export interface DatabaseTable<T = unknown, TKey = number> {
     readonly version: number;
@@ -29,7 +31,18 @@ export class DatabaseService extends Dexie implements DatabaseCleanup {
 
         const version = databaseTables.reduce((sum, current) => sum + current.version, 0);
 
-        this.version(version).stores(databaseTables.reduce((schema, table) => ({ ...schema, [table.name]: table.definition }), {}));
+        this.version(version)
+            .stores(databaseTables.reduce((schema, table) => ({ ...schema, [table.name]: table.definition }), {}))
+            .upgrade(async transaction => {
+                const settingsTable = transaction.table<SettingsEntity>('settings');
+                const allItems = await settingsTable.toArray();
+                await settingsTable.bulkPut(
+                    allItems.map(item => ({
+                        ...item,
+                        lastBackup: item.lastBackup ?? DateTime.now().toMillis(),
+                    })),
+                );
+            });
     }
 
     initialize(): void {

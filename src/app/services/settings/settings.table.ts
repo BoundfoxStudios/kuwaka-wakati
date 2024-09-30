@@ -4,21 +4,23 @@ import { liveQuery, Table } from 'dexie';
 import { Injectable } from '@angular/core';
 import { shareReplay } from 'rxjs';
 import { dexieToRxObservable } from '../dexie-to-rxjs';
+import { DateTime } from 'luxon';
 
-interface SettingsEntity extends Settings {
+export interface SettingsEntity extends Settings {
     id?: number;
 }
 
 const defaultSettings: Settings = {
     workPerDay: 27_000_000, // 7.5 hours
     preFillEndTime: true,
+    lastBackup: DateTime.now().toMillis(),
 };
 
 @Injectable()
 export class SettingsTable implements DatabaseTable<SettingsEntity>, DatabaseCleanup {
     readonly definition = '++id';
     readonly name = 'settings';
-    readonly version = 1;
+    readonly version = 2;
     private settings!: Table<SettingsEntity, number>;
 
     readonly current$ = dexieToRxObservable(
