@@ -2,11 +2,13 @@
 
 <kw-card>
     <h2 header>Create Time Entry</h2>
-    @if (settings$ | async; as settings) {
-    <kw-time-entry class="mb-4 block" (timeEntry)="add($event)" [settings]="settings" body />
-    } @else {
-    <kw-loading-spinner></kw-loading-spinner>
-    }
+    <ng-container body>
+        @if (settings$ | async; as settings) {
+        <kw-time-entry class="mb-4 block" (timeEntry)="add($event)" [settings]="settings" />
+        } @else {
+        <kw-loading-spinner></kw-loading-spinner>
+        }
+    </ng-container>
 </kw-card>
 
 @if (times$ | async; as times) { @if (times.length) {
