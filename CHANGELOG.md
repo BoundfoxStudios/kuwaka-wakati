@@ -1,3 +1,9 @@
+# [1.15.0](https://github.com/BoundfoxStudios/kuwaka-wakati/compare/v1.14.0...v1.15.0) (2025-02-19)
+
+### Features
+
+- add 3 m resolution ([bdefd84](https://github.com/BoundfoxStudios/kuwaka-wakati/commit/bdefd84f1aa90c8068baf331d363477b942ab6c5))
+
 # [1.14.0](https://github.com/BoundfoxStudios/kuwaka-wakati/compare/v1.13.1...v1.14.0) (2024-09-30)
 
 ### Bug Fixes
