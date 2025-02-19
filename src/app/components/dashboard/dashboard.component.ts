@@ -21,7 +21,7 @@ import { dateTimeToDate, Milliseconds } from '../../services/time.utils';
 import { WeekComponent } from '../week/week.component';
 import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.component';
 
-type Resolution = 'all' | '1 m' | '6 m' | '12 m';
+type Resolution = 'all' | '1 m' | '3 m' | '6 m' | '12 m';
 
 @Component({
     selector: 'kw-dashboard',
