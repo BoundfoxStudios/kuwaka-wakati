@@ -13,6 +13,8 @@
         <div class="ml-auto font-medium text-gray-400">
             <span (click)="chartResolution$.next('1 m')" [class.active]="(chartResolution$ | async) === '1 m'" class="cursor-pointer">1 m</span>
             |
+            <span (click)="chartResolution$.next('3 m')" [class.active]="(chartResolution$ | async) === '3 m'" class="cursor-pointer">3 m</span>
+            |
             <span (click)="chartResolution$.next('6 m')" [class.active]="(chartResolution$ | async) === '6 m'" class="cursor-pointer">6 m</span>
             |
             <span (click)="chartResolution$.next('12 m')" [class.active]="(chartResolution$ | async) === '12 m'" class="cursor-pointer">12 m</span>
