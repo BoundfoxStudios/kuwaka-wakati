@@ -1,3 +1,9 @@
+# [1.16.0](https://github.com/BoundfoxStudios/kuwaka-wakati/compare/v1.15.0...v1.16.0) (2025-03-06)
+
+### Features
+
+- use 3 m as default resolution for the dashboard ([78986cd](https://github.com/BoundfoxStudios/kuwaka-wakati/commit/78986cd1fc611f4c2f6e72ce8a6ef7d0c6b272d8))
+
 # [1.15.0](https://github.com/BoundfoxStudios/kuwaka-wakati/compare/v1.14.0...v1.15.0) (2025-02-19)
 
 ### Features
