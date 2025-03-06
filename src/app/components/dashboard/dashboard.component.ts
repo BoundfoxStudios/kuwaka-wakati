@@ -52,7 +52,7 @@ export default class DashboardComponent {
     protected readonly faChevronLeft = faChevronLeft;
     protected readonly faChevronRight = faChevronRight;
     protected readonly faCalendar = faCalendar;
-    protected readonly chartResolution$ = new BehaviorSubject<Resolution>('1 m');
+    protected readonly chartResolution$ = new BehaviorSubject<Resolution>('3 m');
     private readonly weekDate$ = new BehaviorSubject<DateTime>(DateTime.now());
     protected readonly weekNumber$ = this.weekDate$.pipe(map(weekDate => weekDate.get('weekNumber')));
     protected readonly weekFromTo$ = this.weekNumber$.pipe(
